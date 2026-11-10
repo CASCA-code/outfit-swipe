@@ -33,17 +33,20 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
 .item-brand{font:600 14px/1.2 var(--sans);color:var(--ink)}
 .item-niche{font-size:12px;color:var(--muted)}
 .badge-falta{display:inline-flex;align-items:center;height:22px;padding:0 9px;border-radius:999px;background:#EFE6DC;color:var(--rec);font:600 11px/1 var(--sans);letter-spacing:.04em}
-.badge-falta[hidden],.item-brand[hidden],.item-niche[hidden],.mic[hidden]{display:none !important}
+.badge-falta[hidden],.item-brand[hidden],.item-niche[hidden],.mic[hidden],.zoom-close[hidden]{display:none !important}
 .export{height:44px;padding:0 14px;border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:12px;font:600 14px var(--sans);cursor:pointer}
 .export:hover,.export:focus-visible{border-color:var(--navy);outline:2px solid var(--navy);outline-offset:2px}
 .export:active{transform:scale(.97)}
-.stage{flex:1;min-height:0;position:relative;margin:0 12px;border-radius:18px;background:var(--bg);overflow:hidden;border:1px solid var(--line)}
-.photo-wrap{position:absolute;inset:0;overflow:hidden;touch-action:none;cursor:zoom-in;overscroll-behavior:none}
-.photo-wrap.zoomed{cursor:grab}
-.photo-wrap.dragging{cursor:grabbing}
-.photo-wrap img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center;background:var(--bg);-webkit-user-drag:none;user-select:none;pointer-events:none;transform-origin:0 0;will-change:transform}
-.zoom-reset{position:absolute;top:8px;right:8px;z-index:2;width:40px;height:40px;border:0;border-radius:50%;background:rgba(28,25,21,.72);color:#fff;font:600 22px/1 var(--sans);cursor:pointer;display:grid;place-items:center}
-.zoom-reset[hidden]{display:none !important}
+.stage{flex:1;min-height:0;position:relative;margin:0 12px;border-radius:18px;background:var(--bg);overflow:hidden;border:1px solid var(--line);cursor:zoom-in;touch-action:pan-y}
+.stage.zoomed{cursor:grab;touch-action:none}
+.stage.zoomed.panning{cursor:grabbing}
+.photo-wrap{position:absolute;inset:0;overflow:hidden;touch-action:inherit}
+.photo-wrap img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center;background:var(--bg);transform-origin:center center;will-change:transform;-webkit-user-drag:none;user-select:none;pointer-events:auto}
+.photo-wrap img.z-anim{transition:transform .2s ease}
+.zoom-close{position:absolute;top:8px;right:8px;z-index:2;width:44px;height:44px;border:0;border-radius:50%;background:var(--paper);color:var(--ink);display:grid;place-items:center;cursor:pointer;box-shadow:0 1px 0 rgba(28,25,21,.06),0 8px 20px -8px rgba(28,25,21,.45)}
+.zoom-close:hover,.zoom-close:focus-visible{color:var(--navy);outline:2px solid var(--navy);outline-offset:2px}
+.zoom-close:active{transform:scale(.92)}
+.zoom-close svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .nav{display:flex;align-items:center;justify-content:center;gap:16px;padding:12px 16px 4px}
 .nav button{width:52px;height:52px;border:0;border-radius:50%;background:var(--paper);color:var(--ink);display:grid;place-items:center;cursor:pointer;box-shadow:0 1px 0 rgba(28,25,21,.06),0 6px 16px -8px rgba(28,25,21,.3);transition:transform .15s ease}
 .nav button:hover{color:var(--navy)}
@@ -78,7 +81,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
 .toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
 @media (min-width:700px){body{max-width:460px;margin:0 auto}}
 @media (prefers-reduced-motion:reduce){
-  .mic.on svg,.toast,.nav button,.export,.dictar{animation:none;transition:none}
+  .mic.on svg,.toast,.nav button,.export,.dictar,.photo-wrap img.z-anim,.zoom-close{animation:none;transition:none}
 }
 </style>
 </head>
@@ -91,9 +94,11 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
 <div class="tally" id="tally" hidden></div>
 <div class="stage" id="stage" aria-live="polite">
   <div class="photo-wrap" id="photoWrap">
-    <img id="photo" alt="">
+    <img id="photo" alt="" data-scale="1" data-tx="0" data-ty="0">
   </div>
-  <button type="button" class="zoom-reset" id="zoomReset" hidden aria-label="Quitar zoom">×</button>
+  <button type="button" class="zoom-close" id="zoomClose" hidden aria-label="Quitar zoom">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+  </button>
 </div>
 <div class="item-meta" id="itemMeta">
   <span class="item-brand" id="itemBrand"></span>
@@ -1449,12 +1454,14 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
 (function(){
   const KEY = "closetReview.v1";
   const VER = "4";
+  const Z_TAP = 2.5;
+  const Z_MAX = 4;
   const $ = (id) => document.getElementById(id);
   const photo = $("photo"), photoWrap = $("photoWrap"), notes = $("notes");
   const count = $("count"), prev = $("prev"), next = $("next");
   const micBtn = $("mic"), dictar = $("dictar"), hint = $("micHint");
   const dump = $("dump"), toastEl = $("toast"), stage = $("stage");
-  const statusEl = $("micStatus");
+  const statusEl = $("micStatus"), zoomClose = $("zoomClose");
 
   function asset(path){
     if (!path) return "";
@@ -1469,6 +1476,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   let wantListen = false;
   let toastTimer = 0;
   let lastInterim = "";
+  let scale = 1, tx = 0, ty = 0;
 
   try { store = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; }
   catch { store = {}; }
@@ -1524,14 +1532,60 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
     tallyEl.append(cat, br);
     tallyEl.hidden = false;
   }
+  function isZoomed(){ return scale > 1.02; }
+  function applyZoom(animate){
+    photo.classList.toggle("z-anim", !!animate);
+    photo.style.transform = "translate(" + tx + "px, " + ty + "px) scale(" + scale + ")";
+    photo.dataset.scale = String(scale);
+    photo.dataset.tx = String(tx);
+    photo.dataset.ty = String(ty);
+    const on = isZoomed();
+    stage.classList.toggle("zoomed", on);
+    zoomClose.hidden = !on;
+  }
+  function clampPan(){
+    if (!isZoomed()){ scale = 1; tx = 0; ty = 0; return; }
+    const sw = stage.clientWidth, sh = stage.clientHeight;
+    const iw = photo.offsetWidth * scale, ih = photo.offsetHeight * scale;
+    const maxX = Math.max(0, (iw - sw) / 2);
+    const maxY = Math.max(0, (ih - sh) / 2);
+    tx = Math.min(maxX, Math.max(-maxX, tx));
+    ty = Math.min(maxY, Math.max(-maxY, ty));
+  }
+  function zoomTo(newScale, pivotX, pivotY, animate){
+    newScale = Math.min(Z_MAX, Math.max(1, newScale));
+    const rect = photo.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    const vx = pivotX - cx, vy = pivotY - cy;
+    const ratio = newScale / (scale || 1);
+    tx += vx - vx * ratio;
+    ty += vy - vy * ratio;
+    scale = newScale;
+    clampPan();
+    applyZoom(animate);
+  }
+  function resetZoom(animate){
+    scale = 1; tx = 0; ty = 0;
+    stage.classList.remove("panning");
+    applyZoom(animate);
+  }
+  function useFullRes(){
+    const it = items[i];
+    if (!it || !it.srcFull || photo.dataset.full === "1") return;
+    photo.src = asset(it.srcFull);
+    photo.dataset.full = "1";
+  }
   function render(){
     const n = items.length;
     const it = items[i];
     count.textContent = n ? (i + 1) + "/" + n : "0/0";
     prev.disabled = i <= 0;
     next.disabled = i >= n - 1;
+    resetZoom(false);
     if (!it){
       photo.removeAttribute("src");
+      photo.removeAttribute("data-full");
       photo.alt = "";
       notes.value = "";
       itemBrand.hidden = true;
@@ -1541,6 +1595,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
       itemNiche.textContent = "";
       return;
     }
+    photo.dataset.full = "";
     photo.src = asset(it.src);
     photo.alt = it.name || it.id || "prenda";
     notes.value = (store[it.id] && store[it.id].notes) || it.notes || "";
@@ -1573,7 +1628,6 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
     const nextI = i + delta;
     if (nextI < 0 || nextI >= items.length) return;
     i = nextI;
-    resetZoom();
     render();
   }
 
@@ -1581,151 +1635,107 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   prev.addEventListener("click", () => go(-1));
   next.addEventListener("click", () => go(1));
 
-  const zoomReset = $("zoomReset");
-  let scale = 1, tx = 0, ty = 0;
   const pointers = new Map();
-  let moved = false;
-  let startCX = 0, startCY = 0, startTx = 0, startTy = 0;
-  let pinchStartDist = 0, pinchStartScale = 1, pinchStartTx = 0, pinchStartTy = 0;
-  let swiping = false;
+  let mode = null;
+  let gesture = null;
 
-  function clampPan(){
-    const r = photoWrap.getBoundingClientRect();
-    const minX = r.width * (1 - scale);
-    const minY = r.height * (1 - scale);
-    tx = Math.min(0, Math.max(minX, tx));
-    ty = Math.min(0, Math.max(minY, ty));
-  }
-  function applyZoom(){
-    if (scale < 1.02){ scale = 1; tx = 0; ty = 0; }
-    photo.style.transform = scale === 1 ? "none" : "translate(" + tx + "px, " + ty + "px) scale(" + scale + ")";
-    photoWrap.classList.toggle("zoomed", scale > 1);
-    zoomReset.hidden = scale <= 1;
-  }
-  function resetZoom(){
-    scale = 1; tx = 0; ty = 0;
-    photoWrap.classList.remove("dragging");
-    applyZoom();
-  }
-  function loadFull(){
-    const it = items[i];
-    if (!it || !it.srcFull) return;
-    const full = asset(it.srcFull);
-    if (photo.getAttribute("src") === full) return;
-    const keep = {scale: scale, tx: tx, ty: ty};
-    photo.addEventListener("load", function onL(){
-      photo.removeEventListener("load", onL);
-      scale = keep.scale; tx = keep.tx; ty = keep.ty;
-      applyZoom();
-    });
-    photo.src = full;
-  }
-  function zoomAt(cx, cy){
-    const r = photoWrap.getBoundingClientRect();
-    const x = cx - r.left, y = cy - r.top;
-    scale = 2.5;
-    tx = x * (1 - scale);
-    ty = y * (1 - scale);
-    clampPan();
-    applyZoom();
-    loadFull();
-  }
-  function pointerMid(){
-    const pts = Array.from(pointers.values());
-    if (pts.length === 1) return pts[0];
-    return {x: (pts[0].x + pts[1].x) / 2, y: (pts[0].y + pts[1].y) / 2};
-  }
-  function pointerDist(){
-    const pts = Array.from(pointers.values());
-    if (pts.length < 2) return 0;
-    return Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y);
-  }
+  function pointerList(){ return Array.from(pointers.values()); }
+  function dist(a, b){ return Math.hypot(a.x - b.x, a.y - b.y) || 1; }
+  function mid(a, b){ return { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 }; }
 
-  photoWrap.addEventListener("pointerdown", (e) => {
-    if (e.pointerType === "mouse" && e.button !== 0) return;
-    photoWrap.setPointerCapture(e.pointerId);
-    pointers.set(e.pointerId, {x: e.clientX, y: e.clientY});
-    moved = false;
-    swiping = false;
-    if (pointers.size === 1){
-      startCX = e.clientX;
-      startCY = e.clientY;
-      startTx = tx;
-      startTy = ty;
-    } else if (pointers.size === 2){
-      pinchStartDist = pointerDist() || 1;
-      pinchStartScale = scale;
-      pinchStartTx = tx;
-      pinchStartTy = ty;
-    }
-  });
-  photoWrap.addEventListener("pointermove", (e) => {
-    if (!pointers.has(e.pointerId)) return;
-    pointers.set(e.pointerId, {x: e.clientX, y: e.clientY});
-    if (pointers.size === 2){
-      const dist = pointerDist();
-      const mid = pointerMid();
-      const r = photoWrap.getBoundingClientRect();
-      const x = mid.x - r.left, y = mid.y - r.top;
-      const next = Math.min(4, Math.max(1, pinchStartScale * (dist / pinchStartDist)));
-      tx = pinchStartTx + (pinchStartScale - next) * x;
-      ty = pinchStartTy + (pinchStartScale - next) * y;
-      scale = next;
-      clampPan();
-      applyZoom();
-      moved = true;
+  function onPointerDown(e){
+    if (e.button && e.button !== 0) return;
+    if (e.target === zoomClose || (zoomClose.contains && zoomClose.contains(e.target))) return;
+    try { stage.setPointerCapture(e.pointerId); } catch {}
+    pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    if (pointers.size >= 2){
+      const [a, b] = pointerList();
+      mode = "pinch";
+      gesture = { dist: dist(a, b), scale: scale, tx: tx, ty: ty };
       return;
     }
-    if (pointers.size !== 1) return;
-    const dx = e.clientX - startCX;
-    const dy = e.clientY - startCY;
-    if (Math.hypot(dx, dy) > 8) moved = true;
-    if (scale > 1){
-      photoWrap.classList.add("dragging");
-      tx = startTx + dx;
-      ty = startTy + dy;
-      clampPan();
-      applyZoom();
-    } else if (moved && Math.abs(dx) > Math.abs(dy) * 1.2){
-      swiping = true;
-    }
-  });
-  function endPointer(e){
+    mode = isZoomed() ? "maybe-pan" : "maybe-swipe";
+    gesture = { x: e.clientX, y: e.clientY, tx: tx, ty: ty, moved: false };
+  }
+  function onPointerMove(e){
     if (!pointers.has(e.pointerId)) return;
+    pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    if (mode === "pinch" && pointers.size >= 2){
+      const [a, b] = pointerList();
+      const m = mid(a, b);
+      const startScale = gesture.scale, startTx = gesture.tx, startTy = gesture.ty;
+      scale = startScale; tx = startTx; ty = startTy;
+      zoomTo(startScale * (dist(a, b) / gesture.dist), m.x, m.y, false);
+      return;
+    }
+    if (!gesture || pointers.size !== 1) return;
+    const dx = e.clientX - gesture.x, dy = e.clientY - gesture.y;
+    if (Math.hypot(dx, dy) > 8) gesture.moved = true;
+    if (isZoomed()){
+      mode = "pan";
+      stage.classList.add("panning");
+      tx = gesture.tx + dx;
+      ty = gesture.ty + dy;
+      clampPan();
+      applyZoom(false);
+    }
+  }
+  function onPointerUp(e){
     pointers.delete(e.pointerId);
-    photoWrap.classList.remove("dragging");
-    if (pointers.size === 1){
-      const remain = Array.from(pointers.values())[0];
-      startCX = remain.x; startCY = remain.y;
-      startTx = tx; startTy = ty;
-      return;
-    }
-    if (pointers.size > 0) return;
-    if (scale > 1 && scale < 1.15) resetZoom();
-    if (moved){
-      if (swiping && scale === 1){
-        const dx = (e.clientX || startCX) - startCX;
-        if (Math.abs(dx) > 48) go(dx < 0 ? 1 : -1);
+    if (mode === "pinch"){
+      if (pointers.size < 2){
+        if (scale < 1.1) resetZoom(true);
+        mode = null;
+        gesture = null;
       }
       return;
     }
-    if (scale === 1) zoomAt(startCX, startCY);
-    else resetZoom();
+    if (!gesture){ mode = null; return; }
+    const dx = e.clientX - gesture.x, dy = e.clientY - gesture.y;
+    const moved = gesture.moved;
+    const zoomedNow = isZoomed();
+    stage.classList.remove("panning");
+    if (mode === "pan" || (zoomedNow && moved)){
+      mode = null;
+      gesture = null;
+      return;
+    }
+    if (!zoomedNow && moved && Math.abs(dx) > 48 && Math.abs(dx) > Math.abs(dy) * 1.2){
+      go(dx < 0 ? 1 : -1);
+      mode = null;
+      gesture = null;
+      return;
+    }
+    if (!moved){
+      if (zoomedNow){
+        resetZoom(true);
+      } else {
+        useFullRes();
+        zoomTo(Z_TAP, e.clientX, e.clientY, true);
+      }
+    }
+    mode = null;
+    gesture = null;
   }
-  photoWrap.addEventListener("pointerup", endPointer);
-  photoWrap.addEventListener("pointercancel", endPointer);
-  photoWrap.addEventListener("lostpointercapture", (e) => {
-    if (pointers.has(e.pointerId)) endPointer(e);
-  });
-  zoomReset.addEventListener("click", (e) => {
+
+  stage.addEventListener("pointerdown", onPointerDown);
+  stage.addEventListener("pointermove", onPointerMove);
+  stage.addEventListener("pointerup", onPointerUp);
+  stage.addEventListener("pointercancel", onPointerUp);
+  stage.addEventListener("contextmenu", (e) => { if (isZoomed()) e.preventDefault(); });
+  zoomClose.addEventListener("pointerdown", (e) => { e.stopPropagation(); });
+  zoomClose.addEventListener("click", (e) => {
+    e.preventDefault();
     e.stopPropagation();
-    resetZoom();
+    resetZoom(true);
   });
 
   document.addEventListener("keydown", (e) => {
+    if (isZoomed() && e.key === "Escape"){
+      resetZoom(true);
+      return;
+    }
     if (e.target === notes || e.target === dump) return;
-    if (e.key === "Escape"){ resetZoom(); return; }
-    if (scale > 1) return;
     if (e.key === "ArrowLeft") go(-1);
     if (e.key === "ArrowRight") go(1);
   });
