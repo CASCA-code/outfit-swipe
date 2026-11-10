@@ -20,9 +20,17 @@
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font-family:var(--sans);overscroll-behavior:none}
 body{display:flex;flex-direction:column;min-height:100dvh;height:100dvh;padding:calc(var(--sat) + 8px) 0 calc(var(--sab) + 10px);overflow:hidden}
-header{display:flex;align-items:center;gap:12px;padding:4px 16px 8px}
+header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
 .brand{font-family:var(--serif);font-size:22px;font-weight:600;letter-spacing:.01em;text-wrap:balance;flex:1}
 .count{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums;letter-spacing:.06em}
+.tally{padding:0 16px 8px;font-size:11px;line-height:1.45;color:var(--muted);text-wrap:pretty}
+.tally p{margin:0 0 2px}
+.tally b{color:var(--ink);font-weight:600}
+.item-meta{display:flex;align-items:center;flex-wrap:wrap;gap:8px 10px;padding:8px 16px 0;min-height:24px}
+.item-brand{font:600 14px/1.2 var(--sans);color:var(--ink)}
+.item-niche{font-size:12px;color:var(--muted)}
+.badge-falta{display:inline-flex;align-items:center;height:22px;padding:0 9px;border-radius:999px;background:#EFE6DC;color:var(--rec);font:600 11px/1 var(--sans);letter-spacing:.04em}
+.badge-falta[hidden],.item-brand[hidden],.item-niche[hidden]{display:none !important}
 .export{height:44px;padding:0 14px;border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:12px;font:600 14px var(--sans);cursor:pointer}
 .export:hover,.export:focus-visible{border-color:var(--navy);outline:2px solid var(--navy);outline-offset:2px}
 .export:active{transform:scale(.97)}
@@ -70,8 +78,14 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 8px}
   <div class="count" id="count">0/0</div>
   <button type="button" class="export" id="export" aria-label="Exportar notas">Exportar</button>
 </header>
+<div class="tally" id="tally" hidden></div>
 <div class="stage" id="stage" aria-live="polite">
   <img id="photo" alt="">
+</div>
+<div class="item-meta" id="itemMeta">
+  <span class="item-brand" id="itemBrand"></span>
+  <span class="badge-falta" id="faltaMarca" hidden>falta marca</span>
+  <span class="item-niche" id="itemNiche"></span>
 </div>
 <div class="nav">
   <button type="button" id="prev" aria-label="Anterior">
@@ -104,9 +118,11 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 8px}
     "name": "adidas BW Army brown",
     "category": "shoes",
     "subcategory": "sneakers",
+    "niche": "shoes",
     "color": "brown",
     "brand": "adidas",
     "model": "BW Army",
+    "falta_marca": false,
     "chips": [],
     "notes": "",
     "seasons": [],
@@ -115,14 +131,16 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 8px}
   {
     "id": "shoes-oncloud-white",
     "src": "img/shoes-oncloud-white.jpg",
-    "name": "On Cloud 5 undyed-white / white",
+    "name": "On THE ROGER Advantage white",
     "category": "shoes",
     "subcategory": "sneakers",
-    "color": "undyed-white / white",
+    "niche": "shoes",
+    "color": "white",
     "brand": "On",
-    "model": "Cloud 5",
+    "model": "THE ROGER Advantage",
+    "notes": "No me late tanto. Muy casuales, se ven más jóvenes / menos formales; igual están bien. Normalmente no para la escuela.",
+    "falta_marca": false,
     "chips": [],
-    "notes": "",
     "seasons": [],
     "source_file": "/workspace/proyectos/outfits/wardrobe/clean/shoes-oncloud-white.png"
   },
@@ -132,8 +150,10 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 8px}
     "name": "Uniqlo dress shirt light blue",
     "category": "top",
     "subcategory": "dress-shirt",
+    "niche": "camisa botones",
     "color": "light blue",
     "brand": "Uniqlo",
+    "falta_marca": false,
     "chips": [],
     "notes": "",
     "seasons": [],
@@ -145,7 +165,9 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 8px}
     "name": "button up navy",
     "category": "top",
     "subcategory": "button-up",
+    "niche": "camisa botones",
     "color": "navy",
+    "falta_marca": true,
     "brand": "",
     "chips": [],
     "notes": "",
@@ -158,7 +180,9 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 8px}
     "name": "polo black",
     "category": "top",
     "subcategory": "polo",
+    "niche": "polo knit",
     "color": "black",
+    "falta_marca": true,
     "brand": "",
     "chips": [],
     "notes": "",
@@ -171,7 +195,9 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 8px}
     "name": "knit polo navy",
     "category": "top",
     "subcategory": "knit-polo",
+    "niche": "polo knit",
     "color": "navy",
+    "falta_marca": true,
     "brand": "",
     "chips": [],
     "notes": "",
@@ -184,7 +210,9 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 8px}
     "name": "knit polo black",
     "category": "top",
     "subcategory": "knit-polo",
+    "niche": "polo knit",
     "color": "black",
+    "falta_marca": true,
     "brand": "",
     "chips": [],
     "notes": "",
@@ -197,7 +225,9 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 8px}
     "name": "polo navy",
     "category": "top",
     "subcategory": "polo",
+    "niche": "polo jersey",
     "color": "navy",
+    "falta_marca": true,
     "brand": "",
     "chips": [],
     "notes": "",
@@ -210,8 +240,10 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 8px}
     "name": "Massimo Dutti knit polo olive",
     "category": "top",
     "subcategory": "knit-polo",
+    "niche": "polo knit",
     "color": "olive",
     "brand": "Massimo Dutti",
+    "falta_marca": false,
     "chips": [],
     "notes": "",
     "seasons": [],
@@ -223,7 +255,9 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 8px}
     "name": "button up white",
     "category": "top",
     "subcategory": "button-up",
+    "niche": "camisa botones",
     "color": "white",
+    "falta_marca": true,
     "brand": "",
     "chips": [],
     "notes": "",
@@ -236,12 +270,29 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 8px}
     "name": "Polo Ralph Lauren harrington navy",
     "category": "outerwear",
     "subcategory": "harrington",
+    "niche": "chaqueta",
     "color": "navy",
     "brand": "Polo Ralph Lauren",
+    "falta_marca": false,
     "chips": [],
     "notes": "",
     "seasons": [],
     "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1687.jpg"
+  },
+  {
+    "id": "IMG_1688",
+    "src": "img/IMG_1688.jpg",
+    "name": "dress shirt white",
+    "category": "top",
+    "subcategory": "dress-shirt",
+    "niche": "camisa botones",
+    "color": "white",
+    "falta_marca": true,
+    "brand": "",
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1688.jpg"
   },
   {
     "id": "IMG_1689",
@@ -249,8 +300,10 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 8px}
     "name": "Massimo Dutti button up rust brown",
     "category": "top",
     "subcategory": "button-up",
+    "niche": "camisa botones",
     "color": "rust brown",
     "brand": "Massimo Dutti",
+    "falta_marca": false,
     "chips": [],
     "notes": "",
     "seasons": [],
@@ -262,8 +315,10 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 8px}
     "name": "Uniqlo dress shirt pale grey-white",
     "category": "top",
     "subcategory": "dress-shirt",
+    "niche": "camisa botones",
     "color": "pale grey-white",
     "brand": "Uniqlo",
+    "falta_marca": false,
     "chips": [],
     "notes": "",
     "seasons": [],
@@ -275,7 +330,9 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 8px}
     "name": "knit polo taupe",
     "category": "top",
     "subcategory": "knit-polo",
+    "niche": "polo knit",
     "color": "taupe",
+    "falta_marca": true,
     "brand": "",
     "chips": [],
     "notes": "",
@@ -288,7 +345,9 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 8px}
     "name": "polo heather taupe",
     "category": "top",
     "subcategory": "polo",
+    "niche": "polo jersey",
     "color": "heather taupe",
+    "falta_marca": true,
     "brand": "",
     "chips": [],
     "notes": "",
@@ -301,8 +360,10 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 8px}
     "name": "Polo Ralph Lauren quarter zip navy",
     "category": "top",
     "subcategory": "quarter-zip",
+    "niche": "quarter-zip",
     "color": "navy",
     "brand": "Polo Ralph Lauren",
+    "falta_marca": false,
     "chips": [],
     "notes": "",
     "seasons": [],
@@ -314,8 +375,10 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 8px}
     "name": "Nautica sweater heather grey",
     "category": "top",
     "subcategory": "sweater",
+    "niche": "sweater",
     "color": "heather grey",
     "brand": "Nautica",
+    "falta_marca": false,
     "chips": [],
     "notes": "",
     "seasons": [],
@@ -327,7 +390,9 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 8px}
     "name": "hoodie heather grey",
     "category": "top",
     "subcategory": "hoodie",
+    "niche": "hoodie",
     "color": "heather grey",
+    "falta_marca": true,
     "brand": "",
     "chips": [],
     "notes": "",
@@ -340,12 +405,945 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 8px}
     "name": "button up light blue",
     "category": "top",
     "subcategory": "button-up",
+    "niche": "camisa botones",
     "color": "light blue",
+    "notes": "Lino azul claro. Muy suave, poca estructura. Casi siempre me subo las mangas.",
+    "material": "linen",
+    "falta_marca": true,
+    "brand": "",
+    "chips": [],
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1696.jpg"
+  },
+  {
+    "id": "IMG_1697",
+    "src": "img/IMG_1697.jpg",
+    "name": "button up light blue",
+    "category": "top",
+    "subcategory": "button-up",
+    "niche": "camisa botones",
+    "color": "light blue",
+    "falta_marca": true,
     "brand": "",
     "chips": [],
     "notes": "",
     "seasons": [],
-    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1696.jpg"
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1697.jpg"
+  },
+  {
+    "id": "IMG_1698",
+    "src": "img/IMG_1698.jpg",
+    "name": "button up charcoal",
+    "category": "top",
+    "subcategory": "button-up",
+    "niche": "camisa botones",
+    "color": "charcoal",
+    "falta_marca": true,
+    "brand": "",
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1698.jpg"
+  },
+  {
+    "id": "IMG_1699",
+    "src": "img/IMG_1699.jpg",
+    "name": "button up pale grey",
+    "category": "top",
+    "subcategory": "button-up",
+    "niche": "camisa botones",
+    "color": "pale grey",
+    "falta_marca": true,
+    "brand": "",
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1699.jpg"
+  },
+  {
+    "id": "IMG_1700",
+    "src": "img/IMG_1700.jpg",
+    "name": "Polo Ralph Lauren quarter zip red",
+    "category": "top",
+    "subcategory": "quarter-zip",
+    "niche": "quarter-zip",
+    "color": "red",
+    "brand": "Polo Ralph Lauren",
+    "falta_marca": false,
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1700.jpg"
+  },
+  {
+    "id": "IMG_1701",
+    "src": "img/IMG_1701.jpg",
+    "name": "dress shirt light grey",
+    "category": "top",
+    "subcategory": "dress-shirt",
+    "niche": "camisa botones",
+    "color": "light grey",
+    "falta_marca": true,
+    "brand": "",
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1701.jpg"
+  },
+  {
+    "id": "IMG_1702",
+    "src": "img/IMG_1702.jpg",
+    "name": "button up light grey",
+    "category": "top",
+    "subcategory": "button-up",
+    "niche": "camisa botones",
+    "color": "light grey",
+    "falta_marca": true,
+    "brand": "",
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1702.jpg"
+  },
+  {
+    "id": "IMG_1703",
+    "src": "img/IMG_1703.jpg",
+    "name": "button up light grey",
+    "category": "top",
+    "subcategory": "button-up",
+    "niche": "camisa botones",
+    "color": "light grey",
+    "falta_marca": true,
+    "brand": "",
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1703.jpg"
+  },
+  {
+    "id": "IMG_1704",
+    "src": "img/IMG_1704.jpg",
+    "name": "button up navy",
+    "category": "top",
+    "subcategory": "button-up",
+    "niche": "camisa botones",
+    "color": "navy",
+    "falta_marca": true,
+    "brand": "",
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1704.jpg"
+  },
+  {
+    "id": "IMG_1705",
+    "src": "img/IMG_1705.jpg",
+    "name": "button up light grey",
+    "category": "top",
+    "subcategory": "button-up",
+    "niche": "camisa botones",
+    "color": "light grey",
+    "falta_marca": true,
+    "brand": "",
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1705.jpg"
+  },
+  {
+    "id": "IMG_1706",
+    "src": "img/IMG_1706.jpg",
+    "name": "dress shirt white",
+    "category": "top",
+    "subcategory": "dress-shirt",
+    "niche": "camisa botones",
+    "color": "white",
+    "falta_marca": true,
+    "brand": "",
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1706.jpg"
+  },
+  {
+    "id": "IMG_1707",
+    "src": "img/IMG_1707.jpg",
+    "name": "dress shirt navy",
+    "category": "top",
+    "subcategory": "dress-shirt",
+    "niche": "camisa botones",
+    "color": "navy",
+    "falta_marca": true,
+    "brand": "",
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1707.jpg"
+  },
+  {
+    "id": "IMG_1708",
+    "src": "img/IMG_1708.jpg",
+    "name": "button up grey",
+    "category": "top",
+    "subcategory": "button-up",
+    "niche": "camisa botones",
+    "color": "grey",
+    "falta_marca": true,
+    "brand": "",
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1708.jpg"
+  },
+  {
+    "id": "IMG_1709",
+    "src": "img/IMG_1709.jpg",
+    "name": "button up beige",
+    "category": "top",
+    "subcategory": "button-up",
+    "niche": "camisa botones",
+    "color": "beige",
+    "falta_marca": true,
+    "brand": "",
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1709.jpg"
+  },
+  {
+    "id": "IMG_1710",
+    "src": "img/IMG_1710.jpg",
+    "name": "Polo Ralph Lauren oxford pale yellow",
+    "category": "top",
+    "subcategory": "oxford",
+    "niche": "camisa botones",
+    "color": "pale yellow",
+    "brand": "Polo Ralph Lauren",
+    "falta_marca": false,
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1710.jpg"
+  },
+  {
+    "id": "IMG_1711",
+    "src": "img/IMG_1711.jpg",
+    "name": "button up burgundy",
+    "category": "top",
+    "subcategory": "button-up",
+    "niche": "camisa botones",
+    "color": "burgundy",
+    "falta_marca": true,
+    "brand": "",
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1711.jpg"
+  },
+  {
+    "id": "IMG_1712",
+    "src": "img/IMG_1712.jpg",
+    "name": "button up khaki",
+    "category": "top",
+    "subcategory": "button-up",
+    "niche": "camisa botones",
+    "color": "khaki",
+    "falta_marca": true,
+    "brand": "",
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1712.jpg"
+  },
+  {
+    "id": "IMG_1713",
+    "src": "img/IMG_1713.jpg",
+    "name": "button up sage",
+    "category": "top",
+    "subcategory": "button-up",
+    "niche": "camisa botones",
+    "color": "sage",
+    "falta_marca": true,
+    "brand": "",
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1713.jpg"
+  },
+  {
+    "id": "IMG_1714",
+    "src": "img/IMG_1714.jpg",
+    "name": "Polo Ralph Lauren oxford light blue",
+    "category": "top",
+    "subcategory": "oxford",
+    "niche": "camisa botones",
+    "color": "light blue",
+    "brand": "Polo Ralph Lauren",
+    "falta_marca": false,
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1714.jpg"
+  },
+  {
+    "id": "IMG_1715",
+    "src": "img/IMG_1715.jpg",
+    "name": "button up light blue",
+    "category": "top",
+    "subcategory": "button-up",
+    "niche": "camisa botones",
+    "color": "light blue",
+    "falta_marca": true,
+    "brand": "",
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1715.jpg"
+  },
+  {
+    "id": "IMG_1716",
+    "src": "img/IMG_1716.jpg",
+    "name": "button up light blue",
+    "category": "top",
+    "subcategory": "button-up",
+    "niche": "camisa botones",
+    "color": "light blue",
+    "falta_marca": true,
+    "brand": "",
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1716.jpg"
+  },
+  {
+    "id": "IMG_1717",
+    "src": "img/IMG_1717.jpg",
+    "name": "button up white",
+    "category": "top",
+    "subcategory": "button-up",
+    "niche": "camisa botones",
+    "color": "white",
+    "falta_marca": true,
+    "brand": "",
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1717.jpg"
+  },
+  {
+    "id": "IMG_1718",
+    "src": "img/IMG_1718.jpg",
+    "name": "button up off-white",
+    "category": "top",
+    "subcategory": "button-up",
+    "niche": "camisa botones",
+    "color": "off-white",
+    "falta_marca": true,
+    "brand": "",
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1718.jpg"
+  },
+  {
+    "id": "IMG_1719",
+    "src": "img/IMG_1719.jpg",
+    "name": "Polo Ralph Lauren oxford white",
+    "category": "top",
+    "subcategory": "oxford",
+    "niche": "camisa botones",
+    "color": "white",
+    "brand": "Polo Ralph Lauren",
+    "falta_marca": false,
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1719.jpg"
+  },
+  {
+    "id": "IMG_1720",
+    "src": "img/IMG_1720.jpg",
+    "name": "button up white",
+    "category": "top",
+    "subcategory": "button-up",
+    "niche": "camisa botones",
+    "color": "white",
+    "falta_marca": true,
+    "brand": "",
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1720.jpg"
+  },
+  {
+    "id": "IMG_1721",
+    "src": "img/IMG_1721.jpg",
+    "name": "button up white",
+    "category": "top",
+    "subcategory": "button-up",
+    "niche": "camisa botones",
+    "color": "white",
+    "falta_marca": true,
+    "brand": "",
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1721.jpg"
+  },
+  {
+    "id": "IMG_1722",
+    "src": "img/IMG_1722.jpg",
+    "name": "Polo Ralph Lauren oxford white",
+    "category": "top",
+    "subcategory": "oxford",
+    "niche": "camisa botones",
+    "color": "white",
+    "brand": "Polo Ralph Lauren",
+    "falta_marca": false,
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1722.jpg"
+  },
+  {
+    "id": "IMG_1723",
+    "src": "img/IMG_1723.jpg",
+    "name": "button up navy",
+    "category": "top",
+    "subcategory": "button-up",
+    "niche": "camisa botones",
+    "color": "navy",
+    "falta_marca": true,
+    "brand": "",
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1723.jpg"
+  },
+  {
+    "id": "IMG_1724",
+    "src": "img/IMG_1724.jpg",
+    "name": "button up black",
+    "category": "top",
+    "subcategory": "button-up",
+    "niche": "camisa botones",
+    "color": "black",
+    "falta_marca": true,
+    "brand": "",
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1724.jpg"
+  },
+  {
+    "id": "IMG_1725",
+    "src": "img/IMG_1725.jpg",
+    "name": "hoodie olive",
+    "category": "top",
+    "subcategory": "hoodie",
+    "niche": "hoodie",
+    "color": "olive",
+    "falta_marca": true,
+    "brand": "",
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1725.jpg"
+  },
+  {
+    "id": "IMG_1726",
+    "src": "img/IMG_1726.jpg",
+    "name": "Polo Ralph Lauren knit polo navy",
+    "category": "top",
+    "subcategory": "knit-polo",
+    "niche": "polo knit",
+    "color": "navy",
+    "brand": "Polo Ralph Lauren",
+    "falta_marca": false,
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1726.jpg"
+  },
+  {
+    "id": "IMG_1727",
+    "src": "img/IMG_1727.jpg",
+    "name": "Polo Ralph Lauren sweater navy",
+    "category": "top",
+    "subcategory": "sweater",
+    "niche": "sweater",
+    "color": "navy",
+    "brand": "Polo Ralph Lauren",
+    "falta_marca": false,
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1727.jpg"
+  },
+  {
+    "id": "IMG_1728",
+    "src": "img/IMG_1728.jpg",
+    "name": "Polo Ralph Lauren sweater navy",
+    "category": "top",
+    "subcategory": "sweater",
+    "niche": "sweater",
+    "color": "navy",
+    "brand": "Polo Ralph Lauren",
+    "falta_marca": false,
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1728.jpg"
+  },
+  {
+    "id": "IMG_1730",
+    "src": "img/IMG_1730.jpg",
+    "name": "button up light blue",
+    "category": "top",
+    "subcategory": "button-up",
+    "niche": "camisa botones",
+    "color": "light blue",
+    "falta_marca": true,
+    "brand": "",
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1730.jpg"
+  },
+  {
+    "id": "IMG_1731",
+    "src": "img/IMG_1731.jpg",
+    "name": "St. Louis Cardinals jersey cream",
+    "category": "top",
+    "subcategory": "jersey",
+    "niche": "jersey",
+    "color": "cream",
+    "brand": "St. Louis Cardinals",
+    "falta_marca": false,
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1731.jpg"
+  },
+  {
+    "id": "IMG_1732",
+    "src": "img/IMG_1732.jpg",
+    "name": "Lacoste polo burgundy",
+    "category": "top",
+    "subcategory": "polo",
+    "niche": "polo jersey",
+    "color": "burgundy",
+    "brand": "Lacoste",
+    "falta_marca": false,
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1732.jpg"
+  },
+  {
+    "id": "IMG_1733",
+    "src": "img/IMG_1733.jpg",
+    "name": "Lacoste polo navy",
+    "category": "top",
+    "subcategory": "polo",
+    "niche": "polo jersey",
+    "color": "navy",
+    "brand": "Lacoste",
+    "falta_marca": false,
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1733.jpg"
+  },
+  {
+    "id": "IMG_1734",
+    "src": "img/IMG_1734.jpg",
+    "name": "Polo Ralph Lauren button up blue",
+    "category": "top",
+    "subcategory": "button-up",
+    "niche": "camisa botones",
+    "color": "blue",
+    "brand": "Polo Ralph Lauren",
+    "falta_marca": false,
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1734.jpg"
+  },
+  {
+    "id": "IMG_1735",
+    "src": "img/IMG_1735.jpg",
+    "name": "henley dark brown",
+    "category": "top",
+    "subcategory": "henley",
+    "niche": "camisa botones",
+    "color": "dark brown",
+    "falta_marca": true,
+    "brand": "",
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1735.jpg"
+  },
+  {
+    "id": "IMG_1736",
+    "src": "img/IMG_1736.jpg",
+    "name": "button up sand",
+    "category": "top",
+    "subcategory": "button-up",
+    "niche": "camisa botones",
+    "color": "sand",
+    "falta_marca": true,
+    "brand": "",
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1736.jpg"
+  },
+  {
+    "id": "IMG_1737",
+    "src": "img/IMG_1737.jpg",
+    "name": "camp shirt tan",
+    "category": "top",
+    "subcategory": "camp-shirt",
+    "niche": "camisa botones",
+    "color": "tan",
+    "falta_marca": true,
+    "brand": "",
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1737.jpg"
+  },
+  {
+    "id": "IMG_1738",
+    "src": "img/IMG_1738.jpg",
+    "name": "button up blue",
+    "category": "top",
+    "subcategory": "button-up",
+    "niche": "camisa botones",
+    "color": "blue",
+    "falta_marca": true,
+    "brand": "",
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1738.jpg"
+  },
+  {
+    "id": "IMG_1739",
+    "src": "img/IMG_1739.jpg",
+    "name": "button up olive",
+    "category": "top",
+    "subcategory": "button-up",
+    "niche": "camisa botones",
+    "color": "olive",
+    "falta_marca": true,
+    "brand": "",
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1739.jpg"
+  },
+  {
+    "id": "IMG_1740",
+    "src": "img/IMG_1740.jpg",
+    "name": "button up dark brown",
+    "category": "top",
+    "subcategory": "button-up",
+    "niche": "camisa botones",
+    "color": "dark brown",
+    "falta_marca": true,
+    "brand": "",
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1740.jpg"
+  },
+  {
+    "id": "IMG_1741",
+    "src": "img/IMG_1741.jpg",
+    "name": "button up blue-grey",
+    "category": "top",
+    "subcategory": "button-up",
+    "niche": "camisa botones",
+    "color": "blue-grey",
+    "falta_marca": true,
+    "brand": "",
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1741.jpg"
+  },
+  {
+    "id": "IMG_1742",
+    "src": "img/IMG_1742.jpg",
+    "name": "Lacoste polo green",
+    "category": "top",
+    "subcategory": "polo",
+    "niche": "polo jersey",
+    "color": "green",
+    "brand": "Lacoste",
+    "falta_marca": false,
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1742.jpg"
+  },
+  {
+    "id": "IMG_1743",
+    "src": "img/IMG_1743.jpg",
+    "name": "Pull&Bear camp shirt olive",
+    "category": "top",
+    "subcategory": "camp-shirt",
+    "niche": "camisa botones",
+    "color": "olive",
+    "brand": "Pull&Bear",
+    "falta_marca": false,
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1743.jpg"
+  },
+  {
+    "id": "IMG_1744",
+    "src": "img/IMG_1744.jpg",
+    "name": "camp shirt sage",
+    "category": "top",
+    "subcategory": "camp-shirt",
+    "niche": "camisa botones",
+    "color": "sage",
+    "falta_marca": true,
+    "brand": "",
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1744.jpg"
+  },
+  {
+    "id": "IMG_1745",
+    "src": "img/IMG_1745.jpg",
+    "name": "button up white",
+    "category": "top",
+    "subcategory": "button-up",
+    "niche": "camisa botones",
+    "color": "white",
+    "falta_marca": true,
+    "brand": "",
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1745.jpg"
+  },
+  {
+    "id": "IMG_1746",
+    "src": "img/IMG_1746.jpg",
+    "name": "polo navy",
+    "category": "top",
+    "subcategory": "polo",
+    "niche": "polo jersey",
+    "color": "navy",
+    "falta_marca": true,
+    "brand": "",
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1746.jpg"
+  },
+  {
+    "id": "IMG_1747",
+    "src": "img/IMG_1747.jpg",
+    "name": "jeans blue",
+    "category": "bottom",
+    "subcategory": "jeans",
+    "niche": "jeans",
+    "color": "blue",
+    "falta_marca": true,
+    "brand": "",
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1747.jpg"
+  },
+  {
+    "id": "IMG_1748",
+    "src": "img/IMG_1748.jpg",
+    "name": "chinos khaki",
+    "category": "bottom",
+    "subcategory": "chinos",
+    "niche": "pantalón",
+    "color": "khaki",
+    "falta_marca": true,
+    "brand": "",
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1748.jpg"
+  },
+  {
+    "id": "IMG_1749",
+    "src": "img/IMG_1749.jpg",
+    "name": "chinos cream",
+    "category": "bottom",
+    "subcategory": "chinos",
+    "niche": "pantalón",
+    "color": "cream",
+    "falta_marca": true,
+    "brand": "",
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1749.jpg"
+  },
+  {
+    "id": "IMG_1750",
+    "src": "img/IMG_1750.jpg",
+    "name": "jeans dark grey",
+    "category": "bottom",
+    "subcategory": "jeans",
+    "niche": "jeans",
+    "color": "dark grey",
+    "falta_marca": true,
+    "brand": "",
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1750.jpg"
+  },
+  {
+    "id": "IMG_1751",
+    "src": "img/IMG_1751.jpg",
+    "name": "trousers stone",
+    "category": "bottom",
+    "subcategory": "trousers",
+    "niche": "pantalón",
+    "color": "stone",
+    "falta_marca": true,
+    "brand": "",
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1751.jpg"
+  },
+  {
+    "id": "IMG_1752",
+    "src": "img/IMG_1752.jpg",
+    "name": "jeans light blue",
+    "category": "bottom",
+    "subcategory": "jeans",
+    "niche": "jeans",
+    "color": "light blue",
+    "falta_marca": true,
+    "brand": "",
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1752.jpg"
+  },
+  {
+    "id": "IMG_1753",
+    "src": "img/IMG_1753.jpg",
+    "name": "trousers khaki-olive",
+    "category": "bottom",
+    "subcategory": "trousers",
+    "niche": "pantalón",
+    "color": "khaki-olive",
+    "falta_marca": true,
+    "brand": "",
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1753.jpg"
+  },
+  {
+    "id": "IMG_1754",
+    "src": "img/IMG_1754.jpg",
+    "name": "chinos beige",
+    "category": "bottom",
+    "subcategory": "chinos",
+    "niche": "pantalón",
+    "color": "beige",
+    "falta_marca": true,
+    "brand": "",
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1754.jpg"
+  },
+  {
+    "id": "IMG_1755",
+    "src": "img/IMG_1755.jpg",
+    "name": "trousers dark brown",
+    "category": "bottom",
+    "subcategory": "trousers",
+    "niche": "pantalón",
+    "color": "dark brown",
+    "falta_marca": true,
+    "brand": "",
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1755.jpg"
+  },
+  {
+    "id": "IMG_1756",
+    "src": "img/IMG_1756.jpg",
+    "name": "trousers charcoal",
+    "category": "bottom",
+    "subcategory": "trousers",
+    "niche": "pantalón",
+    "color": "charcoal",
+    "falta_marca": true,
+    "brand": "",
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1756.jpg"
+  },
+  {
+    "id": "IMG_1757",
+    "src": "img/IMG_1757.jpg",
+    "name": "t shirt black",
+    "category": "top",
+    "subcategory": "t-shirt",
+    "niche": "playera",
+    "color": "black",
+    "falta_marca": true,
+    "brand": "",
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1757.jpg"
+  },
+  {
+    "id": "IMG_1758",
+    "src": "img/IMG_1758.jpg",
+    "name": "Polo Ralph Lauren t shirt black",
+    "category": "top",
+    "subcategory": "t-shirt",
+    "niche": "playera",
+    "color": "black",
+    "brand": "Polo Ralph Lauren",
+    "falta_marca": false,
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1758.jpg"
+  },
+  {
+    "id": "IMG_1759",
+    "src": "img/IMG_1759.jpg",
+    "name": "trousers grey",
+    "category": "bottom",
+    "subcategory": "trousers",
+    "niche": "pantalón",
+    "color": "grey",
+    "falta_marca": true,
+    "brand": "",
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1759.jpg"
   }
 ]
 </script>
@@ -382,6 +1380,45 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 8px}
     try { localStorage.setItem(KEY, JSON.stringify(store)); }
     catch {}
   }
+  const itemBrand = $("itemBrand"), faltaEl = $("faltaMarca"), itemNiche = $("itemNiche");
+  const tallyEl = $("tally");
+
+  function isFalta(it){
+    if (!it) return true;
+    if (it.falta_marca === true) return true;
+    const b = (it.brand || "").toString().trim();
+    if (it.falta_marca === false && b) return false;
+    return !b;
+  }
+  function fmtTally(map, special){
+    return Object.keys(map).sort((a,b) => {
+      if (a === special) return 1;
+      if (b === special) return -1;
+      if (map[b] !== map[a]) return map[b] - map[a];
+      return a.localeCompare(b, "es");
+    }).map((k) => k + " " + map[k]).join(" · ");
+  }
+  function renderTally(){
+    const niches = {}, brands = {};
+    for (const it of items){
+      const n = (it.niche || it.category || "sin categoría").toString().trim() || "sin categoría";
+      niches[n] = (niches[n] || 0) + 1;
+      const b = isFalta(it) ? "falta marca" : (it.brand || "").toString().trim();
+      brands[b] = (brands[b] || 0) + 1;
+    }
+    tallyEl.replaceChildren();
+    if (!items.length){ tallyEl.hidden = true; return; }
+    const cat = document.createElement("p");
+    const catB = document.createElement("b");
+    catB.textContent = "Categorías: ";
+    cat.append(catB, document.createTextNode(fmtTally(niches)));
+    const br = document.createElement("p");
+    const brB = document.createElement("b");
+    brB.textContent = "Marcas: ";
+    br.append(brB, document.createTextNode(fmtTally(brands, "falta marca")));
+    tallyEl.append(cat, br);
+    tallyEl.hidden = false;
+  }
   function render(){
     const n = items.length;
     const it = items[i];
@@ -392,11 +1429,34 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 8px}
       photo.removeAttribute("src");
       photo.alt = "";
       notes.value = "";
+      itemBrand.hidden = true;
+      itemBrand.textContent = "";
+      faltaEl.hidden = true;
+      itemNiche.hidden = true;
+      itemNiche.textContent = "";
       return;
     }
     photo.src = it.src;
     photo.alt = it.name || it.id || "prenda";
     notes.value = (store[it.id] && store[it.id].notes) || it.notes || "";
+    const falta = isFalta(it);
+    if (falta){
+      itemBrand.hidden = true;
+      itemBrand.textContent = "";
+      faltaEl.hidden = false;
+    } else {
+      itemBrand.hidden = false;
+      itemBrand.textContent = (it.brand || "").toString().trim();
+      faltaEl.hidden = true;
+    }
+    const niche = (it.niche || "").toString().trim();
+    if (niche){
+      itemNiche.hidden = false;
+      itemNiche.textContent = niche;
+    } else {
+      itemNiche.hidden = true;
+      itemNiche.textContent = "";
+    }
   }
   function go(delta){
     if (listening || wantListen){
@@ -585,6 +1645,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 8px}
   function boot(list){
     items = Array.isArray(list) ? list.filter((it) => it && it.id && it.src) : [];
     i = 0;
+    renderTally();
     render();
   }
 
