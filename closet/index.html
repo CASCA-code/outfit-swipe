@@ -34,8 +34,17 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
 .export{height:44px;padding:0 14px;border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:12px;font:600 14px var(--sans);cursor:pointer}
 .export:hover,.export:focus-visible{border-color:var(--navy);outline:2px solid var(--navy);outline-offset:2px}
 .export:active{transform:scale(.97)}
-.stage{flex:1;min-height:0;position:relative;margin:0 12px;border-radius:18px;background:var(--bg);overflow:hidden;border:1px solid var(--line);touch-action:pan-y}
+.stage{flex:1;min-height:0;position:relative;margin:0 12px;border-radius:18px;background:var(--bg);overflow:hidden;border:1px solid var(--line);touch-action:pan-y;cursor:zoom-in}
 .stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center;background:var(--bg);-webkit-user-drag:none;user-select:none;pointer-events:none}
+.lightbox{position:fixed;inset:0;z-index:30;background:rgba(28,25,21,.92);display:flex;align-items:center;justify-content:center;touch-action:none;-webkit-user-select:none;user-select:none}
+.lightbox[hidden]{display:none !important}
+.lightbox-stage{position:absolute;inset:0;overflow:hidden;touch-action:none;display:flex;align-items:center;justify-content:center}
+.lightbox-stage img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;transform-origin:center center;will-change:transform;-webkit-user-drag:none;user-select:none;pointer-events:auto}
+.lightbox-stage img.lb-animate{transition:transform .2s ease}
+.lightbox-close{position:absolute;top:calc(var(--sat) + 10px);right:max(12px, env(safe-area-inset-right, 0px));z-index:2;width:44px;height:44px;border:0;border-radius:50%;background:var(--paper);color:var(--ink);display:grid;place-items:center;cursor:pointer;box-shadow:0 1px 0 rgba(28,25,21,.06),0 8px 20px -8px rgba(28,25,21,.45)}
+.lightbox-close:hover,.lightbox-close:focus-visible{color:var(--navy);outline:2px solid var(--paper);outline-offset:2px}
+.lightbox-close:active{transform:scale(.92)}
+.lightbox-close svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .stage.swiping img{transition:none}
 .nav{display:flex;align-items:center;justify-content:center;gap:16px;padding:12px 16px 4px}
 .nav button{width:52px;height:52px;border:0;border-radius:50%;background:var(--paper);color:var(--ink);display:grid;place-items:center;cursor:pointer;box-shadow:0 1px 0 rgba(28,25,21,.06),0 6px 16px -8px rgba(28,25,21,.3);transition:transform .15s ease}
@@ -68,7 +77,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
 .toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
 @media (min-width:700px){body{max-width:460px;margin:0 auto}}
 @media (prefers-reduced-motion:reduce){
-  .mic.on svg,.toast,.nav button,.export{animation:none;transition:none}
+  .mic.on svg,.toast,.nav button,.export,.lightbox-close,.lightbox-stage img.lb-animate{animation:none;transition:none}
 }
 </style>
 </head>
@@ -79,7 +88,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   <button type="button" class="export" id="export" aria-label="Exportar notas">Exportar</button>
 </header>
 <div class="tally" id="tally" hidden></div>
-<div class="stage" id="stage" aria-live="polite">
+<div class="stage" id="stage" aria-live="polite" tabindex="0" aria-label="Toca para agrandar, desliza para cambiar">
   <img id="photo" alt="">
 </div>
 <div class="item-meta" id="itemMeta">
@@ -109,12 +118,21 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
 </div>
 <textarea id="dump" readonly aria-label="JSON exportado"></textarea>
 <div class="toast" id="toast" role="status"></div>
+<div class="lightbox" id="lightbox" hidden role="dialog" aria-modal="true" aria-label="Foto en grande">
+  <button type="button" class="lightbox-close" id="lightboxClose" aria-label="Cerrar">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+  </button>
+  <div class="lightbox-stage" id="lightboxStage">
+    <img id="lightboxPhoto" alt="">
+  </div>
+</div>
 <!-- ITEMS_FALLBACK_START -->
 <script type="application/json" id="items-fallback">
 [
   {
     "id": "shoes-bw-army-brown",
     "src": "img/shoes-bw-army-brown.jpg",
+    "srcFull": "img-full/shoes-bw-army-brown.jpg",
     "name": "adidas BW Army brown",
     "category": "shoes",
     "subcategory": "sneakers",
@@ -131,6 +149,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "shoes-oncloud-white",
     "src": "img/shoes-oncloud-white.jpg",
+    "srcFull": "img-full/shoes-oncloud-white.jpg",
     "name": "On THE ROGER Advantage white",
     "category": "shoes",
     "subcategory": "sneakers",
@@ -147,6 +166,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1679",
     "src": "img/IMG_1679.jpg",
+    "srcFull": "img-full/IMG_1679.jpg",
     "name": "Uniqlo dress shirt light blue",
     "category": "top",
     "subcategory": "dress-shirt",
@@ -162,6 +182,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1680",
     "src": "img/IMG_1680.jpg",
+    "srcFull": "img-full/IMG_1680.jpg",
     "name": "Giorgio Valentino button up navy",
     "category": "top",
     "subcategory": "button-up",
@@ -177,6 +198,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1681",
     "src": "img/IMG_1681.jpg",
+    "srcFull": "img-full/IMG_1681.jpg",
     "name": "polo black",
     "category": "top",
     "subcategory": "polo",
@@ -192,6 +214,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1682",
     "src": "img/IMG_1682.jpg",
+    "srcFull": "img-full/IMG_1682.jpg",
     "name": "Mango knit polo navy",
     "category": "top",
     "subcategory": "knit-polo",
@@ -207,6 +230,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1683",
     "src": "img/IMG_1683.jpg",
+    "srcFull": "img-full/IMG_1683.jpg",
     "name": "Massimo Dutti knit polo black",
     "category": "top",
     "subcategory": "knit-polo",
@@ -222,6 +246,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1684",
     "src": "img/IMG_1684.jpg",
+    "srcFull": "img-full/IMG_1684.jpg",
     "name": "Massimo Dutti polo navy",
     "category": "top",
     "subcategory": "polo",
@@ -237,6 +262,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1685",
     "src": "img/IMG_1685.jpg",
+    "srcFull": "img-full/IMG_1685.jpg",
     "name": "Massimo Dutti knit polo olive",
     "category": "top",
     "subcategory": "knit-polo",
@@ -252,6 +278,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1686",
     "src": "img/IMG_1686.jpg",
+    "srcFull": "img-full/IMG_1686.jpg",
     "name": "Massimo Dutti button up white",
     "category": "top",
     "subcategory": "button-up",
@@ -267,6 +294,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1687",
     "src": "img/IMG_1687.jpg",
+    "srcFull": "img-full/IMG_1687.jpg",
     "name": "Polo Ralph Lauren harrington navy",
     "category": "outerwear",
     "subcategory": "harrington",
@@ -282,6 +310,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1688",
     "src": "img/IMG_1688.jpg",
+    "srcFull": "img-full/IMG_1688.jpg",
     "name": "dress shirt white",
     "category": "top",
     "subcategory": "dress-shirt",
@@ -297,6 +326,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1689",
     "src": "img/IMG_1689.jpg",
+    "srcFull": "img-full/IMG_1689.jpg",
     "name": "Massimo Dutti button up rust brown",
     "category": "top",
     "subcategory": "button-up",
@@ -312,6 +342,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1690",
     "src": "img/IMG_1690.jpg",
+    "srcFull": "img-full/IMG_1690.jpg",
     "name": "Uniqlo dress shirt pale grey-white",
     "category": "top",
     "subcategory": "dress-shirt",
@@ -327,6 +358,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1691",
     "src": "img/IMG_1691.jpg",
+    "srcFull": "img-full/IMG_1691.jpg",
     "name": "Mango knit polo taupe",
     "category": "top",
     "subcategory": "knit-polo",
@@ -342,6 +374,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1692",
     "src": "img/IMG_1692.jpg",
+    "srcFull": "img-full/IMG_1692.jpg",
     "name": "Massimo Dutti polo heather taupe",
     "category": "top",
     "subcategory": "polo",
@@ -357,6 +390,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1693",
     "src": "img/IMG_1693.jpg",
+    "srcFull": "img-full/IMG_1693.jpg",
     "name": "Polo Ralph Lauren quarter zip navy",
     "category": "top",
     "subcategory": "quarter-zip",
@@ -372,6 +406,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1694",
     "src": "img/IMG_1694.jpg",
+    "srcFull": "img-full/IMG_1694.jpg",
     "name": "Nautica sweater heather grey",
     "category": "top",
     "subcategory": "sweater",
@@ -387,6 +422,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1695",
     "src": "img/IMG_1695.jpg",
+    "srcFull": "img-full/IMG_1695.jpg",
     "name": "Abercrombie & Fitch hoodie heather grey",
     "category": "top",
     "subcategory": "hoodie",
@@ -402,6 +438,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1696",
     "src": "img/IMG_1696.jpg",
+    "srcFull": "img-full/IMG_1696.jpg",
     "name": "button up light blue",
     "category": "top",
     "subcategory": "button-up",
@@ -418,6 +455,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1697",
     "src": "img/IMG_1697.jpg",
+    "srcFull": "img-full/IMG_1697.jpg",
     "name": "button up light blue",
     "category": "top",
     "subcategory": "button-up",
@@ -433,6 +471,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1698",
     "src": "img/IMG_1698.jpg",
+    "srcFull": "img-full/IMG_1698.jpg",
     "name": "button up charcoal",
     "category": "top",
     "subcategory": "button-up",
@@ -448,6 +487,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1699",
     "src": "img/IMG_1699.jpg",
+    "srcFull": "img-full/IMG_1699.jpg",
     "name": "button up pale grey",
     "category": "top",
     "subcategory": "button-up",
@@ -463,6 +503,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1700",
     "src": "img/IMG_1700.jpg",
+    "srcFull": "img-full/IMG_1700.jpg",
     "name": "Polo Ralph Lauren quarter zip red",
     "category": "top",
     "subcategory": "quarter-zip",
@@ -478,6 +519,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1701",
     "src": "img/IMG_1701.jpg",
+    "srcFull": "img-full/IMG_1701.jpg",
     "name": "dress shirt light grey",
     "category": "top",
     "subcategory": "dress-shirt",
@@ -493,6 +535,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1702",
     "src": "img/IMG_1702.jpg",
+    "srcFull": "img-full/IMG_1702.jpg",
     "name": "button up light grey",
     "category": "top",
     "subcategory": "button-up",
@@ -508,6 +551,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1703",
     "src": "img/IMG_1703.jpg",
+    "srcFull": "img-full/IMG_1703.jpg",
     "name": "button up light grey",
     "category": "top",
     "subcategory": "button-up",
@@ -523,6 +567,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1704",
     "src": "img/IMG_1704.jpg",
+    "srcFull": "img-full/IMG_1704.jpg",
     "name": "button up navy",
     "category": "top",
     "subcategory": "button-up",
@@ -538,6 +583,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1705",
     "src": "img/IMG_1705.jpg",
+    "srcFull": "img-full/IMG_1705.jpg",
     "name": "button up light grey",
     "category": "top",
     "subcategory": "button-up",
@@ -553,6 +599,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1706",
     "src": "img/IMG_1706.jpg",
+    "srcFull": "img-full/IMG_1706.jpg",
     "name": "dress shirt white",
     "category": "top",
     "subcategory": "dress-shirt",
@@ -568,6 +615,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1707",
     "src": "img/IMG_1707.jpg",
+    "srcFull": "img-full/IMG_1707.jpg",
     "name": "dress shirt navy",
     "category": "top",
     "subcategory": "dress-shirt",
@@ -583,6 +631,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1708",
     "src": "img/IMG_1708.jpg",
+    "srcFull": "img-full/IMG_1708.jpg",
     "name": "button up grey",
     "category": "top",
     "subcategory": "button-up",
@@ -598,6 +647,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1709",
     "src": "img/IMG_1709.jpg",
+    "srcFull": "img-full/IMG_1709.jpg",
     "name": "button up beige",
     "category": "top",
     "subcategory": "button-up",
@@ -613,6 +663,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1710",
     "src": "img/IMG_1710.jpg",
+    "srcFull": "img-full/IMG_1710.jpg",
     "name": "Polo Ralph Lauren oxford pale yellow",
     "category": "top",
     "subcategory": "oxford",
@@ -628,6 +679,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1711",
     "src": "img/IMG_1711.jpg",
+    "srcFull": "img-full/IMG_1711.jpg",
     "name": "button up burgundy",
     "category": "top",
     "subcategory": "button-up",
@@ -643,6 +695,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1712",
     "src": "img/IMG_1712.jpg",
+    "srcFull": "img-full/IMG_1712.jpg",
     "name": "button up khaki",
     "category": "top",
     "subcategory": "button-up",
@@ -658,6 +711,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1713",
     "src": "img/IMG_1713.jpg",
+    "srcFull": "img-full/IMG_1713.jpg",
     "name": "button up sage",
     "category": "top",
     "subcategory": "button-up",
@@ -673,6 +727,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1714",
     "src": "img/IMG_1714.jpg",
+    "srcFull": "img-full/IMG_1714.jpg",
     "name": "Polo Ralph Lauren oxford light blue",
     "category": "top",
     "subcategory": "oxford",
@@ -688,6 +743,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1715",
     "src": "img/IMG_1715.jpg",
+    "srcFull": "img-full/IMG_1715.jpg",
     "name": "button up light blue",
     "category": "top",
     "subcategory": "button-up",
@@ -703,6 +759,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1716",
     "src": "img/IMG_1716.jpg",
+    "srcFull": "img-full/IMG_1716.jpg",
     "name": "button up light blue",
     "category": "top",
     "subcategory": "button-up",
@@ -718,6 +775,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1717",
     "src": "img/IMG_1717.jpg",
+    "srcFull": "img-full/IMG_1717.jpg",
     "name": "button up white",
     "category": "top",
     "subcategory": "button-up",
@@ -733,6 +791,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1718",
     "src": "img/IMG_1718.jpg",
+    "srcFull": "img-full/IMG_1718.jpg",
     "name": "button up off-white",
     "category": "top",
     "subcategory": "button-up",
@@ -748,6 +807,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1719",
     "src": "img/IMG_1719.jpg",
+    "srcFull": "img-full/IMG_1719.jpg",
     "name": "Polo Ralph Lauren oxford white",
     "category": "top",
     "subcategory": "oxford",
@@ -763,6 +823,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1720",
     "src": "img/IMG_1720.jpg",
+    "srcFull": "img-full/IMG_1720.jpg",
     "name": "button up white",
     "category": "top",
     "subcategory": "button-up",
@@ -778,6 +839,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1721",
     "src": "img/IMG_1721.jpg",
+    "srcFull": "img-full/IMG_1721.jpg",
     "name": "button up white",
     "category": "top",
     "subcategory": "button-up",
@@ -793,6 +855,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1722",
     "src": "img/IMG_1722.jpg",
+    "srcFull": "img-full/IMG_1722.jpg",
     "name": "Polo Ralph Lauren oxford white",
     "category": "top",
     "subcategory": "oxford",
@@ -808,6 +871,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1723",
     "src": "img/IMG_1723.jpg",
+    "srcFull": "img-full/IMG_1723.jpg",
     "name": "button up navy",
     "category": "top",
     "subcategory": "button-up",
@@ -823,6 +887,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1724",
     "src": "img/IMG_1724.jpg",
+    "srcFull": "img-full/IMG_1724.jpg",
     "name": "button up black",
     "category": "top",
     "subcategory": "button-up",
@@ -838,6 +903,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1725",
     "src": "img/IMG_1725.jpg",
+    "srcFull": "img-full/IMG_1725.jpg",
     "name": "hoodie olive",
     "category": "top",
     "subcategory": "hoodie",
@@ -853,6 +919,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1726",
     "src": "img/IMG_1726.jpg",
+    "srcFull": "img-full/IMG_1726.jpg",
     "name": "Polo Ralph Lauren knit polo navy",
     "category": "top",
     "subcategory": "knit-polo",
@@ -868,6 +935,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1727",
     "src": "img/IMG_1727.jpg",
+    "srcFull": "img-full/IMG_1727.jpg",
     "name": "Polo Ralph Lauren sweater navy",
     "category": "top",
     "subcategory": "sweater",
@@ -883,6 +951,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1728",
     "src": "img/IMG_1728.jpg",
+    "srcFull": "img-full/IMG_1728.jpg",
     "name": "Polo Ralph Lauren sweater navy",
     "category": "top",
     "subcategory": "sweater",
@@ -898,6 +967,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1730",
     "src": "img/IMG_1730.jpg",
+    "srcFull": "img-full/IMG_1730.jpg",
     "name": "button up light blue",
     "category": "top",
     "subcategory": "button-up",
@@ -913,6 +983,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1731",
     "src": "img/IMG_1731.jpg",
+    "srcFull": "img-full/IMG_1731.jpg",
     "name": "St. Louis Cardinals jersey cream",
     "category": "top",
     "subcategory": "jersey",
@@ -928,6 +999,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1732",
     "src": "img/IMG_1732.jpg",
+    "srcFull": "img-full/IMG_1732.jpg",
     "name": "Lacoste polo burgundy",
     "category": "top",
     "subcategory": "polo",
@@ -943,6 +1015,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1733",
     "src": "img/IMG_1733.jpg",
+    "srcFull": "img-full/IMG_1733.jpg",
     "name": "Lacoste polo navy",
     "category": "top",
     "subcategory": "polo",
@@ -958,6 +1031,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1734",
     "src": "img/IMG_1734.jpg",
+    "srcFull": "img-full/IMG_1734.jpg",
     "name": "Polo Ralph Lauren button up blue",
     "category": "top",
     "subcategory": "button-up",
@@ -973,6 +1047,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1735",
     "src": "img/IMG_1735.jpg",
+    "srcFull": "img-full/IMG_1735.jpg",
     "name": "henley dark brown",
     "category": "top",
     "subcategory": "henley",
@@ -988,6 +1063,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1736",
     "src": "img/IMG_1736.jpg",
+    "srcFull": "img-full/IMG_1736.jpg",
     "name": "button up sand",
     "category": "top",
     "subcategory": "button-up",
@@ -1003,6 +1079,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1737",
     "src": "img/IMG_1737.jpg",
+    "srcFull": "img-full/IMG_1737.jpg",
     "name": "camp shirt tan",
     "category": "top",
     "subcategory": "camp-shirt",
@@ -1018,6 +1095,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1738",
     "src": "img/IMG_1738.jpg",
+    "srcFull": "img-full/IMG_1738.jpg",
     "name": "button up blue",
     "category": "top",
     "subcategory": "button-up",
@@ -1033,6 +1111,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1739",
     "src": "img/IMG_1739.jpg",
+    "srcFull": "img-full/IMG_1739.jpg",
     "name": "button up olive",
     "category": "top",
     "subcategory": "button-up",
@@ -1048,6 +1127,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1740",
     "src": "img/IMG_1740.jpg",
+    "srcFull": "img-full/IMG_1740.jpg",
     "name": "button up dark brown",
     "category": "top",
     "subcategory": "button-up",
@@ -1063,6 +1143,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1741",
     "src": "img/IMG_1741.jpg",
+    "srcFull": "img-full/IMG_1741.jpg",
     "name": "button up blue-grey",
     "category": "top",
     "subcategory": "button-up",
@@ -1078,6 +1159,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1742",
     "src": "img/IMG_1742.jpg",
+    "srcFull": "img-full/IMG_1742.jpg",
     "name": "Lacoste polo green",
     "category": "top",
     "subcategory": "polo",
@@ -1093,6 +1175,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1743",
     "src": "img/IMG_1743.jpg",
+    "srcFull": "img-full/IMG_1743.jpg",
     "name": "Pull&Bear camp shirt olive",
     "category": "top",
     "subcategory": "camp-shirt",
@@ -1108,6 +1191,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1744",
     "src": "img/IMG_1744.jpg",
+    "srcFull": "img-full/IMG_1744.jpg",
     "name": "camp shirt sage",
     "category": "top",
     "subcategory": "camp-shirt",
@@ -1123,6 +1207,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1745",
     "src": "img/IMG_1745.jpg",
+    "srcFull": "img-full/IMG_1745.jpg",
     "name": "button up white",
     "category": "top",
     "subcategory": "button-up",
@@ -1138,6 +1223,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1746",
     "src": "img/IMG_1746.jpg",
+    "srcFull": "img-full/IMG_1746.jpg",
     "name": "polo navy",
     "category": "top",
     "subcategory": "polo",
@@ -1153,6 +1239,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1747",
     "src": "img/IMG_1747.jpg",
+    "srcFull": "img-full/IMG_1747.jpg",
     "name": "jeans blue",
     "category": "bottom",
     "subcategory": "jeans",
@@ -1168,6 +1255,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1748",
     "src": "img/IMG_1748.jpg",
+    "srcFull": "img-full/IMG_1748.jpg",
     "name": "chinos khaki",
     "category": "bottom",
     "subcategory": "chinos",
@@ -1183,6 +1271,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1749",
     "src": "img/IMG_1749.jpg",
+    "srcFull": "img-full/IMG_1749.jpg",
     "name": "chinos cream",
     "category": "bottom",
     "subcategory": "chinos",
@@ -1198,6 +1287,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1750",
     "src": "img/IMG_1750.jpg",
+    "srcFull": "img-full/IMG_1750.jpg",
     "name": "jeans dark grey",
     "category": "bottom",
     "subcategory": "jeans",
@@ -1213,6 +1303,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1751",
     "src": "img/IMG_1751.jpg",
+    "srcFull": "img-full/IMG_1751.jpg",
     "name": "trousers stone",
     "category": "bottom",
     "subcategory": "trousers",
@@ -1228,6 +1319,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1752",
     "src": "img/IMG_1752.jpg",
+    "srcFull": "img-full/IMG_1752.jpg",
     "name": "jeans light blue",
     "category": "bottom",
     "subcategory": "jeans",
@@ -1243,6 +1335,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1753",
     "src": "img/IMG_1753.jpg",
+    "srcFull": "img-full/IMG_1753.jpg",
     "name": "trousers khaki-olive",
     "category": "bottom",
     "subcategory": "trousers",
@@ -1258,6 +1351,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1754",
     "src": "img/IMG_1754.jpg",
+    "srcFull": "img-full/IMG_1754.jpg",
     "name": "chinos beige",
     "category": "bottom",
     "subcategory": "chinos",
@@ -1273,6 +1367,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1755",
     "src": "img/IMG_1755.jpg",
+    "srcFull": "img-full/IMG_1755.jpg",
     "name": "trousers dark brown",
     "category": "bottom",
     "subcategory": "trousers",
@@ -1288,6 +1383,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1756",
     "src": "img/IMG_1756.jpg",
+    "srcFull": "img-full/IMG_1756.jpg",
     "name": "trousers charcoal",
     "category": "bottom",
     "subcategory": "trousers",
@@ -1303,6 +1399,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1757",
     "src": "img/IMG_1757.jpg",
+    "srcFull": "img-full/IMG_1757.jpg",
     "name": "t shirt black",
     "category": "top",
     "subcategory": "t-shirt",
@@ -1318,6 +1415,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1758",
     "src": "img/IMG_1758.jpg",
+    "srcFull": "img-full/IMG_1758.jpg",
     "name": "Polo Ralph Lauren t shirt black",
     "category": "top",
     "subcategory": "t-shirt",
@@ -1333,6 +1431,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   {
     "id": "IMG_1759",
     "src": "img/IMG_1759.jpg",
+    "srcFull": "img-full/IMG_1759.jpg",
     "name": "trousers grey",
     "category": "bottom",
     "subcategory": "trousers",
@@ -1476,7 +1575,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   prev.addEventListener("click", () => go(-1));
   next.addEventListener("click", () => go(1));
 
-  let startX = 0, startY = 0, tracking = false;
+  let startX = 0, startY = 0, tracking = false, suppressClick = false;
   stage.addEventListener("touchstart", (e) => {
     if (!e.changedTouches[0]) return;
     tracking = true;
@@ -1488,14 +1587,205 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
     tracking = false;
     const dx = e.changedTouches[0].clientX - startX;
     const dy = e.changedTouches[0].clientY - startY;
-    if (Math.abs(dx) > 48 && Math.abs(dx) > Math.abs(dy) * 1.2) go(dx < 0 ? 1 : -1);
+    if (Math.abs(dx) > 48 && Math.abs(dx) > Math.abs(dy) * 1.2){
+      suppressClick = true;
+      go(dx < 0 ? 1 : -1);
+    }
   }, {passive:true});
+  stage.addEventListener("click", () => {
+    if (suppressClick){ suppressClick = false; return; }
+    openLightbox();
+  });
 
   document.addEventListener("keydown", (e) => {
+    if (lbOpen){
+      if (e.key === "Escape") closeLightbox();
+      e.preventDefault();
+      return;
+    }
     if (e.target === notes || e.target === dump) return;
     if (e.key === "ArrowLeft") go(-1);
     if (e.key === "ArrowRight") go(1);
+    if (e.key === "Enter" && e.target === stage) openLightbox();
   });
+
+  const lb = $("lightbox"), lbImg = $("lightboxPhoto"), lbClose = $("lightboxClose"), lbStage = $("lightboxStage");
+  const LB_MAX = 4, LB_MIN = 1, LB_DBL = 2.5;
+  let lbOpen = false, scale = 1, tx = 0, ty = 0;
+  let pinch0 = null, pan0 = null, lastTapAt = 0;
+
+  function applyLb(animate){
+    lbImg.classList.toggle("lb-animate", !!animate);
+    lbImg.style.transform = "translate(" + tx + "px, " + ty + "px) scale(" + scale + ")";
+  }
+  function clampPan(){
+    if (scale <= 1.02){ scale = 1; tx = 0; ty = 0; return; }
+    const sw = lbStage.clientWidth, sh = lbStage.clientHeight;
+    const iw = lbImg.offsetWidth * scale, ih = lbImg.offsetHeight * scale;
+    const maxX = Math.max(0, (iw - sw) / 2);
+    const maxY = Math.max(0, (ih - sh) / 2);
+    tx = Math.min(maxX, Math.max(-maxX, tx));
+    ty = Math.min(maxY, Math.max(-maxY, ty));
+  }
+  function zoomAround(newScale, pivotX, pivotY, animate){
+    newScale = Math.min(LB_MAX, Math.max(LB_MIN, newScale));
+    const rect = lbImg.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    const vx = pivotX - cx, vy = pivotY - cy;
+    const ratio = newScale / (scale || 1);
+    tx += vx - vx * ratio;
+    ty += vy - vy * ratio;
+    scale = newScale;
+    clampPan();
+    applyLb(animate);
+  }
+  function resetLb(){
+    scale = 1; tx = 0; ty = 0;
+    applyLb(false);
+  }
+  function openLightbox(){
+    const it = items[i];
+    if (!it || lbOpen) return;
+    lbOpen = true;
+    lbImg.src = it.srcFull || it.src;
+    lbImg.alt = it.name || it.id || "prenda";
+    resetLb();
+    lb.hidden = false;
+    document.body.classList.add("lb-open");
+    try { lbClose.focus(); } catch {}
+  }
+  function closeLightbox(){
+    if (!lbOpen) return;
+    lbOpen = false;
+    lb.hidden = true;
+    document.body.classList.remove("lb-open");
+    resetLb();
+    pinch0 = null; pan0 = null;
+  }
+  function dist(a, b){
+    const dx = a.clientX - b.clientX, dy = a.clientY - b.clientY;
+    return Math.hypot(dx, dy) || 1;
+  }
+  function mid(a, b){
+    return { x: (a.clientX + b.clientX) / 2, y: (a.clientY + b.clientY) / 2 };
+  }
+  function onLbTouchStart(e){
+    e.preventDefault();
+    if (e.touches.length >= 2){
+      const a = e.touches[0], b = e.touches[1];
+      const m = mid(a, b);
+      pinch0 = { dist: dist(a, b), scale: scale, tx: tx, ty: ty, x: m.x, y: m.y };
+      pan0 = null;
+      lastTapAt = 0;
+      return;
+    }
+    pinch0 = null;
+    const t = e.touches[0];
+    pan0 = { x: t.clientX, y: t.clientY, tx: tx, ty: ty, moved: false };
+  }
+  function onLbTouchMove(e){
+    e.preventDefault();
+    if (e.touches.length >= 2){
+      const a = e.touches[0], b = e.touches[1];
+      if (!pinch0){
+        const m = mid(a, b);
+        pinch0 = { dist: dist(a, b), scale: scale, tx: tx, ty: ty, x: m.x, y: m.y };
+      }
+      const m = mid(a, b);
+      scale = pinch0.scale;
+      tx = pinch0.tx;
+      ty = pinch0.ty;
+      zoomAround(pinch0.scale * (dist(a, b) / pinch0.dist), m.x, m.y, false);
+      pan0 = null;
+      return;
+    }
+    if (scale > 1.02 && pan0 && e.touches.length === 1){
+      const t = e.touches[0];
+      const dx = t.clientX - pan0.x, dy = t.clientY - pan0.y;
+      if (Math.abs(dx) > 4 || Math.abs(dy) > 4) pan0.moved = true;
+      tx = pan0.tx + dx;
+      ty = pan0.ty + dy;
+      clampPan();
+      applyLb(false);
+    }
+  }
+  function onLbTouchEnd(e){
+    if (e.touches.length >= 2) return;
+    if (e.touches.length === 1){
+      pinch0 = null;
+      const t = e.touches[0];
+      pan0 = { x: t.clientX, y: t.clientY, tx: tx, ty: ty, moved: false };
+      return;
+    }
+    const wasPinch = !!pinch0;
+    const wasPan = pan0 && pan0.moved;
+    const tap = pan0 && !pan0.moved && !wasPinch;
+    const x = (e.changedTouches[0] && e.changedTouches[0].clientX) || 0;
+    const y = (e.changedTouches[0] && e.changedTouches[0].clientY) || 0;
+    pinch0 = null;
+    pan0 = null;
+    if (wasPinch || wasPan) return;
+    if (!tap) return;
+    const now = Date.now();
+    if (now - lastTapAt < 320){
+      lastTapAt = 0;
+      if (scale > 1.1){
+        scale = 1; tx = 0; ty = 0;
+        applyLb(true);
+      } else {
+        zoomAround(LB_DBL, x, y, true);
+      }
+      return;
+    }
+    lastTapAt = now;
+    const target = document.elementFromPoint(x, y);
+    if (target === lbClose || (lbClose.contains && lbClose.contains(target))){
+      closeLightbox();
+      return;
+    }
+    // single tap on background (not the photo) closes; on photo, wait for possible double-tap
+    if (target !== lbImg){
+      const prev = lastTapAt;
+      setTimeout(() => {
+        if (lastTapAt === prev && lbOpen) closeLightbox();
+      }, 280);
+    }
+  }
+  lbStage.addEventListener("touchstart", onLbTouchStart, {passive:false});
+  lbStage.addEventListener("touchmove", onLbTouchMove, {passive:false});
+  lbStage.addEventListener("touchend", onLbTouchEnd, {passive:false});
+  lbStage.addEventListener("touchcancel", onLbTouchEnd, {passive:false});
+  lbClose.addEventListener("click", (e) => { e.preventDefault(); e.stopPropagation(); closeLightbox(); });
+  lb.addEventListener("click", (e) => {
+    if (e.target === lb || e.target === lbStage) closeLightbox();
+  });
+  lbImg.addEventListener("dblclick", (e) => {
+    e.preventDefault();
+    if (scale > 1.1){ scale = 1; tx = 0; ty = 0; applyLb(true); }
+    else zoomAround(LB_DBL, e.clientX, e.clientY, true);
+  });
+  let mousePan = null;
+  lbStage.addEventListener("mousedown", (e) => {
+    if (e.button !== 0 || scale <= 1.02) return;
+    if (e.target === lbClose) return;
+    mousePan = { x: e.clientX, y: e.clientY, tx: tx, ty: ty };
+    e.preventDefault();
+  });
+  window.addEventListener("mousemove", (e) => {
+    if (!mousePan || !lbOpen) return;
+    tx = mousePan.tx + (e.clientX - mousePan.x);
+    ty = mousePan.ty + (e.clientY - mousePan.y);
+    clampPan();
+    applyLb(false);
+  });
+  window.addEventListener("mouseup", () => { mousePan = null; });
+  lbStage.addEventListener("wheel", (e) => {
+    if (!lbOpen) return;
+    e.preventDefault();
+    const factor = e.deltaY < 0 ? 1.12 : 1/1.12;
+    zoomAround(scale * factor, e.clientX, e.clientY, false);
+  }, {passive:false});
 
   $("export").addEventListener("click", async () => {
     save();

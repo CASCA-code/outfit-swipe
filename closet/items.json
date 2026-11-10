@@ -2,6 +2,7 @@
   {
     "id": "shoes-bw-army-brown",
     "src": "img/shoes-bw-army-brown.jpg",
+    "srcFull": "img-full/shoes-bw-army-brown.jpg",
     "name": "adidas BW Army brown",
     "category": "shoes",
     "subcategory": "sneakers",
@@ -18,6 +19,7 @@
   {
     "id": "shoes-oncloud-white",
     "src": "img/shoes-oncloud-white.jpg",
+    "srcFull": "img-full/shoes-oncloud-white.jpg",
     "name": "On THE ROGER Advantage white",
     "category": "shoes",
     "subcategory": "sneakers",
@@ -34,6 +36,7 @@
   {
     "id": "IMG_1679",
     "src": "img/IMG_1679.jpg",
+    "srcFull": "img-full/IMG_1679.jpg",
     "name": "Uniqlo dress shirt light blue",
     "category": "top",
     "subcategory": "dress-shirt",
@@ -49,6 +52,7 @@
   {
     "id": "IMG_1680",
     "src": "img/IMG_1680.jpg",
+    "srcFull": "img-full/IMG_1680.jpg",
     "name": "Giorgio Valentino button up navy",
     "category": "top",
     "subcategory": "button-up",
@@ -64,6 +68,7 @@
   {
     "id": "IMG_1681",
     "src": "img/IMG_1681.jpg",
+    "srcFull": "img-full/IMG_1681.jpg",
     "name": "polo black",
     "category": "top",
     "subcategory": "polo",
@@ -79,6 +84,7 @@
   {
     "id": "IMG_1682",
     "src": "img/IMG_1682.jpg",
+    "srcFull": "img-full/IMG_1682.jpg",
     "name": "Mango knit polo navy",
     "category": "top",
     "subcategory": "knit-polo",
@@ -94,6 +100,7 @@
   {
     "id": "IMG_1683",
     "src": "img/IMG_1683.jpg",
+    "srcFull": "img-full/IMG_1683.jpg",
     "name": "Massimo Dutti knit polo black",
     "category": "top",
     "subcategory": "knit-polo",
@@ -109,6 +116,7 @@
   {
     "id": "IMG_1684",
     "src": "img/IMG_1684.jpg",
+    "srcFull": "img-full/IMG_1684.jpg",
     "name": "Massimo Dutti polo navy",
     "category": "top",
     "subcategory": "polo",
@@ -124,6 +132,7 @@
   {
     "id": "IMG_1685",
     "src": "img/IMG_1685.jpg",
+    "srcFull": "img-full/IMG_1685.jpg",
     "name": "Massimo Dutti knit polo olive",
     "category": "top",
     "subcategory": "knit-polo",
@@ -139,6 +148,7 @@
   {
     "id": "IMG_1686",
     "src": "img/IMG_1686.jpg",
+    "srcFull": "img-full/IMG_1686.jpg",
     "name": "Massimo Dutti button up white",
     "category": "top",
     "subcategory": "button-up",
@@ -154,6 +164,7 @@
   {
     "id": "IMG_1687",
     "src": "img/IMG_1687.jpg",
+    "srcFull": "img-full/IMG_1687.jpg",
     "name": "Polo Ralph Lauren harrington navy",
     "category": "outerwear",
     "subcategory": "harrington",
@@ -169,6 +180,7 @@
   {
     "id": "IMG_1688",
     "src": "img/IMG_1688.jpg",
+    "srcFull": "img-full/IMG_1688.jpg",
     "name": "dress shirt white",
     "category": "top",
     "subcategory": "dress-shirt",
@@ -184,6 +196,7 @@
   {
     "id": "IMG_1689",
     "src": "img/IMG_1689.jpg",
+    "srcFull": "img-full/IMG_1689.jpg",
     "name": "Massimo Dutti button up rust brown",
     "category": "top",
     "subcategory": "button-up",
@@ -199,6 +212,7 @@
   {
     "id": "IMG_1690",
     "src": "img/IMG_1690.jpg",
+    "srcFull": "img-full/IMG_1690.jpg",
     "name": "Uniqlo dress shirt pale grey-white",
     "category": "top",
     "subcategory": "dress-shirt",
@@ -214,6 +228,7 @@
   {
     "id": "IMG_1691",
     "src": "img/IMG_1691.jpg",
+    "srcFull": "img-full/IMG_1691.jpg",
     "name": "Mango knit polo taupe",
     "category": "top",
     "subcategory": "knit-polo",
@@ -229,6 +244,7 @@
   {
     "id": "IMG_1692",
     "src": "img/IMG_1692.jpg",
+    "srcFull": "img-full/IMG_1692.jpg",
     "name": "Massimo Dutti polo heather taupe",
     "category": "top",
     "subcategory": "polo",
@@ -244,6 +260,7 @@
   {
     "id": "IMG_1693",
     "src": "img/IMG_1693.jpg",
+    "srcFull": "img-full/IMG_1693.jpg",
     "name": "Polo Ralph Lauren quarter zip navy",
     "category": "top",
     "subcategory": "quarter-zip",
@@ -259,6 +276,7 @@
   {
     "id": "IMG_1694",
     "src": "img/IMG_1694.jpg",
+    "srcFull": "img-full/IMG_1694.jpg",
     "name": "Nautica sweater heather grey",
     "category": "top",
     "subcategory": "sweater",
@@ -274,6 +292,7 @@
   {
     "id": "IMG_1695",
     "src": "img/IMG_1695.jpg",
+    "srcFull": "img-full/IMG_1695.jpg",
     "name": "Abercrombie & Fitch hoodie heather grey",
     "category": "top",
     "subcategory": "hoodie",
@@ -289,6 +308,7 @@
   {
     "id": "IMG_1696",
     "src": "img/IMG_1696.jpg",
+    "srcFull": "img-full/IMG_1696.jpg",
     "name": "button up light blue",
     "category": "top",
     "subcategory": "button-up",
@@ -305,6 +325,7 @@
   {
     "id": "IMG_1697",
     "src": "img/IMG_1697.jpg",
+    "srcFull": "img-full/IMG_1697.jpg",
     "name": "button up light blue",
     "category": "top",
     "subcategory": "button-up",
@@ -320,6 +341,7 @@
   {
     "id": "IMG_1698",
     "src": "img/IMG_1698.jpg",
+    "srcFull": "img-full/IMG_1698.jpg",
     "name": "button up charcoal",
     "category": "top",
     "subcategory": "button-up",
@@ -335,6 +357,7 @@
   {
     "id": "IMG_1699",
     "src": "img/IMG_1699.jpg",
+    "srcFull": "img-full/IMG_1699.jpg",
     "name": "button up pale grey",
     "category": "top",
     "subcategory": "button-up",
@@ -350,6 +373,7 @@
   {
     "id": "IMG_1700",
     "src": "img/IMG_1700.jpg",
+    "srcFull": "img-full/IMG_1700.jpg",
     "name": "Polo Ralph Lauren quarter zip red",
     "category": "top",
     "subcategory": "quarter-zip",
@@ -365,6 +389,7 @@
   {
     "id": "IMG_1701",
     "src": "img/IMG_1701.jpg",
+    "srcFull": "img-full/IMG_1701.jpg",
     "name": "dress shirt light grey",
     "category": "top",
     "subcategory": "dress-shirt",
@@ -380,6 +405,7 @@
   {
     "id": "IMG_1702",
     "src": "img/IMG_1702.jpg",
+    "srcFull": "img-full/IMG_1702.jpg",
     "name": "button up light grey",
     "category": "top",
     "subcategory": "button-up",
@@ -395,6 +421,7 @@
   {
     "id": "IMG_1703",
     "src": "img/IMG_1703.jpg",
+    "srcFull": "img-full/IMG_1703.jpg",
     "name": "button up light grey",
     "category": "top",
     "subcategory": "button-up",
@@ -410,6 +437,7 @@
   {
     "id": "IMG_1704",
     "src": "img/IMG_1704.jpg",
+    "srcFull": "img-full/IMG_1704.jpg",
     "name": "button up navy",
     "category": "top",
     "subcategory": "button-up",
@@ -425,6 +453,7 @@
   {
     "id": "IMG_1705",
     "src": "img/IMG_1705.jpg",
+    "srcFull": "img-full/IMG_1705.jpg",
     "name": "button up light grey",
     "category": "top",
     "subcategory": "button-up",
@@ -440,6 +469,7 @@
   {
     "id": "IMG_1706",
     "src": "img/IMG_1706.jpg",
+    "srcFull": "img-full/IMG_1706.jpg",
     "name": "dress shirt white",
     "category": "top",
     "subcategory": "dress-shirt",
@@ -455,6 +485,7 @@
   {
     "id": "IMG_1707",
     "src": "img/IMG_1707.jpg",
+    "srcFull": "img-full/IMG_1707.jpg",
     "name": "dress shirt navy",
     "category": "top",
     "subcategory": "dress-shirt",
@@ -470,6 +501,7 @@
   {
     "id": "IMG_1708",
     "src": "img/IMG_1708.jpg",
+    "srcFull": "img-full/IMG_1708.jpg",
     "name": "button up grey",
     "category": "top",
     "subcategory": "button-up",
@@ -485,6 +517,7 @@
   {
     "id": "IMG_1709",
     "src": "img/IMG_1709.jpg",
+    "srcFull": "img-full/IMG_1709.jpg",
     "name": "button up beige",
     "category": "top",
     "subcategory": "button-up",
@@ -500,6 +533,7 @@
   {
     "id": "IMG_1710",
     "src": "img/IMG_1710.jpg",
+    "srcFull": "img-full/IMG_1710.jpg",
     "name": "Polo Ralph Lauren oxford pale yellow",
     "category": "top",
     "subcategory": "oxford",
@@ -515,6 +549,7 @@
   {
     "id": "IMG_1711",
     "src": "img/IMG_1711.jpg",
+    "srcFull": "img-full/IMG_1711.jpg",
     "name": "button up burgundy",
     "category": "top",
     "subcategory": "button-up",
@@ -530,6 +565,7 @@
   {
     "id": "IMG_1712",
     "src": "img/IMG_1712.jpg",
+    "srcFull": "img-full/IMG_1712.jpg",
     "name": "button up khaki",
     "category": "top",
     "subcategory": "button-up",
@@ -545,6 +581,7 @@
   {
     "id": "IMG_1713",
     "src": "img/IMG_1713.jpg",
+    "srcFull": "img-full/IMG_1713.jpg",
     "name": "button up sage",
     "category": "top",
     "subcategory": "button-up",
@@ -560,6 +597,7 @@
   {
     "id": "IMG_1714",
     "src": "img/IMG_1714.jpg",
+    "srcFull": "img-full/IMG_1714.jpg",
     "name": "Polo Ralph Lauren oxford light blue",
     "category": "top",
     "subcategory": "oxford",
@@ -575,6 +613,7 @@
   {
     "id": "IMG_1715",
     "src": "img/IMG_1715.jpg",
+    "srcFull": "img-full/IMG_1715.jpg",
     "name": "button up light blue",
     "category": "top",
     "subcategory": "button-up",
@@ -590,6 +629,7 @@
   {
     "id": "IMG_1716",
     "src": "img/IMG_1716.jpg",
+    "srcFull": "img-full/IMG_1716.jpg",
     "name": "button up light blue",
     "category": "top",
     "subcategory": "button-up",
@@ -605,6 +645,7 @@
   {
     "id": "IMG_1717",
     "src": "img/IMG_1717.jpg",
+    "srcFull": "img-full/IMG_1717.jpg",
     "name": "button up white",
     "category": "top",
     "subcategory": "button-up",
@@ -620,6 +661,7 @@
   {
     "id": "IMG_1718",
     "src": "img/IMG_1718.jpg",
+    "srcFull": "img-full/IMG_1718.jpg",
     "name": "button up off-white",
     "category": "top",
     "subcategory": "button-up",
@@ -635,6 +677,7 @@
   {
     "id": "IMG_1719",
     "src": "img/IMG_1719.jpg",
+    "srcFull": "img-full/IMG_1719.jpg",
     "name": "Polo Ralph Lauren oxford white",
     "category": "top",
     "subcategory": "oxford",
@@ -650,6 +693,7 @@
   {
     "id": "IMG_1720",
     "src": "img/IMG_1720.jpg",
+    "srcFull": "img-full/IMG_1720.jpg",
     "name": "button up white",
     "category": "top",
     "subcategory": "button-up",
@@ -665,6 +709,7 @@
   {
     "id": "IMG_1721",
     "src": "img/IMG_1721.jpg",
+    "srcFull": "img-full/IMG_1721.jpg",
     "name": "button up white",
     "category": "top",
     "subcategory": "button-up",
@@ -680,6 +725,7 @@
   {
     "id": "IMG_1722",
     "src": "img/IMG_1722.jpg",
+    "srcFull": "img-full/IMG_1722.jpg",
     "name": "Polo Ralph Lauren oxford white",
     "category": "top",
     "subcategory": "oxford",
@@ -695,6 +741,7 @@
   {
     "id": "IMG_1723",
     "src": "img/IMG_1723.jpg",
+    "srcFull": "img-full/IMG_1723.jpg",
     "name": "button up navy",
     "category": "top",
     "subcategory": "button-up",
@@ -710,6 +757,7 @@
   {
     "id": "IMG_1724",
     "src": "img/IMG_1724.jpg",
+    "srcFull": "img-full/IMG_1724.jpg",
     "name": "button up black",
     "category": "top",
     "subcategory": "button-up",
@@ -725,6 +773,7 @@
   {
     "id": "IMG_1725",
     "src": "img/IMG_1725.jpg",
+    "srcFull": "img-full/IMG_1725.jpg",
     "name": "hoodie olive",
     "category": "top",
     "subcategory": "hoodie",
@@ -740,6 +789,7 @@
   {
     "id": "IMG_1726",
     "src": "img/IMG_1726.jpg",
+    "srcFull": "img-full/IMG_1726.jpg",
     "name": "Polo Ralph Lauren knit polo navy",
     "category": "top",
     "subcategory": "knit-polo",
@@ -755,6 +805,7 @@
   {
     "id": "IMG_1727",
     "src": "img/IMG_1727.jpg",
+    "srcFull": "img-full/IMG_1727.jpg",
     "name": "Polo Ralph Lauren sweater navy",
     "category": "top",
     "subcategory": "sweater",
@@ -770,6 +821,7 @@
   {
     "id": "IMG_1728",
     "src": "img/IMG_1728.jpg",
+    "srcFull": "img-full/IMG_1728.jpg",
     "name": "Polo Ralph Lauren sweater navy",
     "category": "top",
     "subcategory": "sweater",
@@ -785,6 +837,7 @@
   {
     "id": "IMG_1730",
     "src": "img/IMG_1730.jpg",
+    "srcFull": "img-full/IMG_1730.jpg",
     "name": "button up light blue",
     "category": "top",
     "subcategory": "button-up",
@@ -800,6 +853,7 @@
   {
     "id": "IMG_1731",
     "src": "img/IMG_1731.jpg",
+    "srcFull": "img-full/IMG_1731.jpg",
     "name": "St. Louis Cardinals jersey cream",
     "category": "top",
     "subcategory": "jersey",
@@ -815,6 +869,7 @@
   {
     "id": "IMG_1732",
     "src": "img/IMG_1732.jpg",
+    "srcFull": "img-full/IMG_1732.jpg",
     "name": "Lacoste polo burgundy",
     "category": "top",
     "subcategory": "polo",
@@ -830,6 +885,7 @@
   {
     "id": "IMG_1733",
     "src": "img/IMG_1733.jpg",
+    "srcFull": "img-full/IMG_1733.jpg",
     "name": "Lacoste polo navy",
     "category": "top",
     "subcategory": "polo",
@@ -845,6 +901,7 @@
   {
     "id": "IMG_1734",
     "src": "img/IMG_1734.jpg",
+    "srcFull": "img-full/IMG_1734.jpg",
     "name": "Polo Ralph Lauren button up blue",
     "category": "top",
     "subcategory": "button-up",
@@ -860,6 +917,7 @@
   {
     "id": "IMG_1735",
     "src": "img/IMG_1735.jpg",
+    "srcFull": "img-full/IMG_1735.jpg",
     "name": "henley dark brown",
     "category": "top",
     "subcategory": "henley",
@@ -875,6 +933,7 @@
   {
     "id": "IMG_1736",
     "src": "img/IMG_1736.jpg",
+    "srcFull": "img-full/IMG_1736.jpg",
     "name": "button up sand",
     "category": "top",
     "subcategory": "button-up",
@@ -890,6 +949,7 @@
   {
     "id": "IMG_1737",
     "src": "img/IMG_1737.jpg",
+    "srcFull": "img-full/IMG_1737.jpg",
     "name": "camp shirt tan",
     "category": "top",
     "subcategory": "camp-shirt",
@@ -905,6 +965,7 @@
   {
     "id": "IMG_1738",
     "src": "img/IMG_1738.jpg",
+    "srcFull": "img-full/IMG_1738.jpg",
     "name": "button up blue",
     "category": "top",
     "subcategory": "button-up",
@@ -920,6 +981,7 @@
   {
     "id": "IMG_1739",
     "src": "img/IMG_1739.jpg",
+    "srcFull": "img-full/IMG_1739.jpg",
     "name": "button up olive",
     "category": "top",
     "subcategory": "button-up",
@@ -935,6 +997,7 @@
   {
     "id": "IMG_1740",
     "src": "img/IMG_1740.jpg",
+    "srcFull": "img-full/IMG_1740.jpg",
     "name": "button up dark brown",
     "category": "top",
     "subcategory": "button-up",
@@ -950,6 +1013,7 @@
   {
     "id": "IMG_1741",
     "src": "img/IMG_1741.jpg",
+    "srcFull": "img-full/IMG_1741.jpg",
     "name": "button up blue-grey",
     "category": "top",
     "subcategory": "button-up",
@@ -965,6 +1029,7 @@
   {
     "id": "IMG_1742",
     "src": "img/IMG_1742.jpg",
+    "srcFull": "img-full/IMG_1742.jpg",
     "name": "Lacoste polo green",
     "category": "top",
     "subcategory": "polo",
@@ -980,6 +1045,7 @@
   {
     "id": "IMG_1743",
     "src": "img/IMG_1743.jpg",
+    "srcFull": "img-full/IMG_1743.jpg",
     "name": "Pull&Bear camp shirt olive",
     "category": "top",
     "subcategory": "camp-shirt",
@@ -995,6 +1061,7 @@
   {
     "id": "IMG_1744",
     "src": "img/IMG_1744.jpg",
+    "srcFull": "img-full/IMG_1744.jpg",
     "name": "camp shirt sage",
     "category": "top",
     "subcategory": "camp-shirt",
@@ -1010,6 +1077,7 @@
   {
     "id": "IMG_1745",
     "src": "img/IMG_1745.jpg",
+    "srcFull": "img-full/IMG_1745.jpg",
     "name": "button up white",
     "category": "top",
     "subcategory": "button-up",
@@ -1025,6 +1093,7 @@
   {
     "id": "IMG_1746",
     "src": "img/IMG_1746.jpg",
+    "srcFull": "img-full/IMG_1746.jpg",
     "name": "polo navy",
     "category": "top",
     "subcategory": "polo",
@@ -1040,6 +1109,7 @@
   {
     "id": "IMG_1747",
     "src": "img/IMG_1747.jpg",
+    "srcFull": "img-full/IMG_1747.jpg",
     "name": "jeans blue",
     "category": "bottom",
     "subcategory": "jeans",
@@ -1055,6 +1125,7 @@
   {
     "id": "IMG_1748",
     "src": "img/IMG_1748.jpg",
+    "srcFull": "img-full/IMG_1748.jpg",
     "name": "chinos khaki",
     "category": "bottom",
     "subcategory": "chinos",
@@ -1070,6 +1141,7 @@
   {
     "id": "IMG_1749",
     "src": "img/IMG_1749.jpg",
+    "srcFull": "img-full/IMG_1749.jpg",
     "name": "chinos cream",
     "category": "bottom",
     "subcategory": "chinos",
@@ -1085,6 +1157,7 @@
   {
     "id": "IMG_1750",
     "src": "img/IMG_1750.jpg",
+    "srcFull": "img-full/IMG_1750.jpg",
     "name": "jeans dark grey",
     "category": "bottom",
     "subcategory": "jeans",
@@ -1100,6 +1173,7 @@
   {
     "id": "IMG_1751",
     "src": "img/IMG_1751.jpg",
+    "srcFull": "img-full/IMG_1751.jpg",
     "name": "trousers stone",
     "category": "bottom",
     "subcategory": "trousers",
@@ -1115,6 +1189,7 @@
   {
     "id": "IMG_1752",
     "src": "img/IMG_1752.jpg",
+    "srcFull": "img-full/IMG_1752.jpg",
     "name": "jeans light blue",
     "category": "bottom",
     "subcategory": "jeans",
@@ -1130,6 +1205,7 @@
   {
     "id": "IMG_1753",
     "src": "img/IMG_1753.jpg",
+    "srcFull": "img-full/IMG_1753.jpg",
     "name": "trousers khaki-olive",
     "category": "bottom",
     "subcategory": "trousers",
@@ -1145,6 +1221,7 @@
   {
     "id": "IMG_1754",
     "src": "img/IMG_1754.jpg",
+    "srcFull": "img-full/IMG_1754.jpg",
     "name": "chinos beige",
     "category": "bottom",
     "subcategory": "chinos",
@@ -1160,6 +1237,7 @@
   {
     "id": "IMG_1755",
     "src": "img/IMG_1755.jpg",
+    "srcFull": "img-full/IMG_1755.jpg",
     "name": "trousers dark brown",
     "category": "bottom",
     "subcategory": "trousers",
@@ -1175,6 +1253,7 @@
   {
     "id": "IMG_1756",
     "src": "img/IMG_1756.jpg",
+    "srcFull": "img-full/IMG_1756.jpg",
     "name": "trousers charcoal",
     "category": "bottom",
     "subcategory": "trousers",
@@ -1190,6 +1269,7 @@
   {
     "id": "IMG_1757",
     "src": "img/IMG_1757.jpg",
+    "srcFull": "img-full/IMG_1757.jpg",
     "name": "t shirt black",
     "category": "top",
     "subcategory": "t-shirt",
@@ -1205,6 +1285,7 @@
   {
     "id": "IMG_1758",
     "src": "img/IMG_1758.jpg",
+    "srcFull": "img-full/IMG_1758.jpg",
     "name": "Polo Ralph Lauren t shirt black",
     "category": "top",
     "subcategory": "t-shirt",
@@ -1220,6 +1301,7 @@
   {
     "id": "IMG_1759",
     "src": "img/IMG_1759.jpg",
+    "srcFull": "img-full/IMG_1759.jpg",
     "name": "trousers grey",
     "category": "bottom",
     "subcategory": "trousers",
