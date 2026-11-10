@@ -2,7 +2,10 @@
 <html lang="es">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <meta name="theme-color" content="#F5F3EF">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -30,22 +33,13 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
 .item-brand{font:600 14px/1.2 var(--sans);color:var(--ink)}
 .item-niche{font-size:12px;color:var(--muted)}
 .badge-falta{display:inline-flex;align-items:center;height:22px;padding:0 9px;border-radius:999px;background:#EFE6DC;color:var(--rec);font:600 11px/1 var(--sans);letter-spacing:.04em}
-.badge-falta[hidden],.item-brand[hidden],.item-niche[hidden]{display:none !important}
+.badge-falta[hidden],.item-brand[hidden],.item-niche[hidden],.mic[hidden]{display:none !important}
 .export{height:44px;padding:0 14px;border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:12px;font:600 14px var(--sans);cursor:pointer}
 .export:hover,.export:focus-visible{border-color:var(--navy);outline:2px solid var(--navy);outline-offset:2px}
 .export:active{transform:scale(.97)}
-.stage{flex:1;min-height:0;position:relative;margin:0 12px;border-radius:18px;background:var(--bg);overflow:hidden;border:1px solid var(--line);touch-action:pan-y;cursor:zoom-in}
-.stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center;background:var(--bg);-webkit-user-drag:none;user-select:none;pointer-events:none}
-.lightbox{position:fixed;inset:0;z-index:30;background:rgba(28,25,21,.92);display:flex;align-items:center;justify-content:center;touch-action:none;-webkit-user-select:none;user-select:none}
-.lightbox[hidden]{display:none !important}
-.lightbox-stage{position:absolute;inset:0;overflow:hidden;touch-action:none;display:flex;align-items:center;justify-content:center}
-.lightbox-stage img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;transform-origin:center center;will-change:transform;-webkit-user-drag:none;user-select:none;pointer-events:auto}
-.lightbox-stage img.lb-animate{transition:transform .2s ease}
-.lightbox-close{position:absolute;top:calc(var(--sat) + 10px);right:max(12px, env(safe-area-inset-right, 0px));z-index:2;width:44px;height:44px;border:0;border-radius:50%;background:var(--paper);color:var(--ink);display:grid;place-items:center;cursor:pointer;box-shadow:0 1px 0 rgba(28,25,21,.06),0 8px 20px -8px rgba(28,25,21,.45)}
-.lightbox-close:hover,.lightbox-close:focus-visible{color:var(--navy);outline:2px solid var(--paper);outline-offset:2px}
-.lightbox-close:active{transform:scale(.92)}
-.lightbox-close svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.stage.swiping img{transition:none}
+.stage{flex:1;min-height:0;position:relative;margin:0 12px;border-radius:18px;background:var(--bg);overflow:hidden;border:1px solid var(--line)}
+.photo-link{position:absolute;inset:0;display:block;cursor:zoom-in}
+.photo-link img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center;background:var(--bg);-webkit-user-drag:none;user-select:none;pointer-events:none}
 .nav{display:flex;align-items:center;justify-content:center;gap:16px;padding:12px 16px 4px}
 .nav button{width:52px;height:52px;border:0;border-radius:50%;background:var(--paper);color:var(--ink);display:grid;place-items:center;cursor:pointer;box-shadow:0 1px 0 rgba(28,25,21,.06),0 6px 16px -8px rgba(28,25,21,.3);transition:transform .15s ease}
 .nav button:hover{color:var(--navy)}
@@ -63,21 +57,24 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
 .mic.on{background:var(--rec);border-color:var(--rec);color:#fff}
 .mic.on svg{animation:pulse 1.2s ease-in-out infinite}
 @keyframes pulse{50%{opacity:.55}}
-.notes textarea{width:100%;height:112px;resize:none;border:1px solid var(--line);background:var(--paper);border-radius:14px;padding:12px 14px;font:16px/1.45 var(--sans);color:var(--ink);outline:none}
+.notes textarea{width:100%;height:88px;resize:none;border:1px solid var(--line);background:var(--paper);border-radius:14px;padding:12px 14px;font:16px/1.45 var(--sans);color:var(--ink);outline:none}
 .notes textarea:focus{border-color:var(--navy)}
 .notes textarea::placeholder{color:#A39C8E}
-.hint{font-size:12px;color:var(--muted);line-height:1.4;text-wrap:pretty;min-height:0;margin:0}
-.hint[hidden],.mic[hidden]{display:none !important}
+.dictar{width:100%;min-height:48px;border:1px solid var(--navy);background:var(--paper);color:var(--navy);border-radius:14px;font:600 16px var(--sans);cursor:pointer}
+.dictar:hover,.dictar:focus-visible{outline:2px solid var(--navy);outline-offset:2px}
+.dictar:active{transform:scale(.98)}
+.hint{font-size:13px;color:var(--muted);line-height:1.4;text-wrap:pretty;min-height:0;margin:0}
 .hint.err{color:#8B3A32}
 .safari{font-size:12px;color:var(--muted);line-height:1.4;text-wrap:pretty;margin:0}
 .safari a{color:var(--navy);text-underline-offset:2px}
+.ver{margin:2px 0 0;text-align:center;font-size:11px;letter-spacing:.12em;color:var(--muted)}
 #dump{display:none;margin:8px 16px 0;width:calc(100% - 32px);height:88px;border:1px solid var(--line);border-radius:12px;background:var(--paper);font:12px/1.4 ui-monospace,Menlo,monospace;padding:10px;color:var(--ink)}
 #dump.show{display:block}
 .toast{position:fixed;left:50%;bottom:calc(var(--sab) + 20px);transform:translateX(-50%) translateY(16px);background:var(--ink);color:#fff;padding:10px 16px;border-radius:999px;font-size:14px;opacity:0;transition:opacity .2s ease,transform .2s ease;pointer-events:none;z-index:9}
 .toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
 @media (min-width:700px){body{max-width:460px;margin:0 auto}}
 @media (prefers-reduced-motion:reduce){
-  .mic.on svg,.toast,.nav button,.export,.lightbox-close,.lightbox-stage img.lb-animate{animation:none;transition:none}
+  .mic.on svg,.toast,.nav button,.export,.dictar{animation:none;transition:none}
 }
 </style>
 </head>
@@ -88,8 +85,10 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   <button type="button" class="export" id="export" aria-label="Exportar notas">Exportar</button>
 </header>
 <div class="tally" id="tally" hidden></div>
-<div class="stage" id="stage" aria-live="polite" tabindex="0" aria-label="Toca para agrandar, desliza para cambiar">
-  <img id="photo" alt="">
+<div class="stage" id="stage" aria-live="polite">
+  <a class="photo-link" id="photoLink" href="img-full/shoes-bw-army-brown.jpg?v=3" target="_blank" rel="noopener noreferrer">
+    <img id="photo" alt="">
+  </a>
 </div>
 <div class="item-meta" id="itemMeta">
   <span class="item-brand" id="itemBrand"></span>
@@ -107,25 +106,19 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
 <div class="notes">
   <div class="notes-top">
     <label for="notes">Notas</label>
-    <button type="button" class="mic" id="mic" aria-label="Dictar por voz" aria-pressed="false">
+    <button type="button" class="mic" id="mic" hidden aria-label="Dictar por voz en Safari" aria-pressed="false">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19v3m7-12v2a7 7 0 0 1-14 0v-2"/><rect width="6" height="13" x="9" y="2" rx="3"/></svg>
     </button>
   </div>
   <textarea id="notes" placeholder="Cuéntame de esta prenda: tela, cómo te queda, cuándo la usas…"></textarea>
+  <button type="button" class="dictar" id="dictar">Dictar</button>
+  <p class="hint" id="micHint">Toca el 🎙️ del teclado</p>
   <p class="hint" id="micStatus" hidden></p>
-  <p class="hint" id="micHint" hidden>Toca el cuadro y usa el micrófono del teclado</p>
-  <p class="safari">Si no jala, ábrelo en Safari: <a href="https://casca-code.github.io/outfit-swipe/closet/">casca-code.github.io/outfit-swipe/closet/</a></p>
+  <p class="safari">Si no jala, ábrelo en Safari: <a href="https://casca-code.github.io/outfit-swipe/closet/?v=3">casca-code.github.io/outfit-swipe/closet/</a></p>
+  <p class="ver" id="ver">v3</p>
 </div>
 <textarea id="dump" readonly aria-label="JSON exportado"></textarea>
 <div class="toast" id="toast" role="status"></div>
-<div class="lightbox" id="lightbox" hidden role="dialog" aria-modal="true" aria-label="Foto en grande">
-  <button type="button" class="lightbox-close" id="lightboxClose" aria-label="Cerrar">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
-  </button>
-  <div class="lightbox-stage" id="lightboxStage">
-    <img id="lightboxPhoto" alt="">
-  </div>
-</div>
 <!-- ITEMS_FALLBACK_START -->
 <script type="application/json" id="items-fallback">
 [
@@ -1450,11 +1443,18 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
 <script>
 (function(){
   const KEY = "closetReview.v1";
+  const VER = "3";
   const $ = (id) => document.getElementById(id);
-  const photo = $("photo"), notes = $("notes"), count = $("count");
-  const prev = $("prev"), next = $("next"), micBtn = $("mic");
-  const hint = $("micHint"), dump = $("dump"), toastEl = $("toast");
-  const stage = $("stage");
+  const photo = $("photo"), photoLink = $("photoLink"), notes = $("notes");
+  const count = $("count"), prev = $("prev"), next = $("next");
+  const micBtn = $("mic"), dictar = $("dictar"), hint = $("micHint");
+  const dump = $("dump"), toastEl = $("toast"), stage = $("stage");
+  const statusEl = $("micStatus");
+
+  function asset(path){
+    if (!path) return "";
+    return path + (path.indexOf("?") >= 0 ? "&" : "?") + "v=" + VER;
+  }
 
   let items = [];
   let i = 0;
@@ -1463,6 +1463,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   let listening = false;
   let wantListen = false;
   let toastTimer = 0;
+  let lastInterim = "";
 
   try { store = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; }
   catch { store = {}; }
@@ -1527,6 +1528,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
     if (!it){
       photo.removeAttribute("src");
       photo.alt = "";
+      photoLink.removeAttribute("href");
       notes.value = "";
       itemBrand.hidden = true;
       itemBrand.textContent = "";
@@ -1535,8 +1537,9 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
       itemNiche.textContent = "";
       return;
     }
-    photo.src = it.src;
+    photo.src = asset(it.src);
     photo.alt = it.name || it.id || "prenda";
+    photoLink.href = asset(it.srcFull || it.src);
     notes.value = (store[it.id] && store[it.id].notes) || it.notes || "";
     const falta = isFalta(it);
     if (falta){
@@ -1562,7 +1565,6 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
       wantListen = false;
       if (rec) try { rec.stop(); } catch {}
       setListeningUI(false);
-      setStatus("");
     }
     save();
     const nextI = i + delta;
@@ -1592,200 +1594,18 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
       go(dx < 0 ? 1 : -1);
     }
   }, {passive:true});
-  stage.addEventListener("click", () => {
-    if (suppressClick){ suppressClick = false; return; }
-    openLightbox();
+  photoLink.addEventListener("click", (e) => {
+    if (suppressClick){
+      e.preventDefault();
+      suppressClick = false;
+    }
   });
 
   document.addEventListener("keydown", (e) => {
-    if (lbOpen){
-      if (e.key === "Escape") closeLightbox();
-      e.preventDefault();
-      return;
-    }
     if (e.target === notes || e.target === dump) return;
     if (e.key === "ArrowLeft") go(-1);
     if (e.key === "ArrowRight") go(1);
-    if (e.key === "Enter" && e.target === stage) openLightbox();
   });
-
-  const lb = $("lightbox"), lbImg = $("lightboxPhoto"), lbClose = $("lightboxClose"), lbStage = $("lightboxStage");
-  const LB_MAX = 4, LB_MIN = 1, LB_DBL = 2.5;
-  let lbOpen = false, scale = 1, tx = 0, ty = 0;
-  let pinch0 = null, pan0 = null, lastTapAt = 0;
-
-  function applyLb(animate){
-    lbImg.classList.toggle("lb-animate", !!animate);
-    lbImg.style.transform = "translate(" + tx + "px, " + ty + "px) scale(" + scale + ")";
-  }
-  function clampPan(){
-    if (scale <= 1.02){ scale = 1; tx = 0; ty = 0; return; }
-    const sw = lbStage.clientWidth, sh = lbStage.clientHeight;
-    const iw = lbImg.offsetWidth * scale, ih = lbImg.offsetHeight * scale;
-    const maxX = Math.max(0, (iw - sw) / 2);
-    const maxY = Math.max(0, (ih - sh) / 2);
-    tx = Math.min(maxX, Math.max(-maxX, tx));
-    ty = Math.min(maxY, Math.max(-maxY, ty));
-  }
-  function zoomAround(newScale, pivotX, pivotY, animate){
-    newScale = Math.min(LB_MAX, Math.max(LB_MIN, newScale));
-    const rect = lbImg.getBoundingClientRect();
-    const cx = rect.left + rect.width / 2;
-    const cy = rect.top + rect.height / 2;
-    const vx = pivotX - cx, vy = pivotY - cy;
-    const ratio = newScale / (scale || 1);
-    tx += vx - vx * ratio;
-    ty += vy - vy * ratio;
-    scale = newScale;
-    clampPan();
-    applyLb(animate);
-  }
-  function resetLb(){
-    scale = 1; tx = 0; ty = 0;
-    applyLb(false);
-  }
-  function openLightbox(){
-    const it = items[i];
-    if (!it || lbOpen) return;
-    lbOpen = true;
-    lbImg.src = it.srcFull || it.src;
-    lbImg.alt = it.name || it.id || "prenda";
-    resetLb();
-    lb.hidden = false;
-    document.body.classList.add("lb-open");
-    try { lbClose.focus(); } catch {}
-  }
-  function closeLightbox(){
-    if (!lbOpen) return;
-    lbOpen = false;
-    lb.hidden = true;
-    document.body.classList.remove("lb-open");
-    resetLb();
-    pinch0 = null; pan0 = null;
-  }
-  function dist(a, b){
-    const dx = a.clientX - b.clientX, dy = a.clientY - b.clientY;
-    return Math.hypot(dx, dy) || 1;
-  }
-  function mid(a, b){
-    return { x: (a.clientX + b.clientX) / 2, y: (a.clientY + b.clientY) / 2 };
-  }
-  function onLbTouchStart(e){
-    e.preventDefault();
-    if (e.touches.length >= 2){
-      const a = e.touches[0], b = e.touches[1];
-      const m = mid(a, b);
-      pinch0 = { dist: dist(a, b), scale: scale, tx: tx, ty: ty, x: m.x, y: m.y };
-      pan0 = null;
-      lastTapAt = 0;
-      return;
-    }
-    pinch0 = null;
-    const t = e.touches[0];
-    pan0 = { x: t.clientX, y: t.clientY, tx: tx, ty: ty, moved: false };
-  }
-  function onLbTouchMove(e){
-    e.preventDefault();
-    if (e.touches.length >= 2){
-      const a = e.touches[0], b = e.touches[1];
-      if (!pinch0){
-        const m = mid(a, b);
-        pinch0 = { dist: dist(a, b), scale: scale, tx: tx, ty: ty, x: m.x, y: m.y };
-      }
-      const m = mid(a, b);
-      scale = pinch0.scale;
-      tx = pinch0.tx;
-      ty = pinch0.ty;
-      zoomAround(pinch0.scale * (dist(a, b) / pinch0.dist), m.x, m.y, false);
-      pan0 = null;
-      return;
-    }
-    if (scale > 1.02 && pan0 && e.touches.length === 1){
-      const t = e.touches[0];
-      const dx = t.clientX - pan0.x, dy = t.clientY - pan0.y;
-      if (Math.abs(dx) > 4 || Math.abs(dy) > 4) pan0.moved = true;
-      tx = pan0.tx + dx;
-      ty = pan0.ty + dy;
-      clampPan();
-      applyLb(false);
-    }
-  }
-  function onLbTouchEnd(e){
-    if (e.touches.length >= 2) return;
-    if (e.touches.length === 1){
-      pinch0 = null;
-      const t = e.touches[0];
-      pan0 = { x: t.clientX, y: t.clientY, tx: tx, ty: ty, moved: false };
-      return;
-    }
-    const wasPinch = !!pinch0;
-    const wasPan = pan0 && pan0.moved;
-    const tap = pan0 && !pan0.moved && !wasPinch;
-    const x = (e.changedTouches[0] && e.changedTouches[0].clientX) || 0;
-    const y = (e.changedTouches[0] && e.changedTouches[0].clientY) || 0;
-    pinch0 = null;
-    pan0 = null;
-    if (wasPinch || wasPan) return;
-    if (!tap) return;
-    const now = Date.now();
-    if (now - lastTapAt < 320){
-      lastTapAt = 0;
-      if (scale > 1.1){
-        scale = 1; tx = 0; ty = 0;
-        applyLb(true);
-      } else {
-        zoomAround(LB_DBL, x, y, true);
-      }
-      return;
-    }
-    lastTapAt = now;
-    const target = document.elementFromPoint(x, y);
-    if (target === lbClose || (lbClose.contains && lbClose.contains(target))){
-      closeLightbox();
-      return;
-    }
-    // single tap on background (not the photo) closes; on photo, wait for possible double-tap
-    if (target !== lbImg){
-      const prev = lastTapAt;
-      setTimeout(() => {
-        if (lastTapAt === prev && lbOpen) closeLightbox();
-      }, 280);
-    }
-  }
-  lbStage.addEventListener("touchstart", onLbTouchStart, {passive:false});
-  lbStage.addEventListener("touchmove", onLbTouchMove, {passive:false});
-  lbStage.addEventListener("touchend", onLbTouchEnd, {passive:false});
-  lbStage.addEventListener("touchcancel", onLbTouchEnd, {passive:false});
-  lbClose.addEventListener("click", (e) => { e.preventDefault(); e.stopPropagation(); closeLightbox(); });
-  lb.addEventListener("click", (e) => {
-    if (e.target === lb || e.target === lbStage) closeLightbox();
-  });
-  lbImg.addEventListener("dblclick", (e) => {
-    e.preventDefault();
-    if (scale > 1.1){ scale = 1; tx = 0; ty = 0; applyLb(true); }
-    else zoomAround(LB_DBL, e.clientX, e.clientY, true);
-  });
-  let mousePan = null;
-  lbStage.addEventListener("mousedown", (e) => {
-    if (e.button !== 0 || scale <= 1.02) return;
-    if (e.target === lbClose) return;
-    mousePan = { x: e.clientX, y: e.clientY, tx: tx, ty: ty };
-    e.preventDefault();
-  });
-  window.addEventListener("mousemove", (e) => {
-    if (!mousePan || !lbOpen) return;
-    tx = mousePan.tx + (e.clientX - mousePan.x);
-    ty = mousePan.ty + (e.clientY - mousePan.y);
-    clampPan();
-    applyLb(false);
-  });
-  window.addEventListener("mouseup", () => { mousePan = null; });
-  lbStage.addEventListener("wheel", (e) => {
-    if (!lbOpen) return;
-    e.preventDefault();
-    const factor = e.deltaY < 0 ? 1.12 : 1/1.12;
-    zoomAround(scale * factor, e.clientX, e.clientY, false);
-  }, {passive:false});
 
   $("export").addEventListener("click", async () => {
     save();
@@ -1806,9 +1626,16 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
     }
   });
 
-  const statusEl = $("micStatus");
-  const SAFARI_URL = "https://casca-code.github.io/outfit-swipe/closet/";
-  let lastInterim = "";
+  function focusNotes(){
+    hint.hidden = false;
+    hint.textContent = "Toca el 🎙️ del teclado";
+    notes.focus();
+    try {
+      const n = notes.value.length;
+      notes.setSelectionRange(n, n);
+    } catch {}
+  }
+  dictar.addEventListener("click", focusNotes);
 
   function setStatus(msg, isErr){
     if (!msg){
@@ -1826,19 +1653,10 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
     micBtn.classList.toggle("on", on);
     micBtn.setAttribute("aria-pressed", on ? "true" : "false");
   }
-  function fallbackMic(reason){
-    wantListen = false;
-    setListeningUI(false);
-    if (rec) try { rec.abort(); } catch {}
-    micBtn.hidden = true;
-    hint.hidden = false;
-    hint.textContent = "Toca el cuadro y usa el micrófono del teclado";
-    setStatus(reason || "Tu navegador no soporta dictado aquí", true);
-  }
   function isInAppWebView(){
     const ua = navigator.userAgent || "";
     if (/FBAN|FBAV|FB_IAB|Instagram|Line\/|WhatsApp|Snapchat|TikTok|musical_ly|BytedanceWebview|LinkedInApp|Pinterest|Twitter|X\/|Grok\//i.test(ua)) return true;
-    if (/; wv\)/.test(ua)) return true; // Android WebView
+    if (/; wv\)/.test(ua)) return true;
     const ios = /iPhone|iPad|iPod/i.test(ua);
     const safari = /Safari/i.test(ua);
     const otherBrowser = /CriOS|FxiOS|EdgiOS|OPiOS|DuckDuckGo|Brave/i.test(ua);
@@ -1847,9 +1665,8 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   }
 
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-  if (!SR || isInAppWebView()){
-    fallbackMic(SR ? "Tu navegador no soporta dictado aquí" : "Tu navegador no soporta dictado aquí");
-  } else {
+  const canSR = !!(SR && !isInAppWebView());
+  if (canSR){
     rec = new SR();
     rec.lang = "es-MX";
     rec.continuous = false;
@@ -1880,7 +1697,6 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
         if (!statusEl.classList.contains("err")) setStatus("");
         return;
       }
-      // iOS: continuous is ignored; restart from onend while the user still wants dictation
       try {
         rec.start();
         setListeningUI(true);
@@ -1888,93 +1704,44 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
       } catch (err) {
         wantListen = false;
         setListeningUI(false);
-        fallbackMic("Tu navegador no soporta dictado aquí");
+        setStatus("");
+        focusNotes();
       }
     };
     rec.onerror = (ev) => {
       const err = (ev && ev.error) || "";
       if (err === "no-speech"){
         if (wantListen) setStatus("No te oí, sigue hablando…");
-        return; // onend will restart
-      }
-      if (err === "aborted"){
         return;
       }
-      const map = {
-        "audio-capture": "No se pudo usar el micrófono",
-        "network": "Error de red en el dictado",
-        "language-not-supported": "Tu navegador no soporta dictado aquí",
-        "not-supported": "Tu navegador no soporta dictado aquí"
-      };
-      if (err === "not-allowed" || err === "service-not-allowed"){
-        denyMic();
-        return;
-      }
-      fallbackMic(map[err] || "Tu navegador no soporta dictado aquí");
-    };
-    const PERM_HINT = "Toca aA → Configuración del sitio web → Micrófono: Permitir y recarga";
-    let micStream = null;
-    function stopMicStream(){
-      if (!micStream) return;
-      try { micStream.getTracks().forEach((t) => t.stop()); } catch {}
-      micStream = null;
-    }
-    function denyMic(){
+      if (err === "aborted") return;
       wantListen = false;
       setListeningUI(false);
-      if (rec) try { rec.abort(); } catch {}
-      stopMicStream();
-      setStatus(PERM_HINT, true);
-      hint.hidden = false;
-      hint.textContent = "Toca el cuadro y usa el micrófono del teclado";
-    }
-    function startRec(){
-      try {
-        rec.start();
-      } catch (err) {
-        if (err && /InvalidState/i.test(String(err.name || err))) return;
-        fallbackMic("Tu navegador no soporta dictado aquí");
-      }
-    }
-    // getUserMedia must be invoked in the click handler so iOS Safari shows the prompt
+      setStatus("");
+      focusNotes();
+    };
+    micBtn.hidden = false;
     micBtn.addEventListener("click", () => {
       if (wantListen || listening){
         wantListen = false;
         setListeningUI(false);
         setStatus("");
         try { rec.stop(); } catch {}
-        stopMicStream();
         return;
       }
       wantListen = true;
       lastInterim = "";
       setListeningUI(true);
       setStatus("Escuchando…");
-      const gum = navigator.mediaDevices && navigator.mediaDevices.getUserMedia;
-      if (!gum){
-        startRec();
-        return;
+      try {
+        rec.start();
+      } catch (err) {
+        if (err && /InvalidState/i.test(String(err.name || err))) return;
+        wantListen = false;
+        setListeningUI(false);
+        setStatus("");
+        focusNotes();
       }
-      gum.call(navigator.mediaDevices, { audio: true }).then((stream) => {
-        stopMicStream();
-        micStream = stream;
-        if (!wantListen){
-          stopMicStream();
-          return;
-        }
-        startRec();
-      }).catch((err) => {
-        const name = String((err && (err.name || err.message)) || "");
-        if (/NotAllowed|PermissionDenied|not-allowed/i.test(name)){
-          denyMic();
-          return;
-        }
-        if (/NotFound|NotReadable|Overconstrained|AbortError/i.test(name)){
-          fallbackMic("No se pudo usar el micrófono");
-          return;
-        }
-        startRec();
-      });
     });
   }
 
@@ -1985,7 +1752,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
     render();
   }
 
-  fetch("items.json", {cache:"no-store"})
+  fetch(asset("items.json"), {cache:"no-store"})
     .then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); })
     .then(boot)
     .catch(() => {
