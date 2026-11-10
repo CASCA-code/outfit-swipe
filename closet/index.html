@@ -49,8 +49,11 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 8px}
 .notes textarea{width:100%;height:112px;resize:none;border:1px solid var(--line);background:var(--paper);border-radius:14px;padding:12px 14px;font:16px/1.45 var(--sans);color:var(--ink);outline:none}
 .notes textarea:focus{border-color:var(--navy)}
 .notes textarea::placeholder{color:#A39C8E}
-.hint{font-size:12px;color:var(--muted);line-height:1.4;text-wrap:pretty;min-height:0}
-.hint[hidden]{display:none}
+.hint{font-size:12px;color:var(--muted);line-height:1.4;text-wrap:pretty;min-height:0;margin:0}
+.hint[hidden],.mic[hidden]{display:none !important}
+.hint.err{color:#8B3A32}
+.safari{font-size:12px;color:var(--muted);line-height:1.4;text-wrap:pretty;margin:0}
+.safari a{color:var(--navy);text-underline-offset:2px}
 #dump{display:none;margin:8px 16px 0;width:calc(100% - 32px);height:88px;border:1px solid var(--line);border-radius:12px;background:var(--paper);font:12px/1.4 ui-monospace,Menlo,monospace;padding:10px;color:var(--ink)}
 #dump.show{display:block}
 .toast{position:fixed;left:50%;bottom:calc(var(--sab) + 20px);transform:translateX(-50%) translateY(16px);background:var(--ink);color:#fff;padding:10px 16px;border-radius:999px;font-size:14px;opacity:0;transition:opacity .2s ease,transform .2s ease;pointer-events:none;z-index:9}
@@ -86,7 +89,9 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 8px}
     </button>
   </div>
   <textarea id="notes" placeholder="Cuéntame de esta prenda: tela, cómo te queda, cuándo la usas…"></textarea>
-  <p class="hint" id="micHint" hidden>usa el micrófono del teclado</p>
+  <p class="hint" id="micStatus" hidden></p>
+  <p class="hint" id="micHint" hidden>Toca el cuadro y usa el micrófono del teclado</p>
+  <p class="safari">Si no jala, ábrelo en Safari: <a href="https://casca-code.github.io/outfit-swipe/closet/">casca-code.github.io/outfit-swipe/closet/</a></p>
 </div>
 <textarea id="dump" readonly aria-label="JSON exportado"></textarea>
 <div class="toast" id="toast" role="status"></div>
@@ -359,6 +364,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 8px}
   let store = {};
   let rec = null;
   let listening = false;
+  let wantListen = false;
   let toastTimer = 0;
 
   try { store = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; }
@@ -393,7 +399,12 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 8px}
     notes.value = (store[it.id] && store[it.id].notes) || it.notes || "";
   }
   function go(delta){
-    if (listening && rec) try { rec.stop(); } catch {}
+    if (listening || wantListen){
+      wantListen = false;
+      if (rec) try { rec.stop(); } catch {}
+      setListeningUI(false);
+      setStatus("");
+    }
     save();
     const nextI = i + delta;
     if (nextI < 0 || nextI >= items.length) return;
@@ -445,48 +456,128 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 8px}
     }
   });
 
-  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-  if (!SR){
+  const statusEl = $("micStatus");
+  const SAFARI_URL = "https://casca-code.github.io/outfit-swipe/closet/";
+  let lastInterim = "";
+
+  function setStatus(msg, isErr){
+    if (!msg){
+      statusEl.hidden = true;
+      statusEl.textContent = "";
+      statusEl.classList.remove("err");
+      return;
+    }
+    statusEl.hidden = false;
+    statusEl.textContent = msg;
+    statusEl.classList.toggle("err", !!isErr);
+  }
+  function setListeningUI(on){
+    listening = on;
+    micBtn.classList.toggle("on", on);
+    micBtn.setAttribute("aria-pressed", on ? "true" : "false");
+  }
+  function fallbackMic(reason){
+    wantListen = false;
+    setListeningUI(false);
+    if (rec) try { rec.abort(); } catch {}
+    micBtn.hidden = true;
     hint.hidden = false;
-    micBtn.disabled = true;
-    micBtn.title = "usa el micrófono del teclado";
+    hint.textContent = "Toca el cuadro y usa el micrófono del teclado";
+    setStatus(reason || "Tu navegador no soporta dictado aquí", true);
+  }
+  function isInAppWebView(){
+    const ua = navigator.userAgent || "";
+    if (/FBAN|FBAV|FB_IAB|Instagram|Line\/|WhatsApp|Snapchat|TikTok|musical_ly|BytedanceWebview|LinkedInApp|Pinterest|Twitter|X\/|Grok\//i.test(ua)) return true;
+    if (/; wv\)/.test(ua)) return true; // Android WebView
+    const ios = /iPhone|iPad|iPod/i.test(ua);
+    const safari = /Safari/i.test(ua);
+    const otherBrowser = /CriOS|FxiOS|EdgiOS|OPiOS|DuckDuckGo|Brave/i.test(ua);
+    if (ios && !safari && !otherBrowser) return true;
+    return false;
+  }
+
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR || isInAppWebView()){
+    fallbackMic(SR ? "Tu navegador no soporta dictado aquí" : "Tu navegador no soporta dictado aquí");
   } else {
     rec = new SR();
     rec.lang = "es-MX";
-    rec.continuous = true;
-    rec.interimResults = false;
+    rec.continuous = false;
+    rec.interimResults = true;
+    rec.maxAlternatives = 1;
     rec.onresult = (ev) => {
-      let chunk = "";
+      let finalChunk = "";
+      let interim = "";
       for (let k = ev.resultIndex; k < ev.results.length; k++){
-        if (ev.results[k].isFinal) chunk += ev.results[k][0].transcript;
+        const text = ev.results[k][0].transcript;
+        if (ev.results[k].isFinal) finalChunk += text;
+        else interim += text;
       }
-      chunk = chunk.trim();
-      if (!chunk) return;
-      notes.value = notes.value ? notes.value.replace(/\s*$/, "") + " " + chunk : chunk;
-      save();
+      finalChunk = finalChunk.trim();
+      if (finalChunk){
+        notes.value = notes.value ? notes.value.replace(/\s*$/, "") + " " + finalChunk : finalChunk;
+        save();
+        lastInterim = "";
+        if (wantListen) setStatus("Escuchando…");
+      } else if (interim){
+        lastInterim = interim;
+        setStatus(interim);
+      }
     };
     rec.onend = () => {
-      listening = false;
-      micBtn.classList.remove("on");
-      micBtn.setAttribute("aria-pressed", "false");
+      if (!wantListen){
+        setListeningUI(false);
+        if (!statusEl.classList.contains("err")) setStatus("");
+        return;
+      }
+      // iOS: continuous is ignored; restart from onend while the user still wants dictation
+      try {
+        rec.start();
+        setListeningUI(true);
+        if (!lastInterim) setStatus("Escuchando…");
+      } catch (err) {
+        wantListen = false;
+        setListeningUI(false);
+        fallbackMic("Tu navegador no soporta dictado aquí");
+      }
     };
-    rec.onerror = () => {
-      listening = false;
-      micBtn.classList.remove("on");
+    rec.onerror = (ev) => {
+      const err = (ev && ev.error) || "";
+      if (err === "no-speech"){
+        if (wantListen) setStatus("No te oí, sigue hablando…");
+        return; // onend will restart
+      }
+      if (err === "aborted"){
+        return;
+      }
+      const map = {
+        "not-allowed": "Permiso de micrófono denegado",
+        "service-not-allowed": "Permiso de micrófono denegado",
+        "audio-capture": "No se pudo usar el micrófono",
+        "network": "Error de red en el dictado",
+        "language-not-supported": "Tu navegador no soporta dictado aquí",
+        "not-supported": "Tu navegador no soporta dictado aquí"
+      };
+      fallbackMic(map[err] || "Tu navegador no soporta dictado aquí");
     };
+    // start() must run directly inside the click handler (iOS user-gesture)
     micBtn.addEventListener("click", () => {
-      if (listening){
+      if (wantListen || listening){
+        wantListen = false;
+        setListeningUI(false);
+        setStatus("");
         try { rec.stop(); } catch {}
         return;
       }
+      wantListen = true;
+      lastInterim = "";
+      setListeningUI(true);
+      setStatus("Escuchando…");
       try {
         rec.start();
-        listening = true;
-        micBtn.classList.add("on");
-        micBtn.setAttribute("aria-pressed", "true");
-      } catch {
-        hint.hidden = false;
-        hint.textContent = "usa el micrófono del teclado";
+      } catch (err) {
+        if (err && /InvalidState/i.test(String(err.name || err))) return;
+        fallbackMic("Tu navegador no soporta dictado aquí");
       }
     });
   }
