@@ -1,0 +1,514 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="theme-color" content="#F5F3EF">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="robots" content="noindex">
+<title>Clóset</title>
+<link rel="icon" href="data:,">
+<style>
+:root{
+  --bg:#F5F3EF; --paper:#FFFcf7; --ink:#1C1915; --navy:#24304D;
+  --muted:#7A7468; --line:#E3DCD0; --rec:#8B3A32;
+  --sat:env(safe-area-inset-top,0px); --sab:env(safe-area-inset-bottom,0px);
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
+  --sans:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font-family:var(--sans);overscroll-behavior:none}
+body{display:flex;flex-direction:column;min-height:100dvh;height:100dvh;padding:calc(var(--sat) + 8px) 0 calc(var(--sab) + 10px);overflow:hidden}
+header{display:flex;align-items:center;gap:12px;padding:4px 16px 8px}
+.brand{font-family:var(--serif);font-size:22px;font-weight:600;letter-spacing:.01em;text-wrap:balance;flex:1}
+.count{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums;letter-spacing:.06em}
+.export{height:44px;padding:0 14px;border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:12px;font:600 14px var(--sans);cursor:pointer}
+.export:hover,.export:focus-visible{border-color:var(--navy);outline:2px solid var(--navy);outline-offset:2px}
+.export:active{transform:scale(.97)}
+.stage{flex:1;min-height:0;position:relative;margin:0 12px;border-radius:18px;background:var(--bg);overflow:hidden;border:1px solid var(--line);touch-action:pan-y}
+.stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center;background:var(--bg);-webkit-user-drag:none;user-select:none;pointer-events:none}
+.stage.swiping img{transition:none}
+.nav{display:flex;align-items:center;justify-content:center;gap:16px;padding:12px 16px 4px}
+.nav button{width:52px;height:52px;border:0;border-radius:50%;background:var(--paper);color:var(--ink);display:grid;place-items:center;cursor:pointer;box-shadow:0 1px 0 rgba(28,25,21,.06),0 6px 16px -8px rgba(28,25,21,.3);transition:transform .15s ease}
+.nav button:hover{color:var(--navy)}
+.nav button:focus-visible{outline:2px solid var(--navy);outline-offset:2px}
+.nav button:active{transform:scale(.92)}
+.nav button:disabled{opacity:.28;cursor:default;box-shadow:none}
+.nav svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.notes{padding:8px 16px 0;display:flex;flex-direction:column;gap:8px}
+.notes-top{display:flex;align-items:center;gap:8px}
+.notes-top label{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600;flex:1}
+.mic{width:44px;height:44px;border:1px solid var(--line);border-radius:12px;background:var(--paper);color:var(--ink);display:grid;place-items:center;cursor:pointer;flex-shrink:0}
+.mic:hover,.mic:focus-visible{border-color:var(--navy);outline:2px solid var(--navy);outline-offset:2px}
+.mic:active{transform:scale(.96)}
+.mic svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.mic.on{background:var(--rec);border-color:var(--rec);color:#fff}
+.mic.on svg{animation:pulse 1.2s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.55}}
+.notes textarea{width:100%;height:112px;resize:none;border:1px solid var(--line);background:var(--paper);border-radius:14px;padding:12px 14px;font:16px/1.45 var(--sans);color:var(--ink);outline:none}
+.notes textarea:focus{border-color:var(--navy)}
+.notes textarea::placeholder{color:#A39C8E}
+.hint{font-size:12px;color:var(--muted);line-height:1.4;text-wrap:pretty;min-height:0}
+.hint[hidden]{display:none}
+#dump{display:none;margin:8px 16px 0;width:calc(100% - 32px);height:88px;border:1px solid var(--line);border-radius:12px;background:var(--paper);font:12px/1.4 ui-monospace,Menlo,monospace;padding:10px;color:var(--ink)}
+#dump.show{display:block}
+.toast{position:fixed;left:50%;bottom:calc(var(--sab) + 20px);transform:translateX(-50%) translateY(16px);background:var(--ink);color:#fff;padding:10px 16px;border-radius:999px;font-size:14px;opacity:0;transition:opacity .2s ease,transform .2s ease;pointer-events:none;z-index:9}
+.toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+@media (min-width:700px){body{max-width:460px;margin:0 auto}}
+@media (prefers-reduced-motion:reduce){
+  .mic.on svg,.toast,.nav button,.export{animation:none;transition:none}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">Clóset</div>
+  <div class="count" id="count">0/0</div>
+  <button type="button" class="export" id="export" aria-label="Exportar notas">Exportar</button>
+</header>
+<div class="stage" id="stage" aria-live="polite">
+  <img id="photo" alt="">
+</div>
+<div class="nav">
+  <button type="button" id="prev" aria-label="Anterior">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+  </button>
+  <button type="button" id="next" aria-label="Siguiente">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+  </button>
+</div>
+<div class="notes">
+  <div class="notes-top">
+    <label for="notes">Notas</label>
+    <button type="button" class="mic" id="mic" aria-label="Dictar por voz" aria-pressed="false">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19v3m7-12v2a7 7 0 0 1-14 0v-2"/><rect width="6" height="13" x="9" y="2" rx="3"/></svg>
+    </button>
+  </div>
+  <textarea id="notes" placeholder="Cuéntame de esta prenda: tela, cómo te queda, cuándo la usas…"></textarea>
+  <p class="hint" id="micHint" hidden>usa el micrófono del teclado</p>
+</div>
+<textarea id="dump" readonly aria-label="JSON exportado"></textarea>
+<div class="toast" id="toast" role="status"></div>
+<!-- ITEMS_FALLBACK_START -->
+<script type="application/json" id="items-fallback">
+[
+  {
+    "id": "shoes-bw-army-brown",
+    "src": "img/shoes-bw-army-brown.jpg",
+    "name": "adidas BW Army brown",
+    "category": "shoes",
+    "subcategory": "sneakers",
+    "color": "brown",
+    "brand": "adidas",
+    "model": "BW Army",
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/clean/shoes-bw-army-brown.png"
+  },
+  {
+    "id": "shoes-oncloud-white",
+    "src": "img/shoes-oncloud-white.jpg",
+    "name": "On Cloud 5 undyed-white / white",
+    "category": "shoes",
+    "subcategory": "sneakers",
+    "color": "undyed-white / white",
+    "brand": "On",
+    "model": "Cloud 5",
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/clean/shoes-oncloud-white.png"
+  },
+  {
+    "id": "IMG_1679",
+    "src": "img/IMG_1679.jpg",
+    "name": "Uniqlo dress shirt light blue",
+    "category": "top",
+    "subcategory": "dress-shirt",
+    "color": "light blue",
+    "brand": "Uniqlo",
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1679.jpg"
+  },
+  {
+    "id": "IMG_1680",
+    "src": "img/IMG_1680.jpg",
+    "name": "button up navy",
+    "category": "top",
+    "subcategory": "button-up",
+    "color": "navy",
+    "brand": "",
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1680.jpg"
+  },
+  {
+    "id": "IMG_1681",
+    "src": "img/IMG_1681.jpg",
+    "name": "polo black",
+    "category": "top",
+    "subcategory": "polo",
+    "color": "black",
+    "brand": "",
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1681.jpg"
+  },
+  {
+    "id": "IMG_1682",
+    "src": "img/IMG_1682.jpg",
+    "name": "knit polo navy",
+    "category": "top",
+    "subcategory": "knit-polo",
+    "color": "navy",
+    "brand": "",
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1682.jpg"
+  },
+  {
+    "id": "IMG_1683",
+    "src": "img/IMG_1683.jpg",
+    "name": "knit polo black",
+    "category": "top",
+    "subcategory": "knit-polo",
+    "color": "black",
+    "brand": "",
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1683.jpg"
+  },
+  {
+    "id": "IMG_1684",
+    "src": "img/IMG_1684.jpg",
+    "name": "polo navy",
+    "category": "top",
+    "subcategory": "polo",
+    "color": "navy",
+    "brand": "",
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1684.jpg"
+  },
+  {
+    "id": "IMG_1685",
+    "src": "img/IMG_1685.jpg",
+    "name": "Massimo Dutti knit polo olive",
+    "category": "top",
+    "subcategory": "knit-polo",
+    "color": "olive",
+    "brand": "Massimo Dutti",
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1685.jpg"
+  },
+  {
+    "id": "IMG_1686",
+    "src": "img/IMG_1686.jpg",
+    "name": "button up white",
+    "category": "top",
+    "subcategory": "button-up",
+    "color": "white",
+    "brand": "",
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1686.jpg"
+  },
+  {
+    "id": "IMG_1687",
+    "src": "img/IMG_1687.jpg",
+    "name": "Polo Ralph Lauren harrington navy",
+    "category": "outerwear",
+    "subcategory": "harrington",
+    "color": "navy",
+    "brand": "Polo Ralph Lauren",
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1687.jpg"
+  },
+  {
+    "id": "IMG_1689",
+    "src": "img/IMG_1689.jpg",
+    "name": "Massimo Dutti button up rust brown",
+    "category": "top",
+    "subcategory": "button-up",
+    "color": "rust brown",
+    "brand": "Massimo Dutti",
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1689.jpg"
+  },
+  {
+    "id": "IMG_1690",
+    "src": "img/IMG_1690.jpg",
+    "name": "Uniqlo dress shirt pale grey-white",
+    "category": "top",
+    "subcategory": "dress-shirt",
+    "color": "pale grey-white",
+    "brand": "Uniqlo",
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1690.jpg"
+  },
+  {
+    "id": "IMG_1691",
+    "src": "img/IMG_1691.jpg",
+    "name": "knit polo taupe",
+    "category": "top",
+    "subcategory": "knit-polo",
+    "color": "taupe",
+    "brand": "",
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1691.jpg"
+  },
+  {
+    "id": "IMG_1692",
+    "src": "img/IMG_1692.jpg",
+    "name": "polo heather taupe",
+    "category": "top",
+    "subcategory": "polo",
+    "color": "heather taupe",
+    "brand": "",
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1692.jpg"
+  },
+  {
+    "id": "IMG_1693",
+    "src": "img/IMG_1693.jpg",
+    "name": "Polo Ralph Lauren quarter zip navy",
+    "category": "top",
+    "subcategory": "quarter-zip",
+    "color": "navy",
+    "brand": "Polo Ralph Lauren",
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1693.jpg"
+  },
+  {
+    "id": "IMG_1694",
+    "src": "img/IMG_1694.jpg",
+    "name": "Nautica sweater heather grey",
+    "category": "top",
+    "subcategory": "sweater",
+    "color": "heather grey",
+    "brand": "Nautica",
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1694.jpg"
+  },
+  {
+    "id": "IMG_1695",
+    "src": "img/IMG_1695.jpg",
+    "name": "hoodie heather grey",
+    "category": "top",
+    "subcategory": "hoodie",
+    "color": "heather grey",
+    "brand": "",
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1695.jpg"
+  },
+  {
+    "id": "IMG_1696",
+    "src": "img/IMG_1696.jpg",
+    "name": "button up light blue",
+    "category": "top",
+    "subcategory": "button-up",
+    "color": "light blue",
+    "brand": "",
+    "chips": [],
+    "notes": "",
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/raw_jpg/IMG_1696.jpg"
+  }
+]
+</script>
+<!-- ITEMS_FALLBACK_END -->
+<script>
+(function(){
+  const KEY = "closetReview.v1";
+  const $ = (id) => document.getElementById(id);
+  const photo = $("photo"), notes = $("notes"), count = $("count");
+  const prev = $("prev"), next = $("next"), micBtn = $("mic");
+  const hint = $("micHint"), dump = $("dump"), toastEl = $("toast");
+  const stage = $("stage");
+
+  let items = [];
+  let i = 0;
+  let store = {};
+  let rec = null;
+  let listening = false;
+  let toastTimer = 0;
+
+  try { store = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; }
+  catch { store = {}; }
+
+  function toast(msg){
+    toastEl.textContent = msg;
+    toastEl.classList.add("on");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toastEl.classList.remove("on"), 1800);
+  }
+  function save(){
+    if (!items[i]) return;
+    store[items[i].id] = { notes: notes.value };
+    try { localStorage.setItem(KEY, JSON.stringify(store)); }
+    catch {}
+  }
+  function render(){
+    const n = items.length;
+    const it = items[i];
+    count.textContent = n ? (i + 1) + "/" + n : "0/0";
+    prev.disabled = i <= 0;
+    next.disabled = i >= n - 1;
+    if (!it){
+      photo.removeAttribute("src");
+      photo.alt = "";
+      notes.value = "";
+      return;
+    }
+    photo.src = it.src;
+    photo.alt = it.name || it.id || "prenda";
+    notes.value = (store[it.id] && store[it.id].notes) || it.notes || "";
+  }
+  function go(delta){
+    if (listening && rec) try { rec.stop(); } catch {}
+    save();
+    const nextI = i + delta;
+    if (nextI < 0 || nextI >= items.length) return;
+    i = nextI;
+    render();
+  }
+
+  notes.addEventListener("input", save);
+  prev.addEventListener("click", () => go(-1));
+  next.addEventListener("click", () => go(1));
+
+  let startX = 0, startY = 0, tracking = false;
+  stage.addEventListener("touchstart", (e) => {
+    if (!e.changedTouches[0]) return;
+    tracking = true;
+    startX = e.changedTouches[0].clientX;
+    startY = e.changedTouches[0].clientY;
+  }, {passive:true});
+  stage.addEventListener("touchend", (e) => {
+    if (!tracking || !e.changedTouches[0]) return;
+    tracking = false;
+    const dx = e.changedTouches[0].clientX - startX;
+    const dy = e.changedTouches[0].clientY - startY;
+    if (Math.abs(dx) > 48 && Math.abs(dx) > Math.abs(dy) * 1.2) go(dx < 0 ? 1 : -1);
+  }, {passive:true});
+
+  document.addEventListener("keydown", (e) => {
+    if (e.target === notes || e.target === dump) return;
+    if (e.key === "ArrowLeft") go(-1);
+    if (e.key === "ArrowRight") go(1);
+  });
+
+  $("export").addEventListener("click", async () => {
+    save();
+    const data = items.map((it) => ({
+      id: it.id,
+      notes: (store[it.id] && store[it.id].notes) || it.notes || ""
+    }));
+    const text = JSON.stringify(data, null, 2);
+    dump.value = text;
+    dump.classList.add("show");
+    try {
+      await navigator.clipboard.writeText(text);
+      toast("Copiado");
+    } catch {
+      dump.focus();
+      dump.select();
+      toast("Copia el texto de abajo");
+    }
+  });
+
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR){
+    hint.hidden = false;
+    micBtn.disabled = true;
+    micBtn.title = "usa el micrófono del teclado";
+  } else {
+    rec = new SR();
+    rec.lang = "es-MX";
+    rec.continuous = true;
+    rec.interimResults = false;
+    rec.onresult = (ev) => {
+      let chunk = "";
+      for (let k = ev.resultIndex; k < ev.results.length; k++){
+        if (ev.results[k].isFinal) chunk += ev.results[k][0].transcript;
+      }
+      chunk = chunk.trim();
+      if (!chunk) return;
+      notes.value = notes.value ? notes.value.replace(/\s*$/, "") + " " + chunk : chunk;
+      save();
+    };
+    rec.onend = () => {
+      listening = false;
+      micBtn.classList.remove("on");
+      micBtn.setAttribute("aria-pressed", "false");
+    };
+    rec.onerror = () => {
+      listening = false;
+      micBtn.classList.remove("on");
+    };
+    micBtn.addEventListener("click", () => {
+      if (listening){
+        try { rec.stop(); } catch {}
+        return;
+      }
+      try {
+        rec.start();
+        listening = true;
+        micBtn.classList.add("on");
+        micBtn.setAttribute("aria-pressed", "true");
+      } catch {
+        hint.hidden = false;
+        hint.textContent = "usa el micrófono del teclado";
+      }
+    });
+  }
+
+  function boot(list){
+    items = Array.isArray(list) ? list.filter((it) => it && it.id && it.src) : [];
+    i = 0;
+    render();
+  }
+
+  fetch("items.json", {cache:"no-store"})
+    .then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(boot)
+    .catch(() => {
+      try {
+        const raw = $("items-fallback") && $("items-fallback").textContent;
+        boot(JSON.parse(raw || "[]"));
+      } catch { boot([]); }
+    });
+
+  window.addEventListener("pagehide", save);
+})();
+</script>
+</body>
+</html>
