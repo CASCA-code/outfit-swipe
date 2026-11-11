@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#F5F3EF">
+<meta name="robots" content="noindex">
+<title>¿Te gusta?</title>
+<link rel="icon" href="data:,">
+<style>
+:root{--bg:#F5F3EF;--paper:#FFFCF7;--ink:#1C1915;--navy:#24304D;--muted:#7A7468;--line:#E3DCD0;--no:#8B3A32;
+--serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;--sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font-family:var(--sans);overscroll-behavior:none}
+body{height:100dvh;display:flex;flex-direction:column;padding:calc(env(safe-area-inset-top,0px) + 6px) 0 calc(env(safe-area-inset-bottom,0px) + 6px);overflow:hidden}
+header{display:flex;align-items:center;gap:10px;padding:2px 14px}
+h1{font:600 21px var(--serif);margin:0;flex:1}
+.count{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.lanes{display:flex;gap:6px;padding:6px 14px;overflow-x:auto;flex:none}
+.lanes button{flex:none;height:34px;padding:0 12px;border:1px solid var(--line);background:var(--paper);border-radius:999px;font:600 13px var(--sans);color:var(--ink);cursor:pointer}
+.lanes button[aria-pressed=true]{background:var(--navy);color:#fff;border-color:var(--navy)}
+main{flex:1;min-height:0;position:relative;margin:2px 12px;border-radius:18px;background:var(--paper);border:1px solid var(--line);overflow:hidden;touch-action:pan-y}
+main img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;transition:transform .18s ease,opacity .18s ease;user-select:none;-webkit-user-drag:none}
+.tag{position:absolute;left:10px;top:10px;z-index:2;font:600 11px var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--navy);background:rgba(232,236,244,.92);padding:5px 9px;border-radius:999px}
+.stamp{position:absolute;top:18px;right:14px;z-index:3;font:800 22px var(--sans);padding:4px 12px;border:3px solid;border-radius:10px;opacity:0;transform:rotate(8deg)}
+.stamp.si{color:var(--navy)}.stamp.no{color:var(--no);left:14px;right:auto;transform:rotate(-8deg)}
+.done{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:24px;color:var(--muted)}
+.actions{display:flex;justify-content:center;gap:14px;padding:10px 0 2px;flex:none}
+.actions button{height:56px;min-width:92px;border-radius:28px;border:1px solid var(--line);background:var(--paper);font:700 16px var(--sans);cursor:pointer}
+.actions .yes{background:var(--navy);color:#fff;border-color:var(--navy)}
+.actions .no{color:var(--no)}
+.actions button:active{transform:scale(.95)}
+.tools{display:flex;justify-content:center;gap:6px;flex:none}
+.tools button{background:none;border:0;color:var(--muted);text-decoration:underline;cursor:pointer;font:500 13px var(--sans);padding:6px 8px}
+.hint{margin:0;text-align:center;font:500 13px var(--sans);color:var(--muted)}
+</style>
+</head>
+<body>
+<header><h1>¿Te gusta?</h1><span class="count" id="count"></span></header>
+<nav class="lanes" id="lanes"></nav>
+<main id="main"></main>
+<div class="actions" id="actions">
+  <button class="no" data-v="no">No</button>
+  <button data-v="skip">Saltar</button>
+  <button class="yes" data-v="si">Sí</button>
+</div>
+<div class="tools"><button id="undo">Deshacer</button><button id="export">Exportar votos</button><button id="reskip">Ver saltados</button></div>
+<p class="hint">Espacio = keep · Delete = no</p>
+<script>
+const KEY="outfit-photo-rate-v1";
+const PRIVATE=new URLSearchParams(location.search).has("private");
+let deck=[],lane="Todas",store=JSON.parse(localStorage.getItem(KEY)||"{}");store.votes=store.votes||{};store.log=store.log||[];
+const save=()=>localStorage.setItem(KEY,JSON.stringify(store));
+const pool=()=>deck.filter(c=>lane==="Todas"||c.lane===lane);
+const next=()=>pool().find(c=>!store.votes[c.id]);
+const main=document.getElementById("main");
+function render(){
+  const p=pool(),done=p.filter(c=>store.votes[c.id]&&store.votes[c.id].v!=="skip").length;
+  document.getElementById("count").textContent=done+" / "+p.length;
+  const c=next();
+  document.getElementById("actions").style.visibility=c?"visible":"hidden";
+  if(!c){main.innerHTML='<div class="done">Ya calificaste todas'+(lane==="Todas"?"":" en "+lane)+'.<br>Toca “Exportar votos”.</div>';return}
+  main.innerHTML=`<span class="tag">${c.lane}</span><span class="stamp si">SÍ</span><span class="stamp no">NO</span><img src="${c.remote||c.src}" alt="${(c.alt||"Outfit").replace(/"/g,"")}" draggable="false">`;
+  const i=deck.indexOf(c);for(let k=1;k<=3;k++){const n=deck[i+k];if(n)new Image().src=n.remote||n.src}
+}
+function vote(v){const c=next();if(!c)return;
+  store.votes[c.id]={v,lane:c.lane,source:c.source,source_url:c.source_url||null,t:new Date().toISOString()};store.log.push(c.id);save();
+  const img=main.querySelector("img");if(img&&v!=="skip"){img.style.transform=`translateX(${v==="si"?120:-120}%) rotate(${v==="si"?8:-8}deg)`;img.style.opacity=0;setTimeout(render,160)}else render()}
+document.querySelectorAll("#actions button").forEach(b=>b.onclick=()=>vote(b.dataset.v));
+document.addEventListener("keydown",e=>{
+  if(e.repeat)return;
+  if((e.metaKey||e.ctrlKey)&&e.key==="z"){e.preventDefault();undo();return}
+  if(e.key===" "||e.code==="Space"){e.preventDefault();vote("si");return}
+  if(e.key==="Delete"||e.key==="Backspace"){e.preventDefault();vote("no");return}
+  if(e.key==="ArrowRight")vote("si");
+  if(e.key==="ArrowLeft")vote("no");
+  if(e.key==="ArrowDown"||e.key==="Escape"){e.preventDefault();vote("skip")}
+},true);
+function undo(){const id=store.log.pop();if(id){delete store.votes[id];save();render()}}
+document.getElementById("undo").onclick=undo;
+document.getElementById("reskip").onclick=()=>{for(const k in store.votes)if(store.votes[k].v==="skip")delete store.votes[k];save();render()};
+document.getElementById("export").onclick=async()=>{
+  const out=JSON.stringify({exported:new Date().toISOString(),deck:"rate-photos v1",votes:store.votes},null,1);
+  try{await navigator.clipboard.writeText(out)}catch(e){}
+  const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([out],{type:"application/json"}));a.download="votos-fotos.json";a.click();
+};
+let sx=null,dx=0;
+main.addEventListener("touchstart",e=>{sx=e.touches[0].clientX;dx=0},{passive:true});
+main.addEventListener("touchmove",e=>{if(sx===null)return;dx=e.touches[0].clientX-sx;const img=main.querySelector("img");if(img){img.style.transition="none";img.style.transform=`translateX(${dx}px) rotate(${dx/25}deg)`}
+  main.querySelector(".stamp.si")&&(main.querySelector(".stamp.si").style.opacity=Math.max(0,dx/120));main.querySelector(".stamp.no")&&(main.querySelector(".stamp.no").style.opacity=Math.max(0,-dx/120))},{passive:true});
+main.addEventListener("touchend",()=>{if(sx===null)return;sx=null;const img=main.querySelector("img");if(img)img.style.transition="";
+  if(Math.abs(dx)>90)vote(dx>0?"si":"no");else if(img){img.style.transform="";main.querySelectorAll(".stamp").forEach(s=>s.style.opacity=0)}});
+Promise.all([fetch("deck.json?v=2").then(r=>r.json()),PRIVATE?fetch("private/deck-private.json").then(r=>r.ok?r.json():{cards:[]}).catch(()=>({cards:[]})):Promise.resolve({cards:[]})]).then(([d,p])=>{
+  deck=d.cards.concat(p.cards);
+  const ln=document.getElementById("lanes");["Todas",...d.lanes].forEach(l=>{const b=document.createElement("button");b.textContent=l;b.setAttribute("aria-pressed",l===lane);b.onclick=()=>{lane=l;ln.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x.textContent===l));render()};ln.appendChild(b)});
+  render()});
+</script>
+</body>
+</html>

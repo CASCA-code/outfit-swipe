@@ -1,0 +1,4 @@
+# private, copyrighted extras — never commit
+private/
+# local JPEG copies; the page uses Pexels CDN URLs
+img/
