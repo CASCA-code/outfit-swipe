@@ -1385,5 +1385,21 @@
     "chips": [],
     "seasons": [],
     "source_file": "/workspace/proyectos/outfits/wardrobe/clean/NEW-2026-11-11-c.png"
+  },
+  {
+    "id": "NEW-2026-11-12-a",
+    "src": "img/NEW-2026-11-12-a.jpg",
+    "srcFull": "img-full/NEW-2026-11-12-a.jpg",
+    "name": "Ralph Lauren trousers beige",
+    "category": "bottom",
+    "subcategory": "trousers",
+    "niche": "pantalón",
+    "color": "beige",
+    "brand": "Ralph Lauren",
+    "notes": "Entre los que mejor le quedan; le encantan, quiere usarlos. Beige, algodón/poplin ligero.",
+    "falta_marca": false,
+    "chips": [],
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/clean/NEW-2026-11-12-a.png"
   }
 ]

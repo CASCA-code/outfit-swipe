@@ -191,7 +191,7 @@ $('#imp').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const j=
 $('#dclose').onclick=()=>$('#dlg').close();
 $('#dlg').addEventListener('click',e=>{if(e.target.id==='dlg')e.target.close()});
 document.addEventListener('keydown',e=>{if($('#dlg').open)return;if(e.key==='r'||e.key==='R')randomize()});
-fetch('items.json?v=2').then(r=>r.json()).then(d=>{ITEMS=d.items;PRESETS=d.presets;ITEMS.forEach(i=>BY[i.id]=i);
+fetch('items.json?v=3').then(r=>r.json()).then(d=>{ITEMS=d.items;PRESETS=d.presets;ITEMS.forEach(i=>BY[i.id]=i);
  $('#sub').textContent=`Clóset de Nicolás · ${ITEMS.length} prendas`;
  let saved=null;try{saved=JSON.parse(localStorage.getItem(LS+'-cur'))}catch(e){}
  cur=saved&&BY[saved.arriba]?saved:{...PRESETS.find(p=>p.id==='look-19').slots};render();renderSaved()});

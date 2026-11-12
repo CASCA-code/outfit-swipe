@@ -1323,6 +1323,21 @@
 "model": "",
 "note": "Muy buena, semi formal, le queda muy bien. Posible mismo lado reversible que la gris (NEW-2026-11-11-b). No es IMG_1687 (esa tiene pony dorado y bolsillos lisos).",
 "short": false
+},
+{
+"id": "NEW-2026-11-12-a",
+"src": "img/NEW-2026-11-12-a.webp",
+"slots": [
+"pantalon"
+],
+"sub": "trousers",
+"subEs": "Pantalón",
+"color": "beige",
+"colorEs": "beige",
+"brand": "Ralph Lauren",
+"model": "",
+"note": "Entre los que mejor le quedan; le encantan, quiere usarlos. Beige, algodón/poplin ligero.",
+"short": false
 }
 ],
 "presets": [
