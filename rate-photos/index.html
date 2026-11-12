@@ -19,7 +19,7 @@ h1{font:600 21px var(--serif);margin:0;flex:1}
 .lanes{display:flex;gap:6px;padding:6px 14px;overflow-x:auto;flex:none}
 .lanes button{flex:none;height:34px;padding:0 12px;border:1px solid var(--line);background:var(--paper);border-radius:999px;font:600 13px var(--sans);color:var(--ink);cursor:pointer}
 .lanes button[aria-pressed=true]{background:var(--navy);color:#fff;border-color:var(--navy)}
-main{flex:1;min-height:0;position:relative;margin:2px 12px;border-radius:18px;background:var(--paper);border:1px solid var(--line);overflow:hidden;touch-action:pan-y}
+main{cursor:pointer;flex:1;min-height:0;position:relative;margin:2px 12px;border-radius:18px;background:var(--paper);border:1px solid var(--line);overflow:hidden;touch-action:pan-y}
 main img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;transition:transform .18s ease,opacity .18s ease;user-select:none;-webkit-user-drag:none}
 .tag{position:absolute;left:10px;top:10px;z-index:2;font:600 11px var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--navy);background:rgba(232,236,244,.92);padding:5px 9px;border-radius:999px}
 .stamp{position:absolute;top:18px;right:14px;z-index:3;font:800 22px var(--sans);padding:4px 12px;border:3px solid;border-radius:10px;opacity:0;transform:rotate(8deg)}
@@ -45,9 +45,9 @@ main img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;tra
   <button class="yes" data-v="si">Sí</button>
 </div>
 <div class="tools"><button id="undo">Deshacer</button><button id="export">Exportar votos</button><button id="reskip">Ver saltados</button></div>
-<p class="hint">Espacio = keep · Delete = no</p>
+<p class="hint">Click izq = no · Click der = sí · Espacio = atrás</p>
 <script>
-const KEY="outfit-photo-rate-v1";
+const KEY="outfit-photo-rate-v2";
 const PRIVATE=new URLSearchParams(location.search).has("private");
 let deck=[],lane="Todas",store=JSON.parse(localStorage.getItem(KEY)||"{}");store.votes=store.votes||{};store.log=store.log||[];
 const save=()=>localStorage.setItem(KEY,JSON.stringify(store));
@@ -66,31 +66,37 @@ function render(){
 function vote(v){const c=next();if(!c)return;
   store.votes[c.id]={v,lane:c.lane,source:c.source,source_url:c.source_url||null,t:new Date().toISOString()};store.log.push(c.id);save();
   const img=main.querySelector("img");if(img&&v!=="skip"){img.style.transform=`translateX(${v==="si"?120:-120}%) rotate(${v==="si"?8:-8}deg)`;img.style.opacity=0;setTimeout(render,160)}else render()}
-document.querySelectorAll("#actions button").forEach(b=>b.onclick=()=>vote(b.dataset.v));
+document.querySelectorAll("#actions button,.tools button").forEach(b=>b.addEventListener("mouseup",()=>b.blur()));
+document.querySelectorAll("#actions button").forEach(b=>b.onclick=e=>{e.stopPropagation();b.blur();vote(b.dataset.v)});
+let lastTouch=0,busy=0;
+const voteOnce=v=>{const n=Date.now();if(n-busy<250)return;busy=n;vote(v)};
+main.addEventListener("click",e=>{if(e.button!==0||Date.now()-lastTouch<500)return;e.preventDefault();voteOnce("no")});
+main.addEventListener("contextmenu",e=>{e.preventDefault();e.stopPropagation();if(Date.now()-lastTouch<500)return;voteOnce("si")});
 document.addEventListener("keydown",e=>{
   if(e.repeat)return;
   if((e.metaKey||e.ctrlKey)&&e.key==="z"){e.preventDefault();undo();return}
-  if(e.key===" "||e.code==="Space"){e.preventDefault();vote("si");return}
+  if(e.key===" "||e.code==="Space"){e.preventDefault();if(document.activeElement&&document.activeElement.blur)document.activeElement.blur();undo();return}
   if(e.key==="Delete"||e.key==="Backspace"){e.preventDefault();vote("no");return}
   if(e.key==="ArrowRight")vote("si");
   if(e.key==="ArrowLeft")vote("no");
   if(e.key==="ArrowDown"||e.key==="Escape"){e.preventDefault();vote("skip")}
 },true);
-function undo(){const id=store.log.pop();if(id){delete store.votes[id];save();render()}}
+document.addEventListener("keyup",e=>{if(e.key===" "||e.code==="Space")e.preventDefault()},true);
+function undo(){let id=store.log.pop();while(id&&!store.votes[id])id=store.log.pop();if(id){delete store.votes[id];save();render()}}
 document.getElementById("undo").onclick=undo;
 document.getElementById("reskip").onclick=()=>{for(const k in store.votes)if(store.votes[k].v==="skip")delete store.votes[k];save();render()};
 document.getElementById("export").onclick=async()=>{
-  const out=JSON.stringify({exported:new Date().toISOString(),deck:"rate-photos v1",votes:store.votes},null,1);
+  const out=JSON.stringify({exported:new Date().toISOString(),deck:"rate-photos v2",votes:store.votes},null,1);
   try{await navigator.clipboard.writeText(out)}catch(e){}
-  const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([out],{type:"application/json"}));a.download="votos-fotos.json";a.click();
+  const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([out],{type:"application/json"}));a.download="votos-fotos-batch2.json";a.click();
 };
 let sx=null,dx=0;
 main.addEventListener("touchstart",e=>{sx=e.touches[0].clientX;dx=0},{passive:true});
 main.addEventListener("touchmove",e=>{if(sx===null)return;dx=e.touches[0].clientX-sx;const img=main.querySelector("img");if(img){img.style.transition="none";img.style.transform=`translateX(${dx}px) rotate(${dx/25}deg)`}
   main.querySelector(".stamp.si")&&(main.querySelector(".stamp.si").style.opacity=Math.max(0,dx/120));main.querySelector(".stamp.no")&&(main.querySelector(".stamp.no").style.opacity=Math.max(0,-dx/120))},{passive:true});
-main.addEventListener("touchend",()=>{if(sx===null)return;sx=null;const img=main.querySelector("img");if(img)img.style.transition="";
+main.addEventListener("touchend",()=>{lastTouch=Date.now();if(sx===null)return;sx=null;const img=main.querySelector("img");if(img)img.style.transition="";
   if(Math.abs(dx)>90)vote(dx>0?"si":"no");else if(img){img.style.transform="";main.querySelectorAll(".stamp").forEach(s=>s.style.opacity=0)}});
-Promise.all([fetch("deck.json?v=2").then(r=>r.json()),PRIVATE?fetch("private/deck-private.json").then(r=>r.ok?r.json():{cards:[]}).catch(()=>({cards:[]})):Promise.resolve({cards:[]})]).then(([d,p])=>{
+Promise.all([fetch("deck.json?v=3").then(r=>r.json()),PRIVATE?fetch("private/deck-private.json").then(r=>r.ok?r.json():{cards:[]}).catch(()=>({cards:[]})):Promise.resolve({cards:[]})]).then(([d,p])=>{
   deck=d.cards.concat(p.cards);
   const ln=document.getElementById("lanes");["Todas",...d.lanes].forEach(l=>{const b=document.createElement("button");b.textContent=l;b.setAttribute("aria-pressed",l===lane);b.onclick=()=>{lane=l;ln.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x.textContent===l));render()};ln.appendChild(b)});
   render()});
