@@ -147,8 +147,8 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
   <button type="button" class="dictar" id="dictar">Dictar</button>
   <p class="hint" id="micHint">Toca el 🎙️ del teclado</p>
   <p class="hint" id="micStatus" hidden></p>
-  <p class="safari">Si no jala, ábrelo en Safari: <a href="https://casca-code.github.io/outfit-swipe/closet/?v=6">casca-code.github.io/outfit-swipe/closet/</a></p>
-  <p class="ver" id="ver">v6</p>
+  <p class="safari">Si no jala, ábrelo en Safari: <a href="https://casca-code.github.io/outfit-swipe/closet/?v=7">casca-code.github.io/outfit-swipe/closet/</a></p>
+  <p class="ver" id="ver">v7</p>
 </div>
 <textarea id="dump" readonly aria-label="JSON exportado"></textarea>
 <div class="toast" id="toast" role="status"></div>
@@ -1469,6 +1469,78 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
     "chips": [],
     "seasons": [],
     "source_file": "/workspace/proyectos/outfits/wardrobe/clean/IMG_1759.png"
+  },
+  {
+    "id": "shoes-zara-boat-grey",
+    "src": "img/shoes-zara-boat-grey.jpg",
+    "srcFull": "img-full/shoes-zara-boat-grey.jpg",
+    "name": "Zara boat shoes grey",
+    "category": "shoes",
+    "subcategory": "boat shoes",
+    "niche": "shoes",
+    "color": "grey",
+    "brand": "Zara",
+    "notes": "Nicolás has these grey Zara shoes (2026-11-11); use them in outfits.",
+    "material": "suede",
+    "falta_marca": false,
+    "chips": [],
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/clean/shoes-zara-boat-grey.png"
+  },
+  {
+    "id": "NEW-2026-11-11-a",
+    "src": "img/NEW-2026-11-11-a.jpg",
+    "srcFull": "img-full/NEW-2026-11-11-a.jpg",
+    "name": "sweater black",
+    "category": "top",
+    "subcategory": "sweater",
+    "niche": "sweater",
+    "color": "black",
+    "notes": "Suéter negro peruano. Le gusta mucho, le queda muy bien. Usar con camisa/polo blanco abajo (cuello afuera). Ski vibes, eighties, Ivy.",
+    "falta_marca": true,
+    "origin": "Perú",
+    "brand": "",
+    "chips": [],
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/clean/NEW-2026-11-11-a.png"
+  },
+  {
+    "id": "NEW-2026-11-11-b",
+    "src": "img/NEW-2026-11-11-b.jpg",
+    "srcFull": "img-full/NEW-2026-11-11-b.jpg",
+    "name": "Polo Ralph Lauren harrington grey",
+    "category": "outerwear",
+    "subcategory": "harrington",
+    "niche": "chaqueta",
+    "color": "grey",
+    "brand": "Polo Ralph Lauren",
+    "notes": "Muy buena, semi formal, le queda muy bien. Posible misma prenda reversible que NEW-2026-11-11-c: aquí el caparazón es gris con forro navy y pony navy; en la foto navy el forro y el pony son grises. Los bolsillos no coinciden (welt curvo en el lado gris vs. solapa con botones en el navy) — pasa en chaquetas Polo reversibles, pero no está confirmado. Catalogadas por separado, no se fusionaron.",
+    "falta_marca": false,
+    "possible_same_as": [
+      "NEW-2026-11-11-c"
+    ],
+    "chips": [],
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/clean/NEW-2026-11-11-b.png"
+  },
+  {
+    "id": "NEW-2026-11-11-c",
+    "src": "img/NEW-2026-11-11-c.jpg",
+    "srcFull": "img-full/NEW-2026-11-11-c.jpg",
+    "name": "Polo Ralph Lauren harrington navy",
+    "category": "outerwear",
+    "subcategory": "harrington",
+    "niche": "chaqueta",
+    "color": "navy",
+    "brand": "Polo Ralph Lauren",
+    "notes": "Muy buena, semi formal, le queda muy bien. Posible misma chaqueta reversible que NEW-2026-11-11-b (lados navy/gris). No es la misma que IMG_1687: esa es un Harrington navy con pony dorado, bolsillos welt lisos y ruedo elástico navy, sin forro gris ni solapas con botones. La nota de Nicolás en IMG_1687 ('la otra está un poco mejor') probablemente se refiere a esta (o al par). Catalogadas por separado, no se fusionaron.",
+    "falta_marca": false,
+    "possible_same_as": [
+      "NEW-2026-11-11-b"
+    ],
+    "chips": [],
+    "seasons": [],
+    "source_file": "/workspace/proyectos/outfits/wardrobe/clean/NEW-2026-11-11-c.png"
   }
 ]
 </script>
@@ -1476,7 +1548,7 @@ header{display:flex;align-items:center;gap:12px;padding:4px 16px 6px}
 <script>
 (function(){
   const KEY = "closetReview.v1";
-  const VER = "6";
+  const VER = "7";
   const Z_TAP = 2.5;
   const Z_MAX = 4;
   const $ = (id) => document.getElementById(id);

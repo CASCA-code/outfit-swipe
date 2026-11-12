@@ -1278,6 +1278,51 @@
 "model": "",
 "note": "Gamuza gris con suela crema; van con lino y jeans claros.",
 "short": false
+},
+{
+"id": "NEW-2026-11-11-a",
+"src": "img/NEW-2026-11-11-a.webp",
+"slots": [
+"arriba"
+],
+"sub": "sweater",
+"subEs": "Suéter",
+"color": "black",
+"colorEs": "negro",
+"brand": "",
+"model": "",
+"note": "Suéter negro peruano. Le gusta mucho, le queda muy bien. Usar con camisa/polo blanco abajo (cuello afuera). Ski vibes, eighties, Ivy.",
+"short": false
+},
+{
+"id": "NEW-2026-11-11-b",
+"src": "img/NEW-2026-11-11-b.webp",
+"slots": [
+"chaqueta"
+],
+"sub": "harrington",
+"subEs": "Harrington",
+"color": "grey",
+"colorEs": "gris",
+"brand": "Polo Ralph Lauren",
+"model": "",
+"note": "Muy buena, semi formal, le queda muy bien. Posible mismo lado reversible que la navy (NEW-2026-11-11-c).",
+"short": false
+},
+{
+"id": "NEW-2026-11-11-c",
+"src": "img/NEW-2026-11-11-c.webp",
+"slots": [
+"chaqueta"
+],
+"sub": "harrington",
+"subEs": "Harrington",
+"color": "navy",
+"colorEs": "navy",
+"brand": "Polo Ralph Lauren",
+"model": "",
+"note": "Muy buena, semi formal, le queda muy bien. Posible mismo lado reversible que la gris (NEW-2026-11-11-b). No es IMG_1687 (esa tiene pony dorado y bolsillos lisos).",
+"short": false
 }
 ],
 "presets": [
