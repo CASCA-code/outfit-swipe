@@ -48,7 +48,7 @@ main img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;tra
 <p class="hint">Click izq = no · Click der = sí · Espacio = atrás</p>
 <script>
 const Q=new URLSearchParams(location.search),B=Q.get("b")||"2";
-const CFG={"2":{deck:"deck.json",key:"outfit-photo-rate-v2",out:"votos-fotos-batch2.json"},"3":{deck:"deck-batch3.json",key:"outfit-photo-rate-v3",out:"votos-fotos-batch3.json"},"4":{deck:"deck-batch4.json",key:"outfit-photo-rate-v4",out:"votos-fotos-batch4.json"},"lestyle":{deck:"deck-lestyle.json",key:"outfit-photo-rate-lestyle",out:"votos-fotos-lestyle.json"}}[B]||{deck:"deck-batch"+B+".json",key:"outfit-photo-rate-b"+B,out:"votos-fotos-batch"+B+".json"};
+const CFG={"2":{deck:"deck.json",key:"outfit-photo-rate-v2",out:"votos-fotos-batch2.json"},"3":{deck:"deck-batch3.json",key:"outfit-photo-rate-v3",out:"votos-fotos-batch3.json"},"4":{deck:"deck-batch4.json",key:"outfit-photo-rate-v4",out:"votos-fotos-batch4.json"},"lestyle":{deck:"deck-lestyle.json",key:"outfit-photo-rate-lestyle",out:"votos-fotos-lestyle.json"},"si":{deck:"deck-si.json",key:"outfit-photo-rate-si",out:"votos-fotos-si.json"}}[B]||{deck:"deck-batch"+B+".json",key:"outfit-photo-rate-b"+B,out:"votos-fotos-batch"+B+".json"};
 const KEY=CFG.key;
 const PRIVATE=new URLSearchParams(location.search).has("private");
 let deck=[],lane="Todas",store=JSON.parse(localStorage.getItem(KEY)||"{}");store.votes=store.votes||{};store.log=store.log||[];
