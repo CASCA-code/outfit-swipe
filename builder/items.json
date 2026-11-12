@@ -1,0 +1,1465 @@
+{
+"items": [
+{
+"id": "shoes-bw-army-brown",
+"src": "img/shoes-bw-army-brown.webp",
+"slots": [
+"zapatos"
+],
+"sub": "sneakers",
+"subEs": "Tenis",
+"color": "brown",
+"colorEs": "café",
+"brand": "adidas",
+"model": "BW Army",
+"note": "Yo creo que estos son mis zapatos favoritos es demasiado bien parece unos loafers, pero más casuales me…",
+"short": false
+},
+{
+"id": "shoes-oncloud-white",
+"src": "img/shoes-oncloud-white.webp",
+"slots": [
+"zapatos"
+],
+"sub": "sneakers",
+"subEs": "Tenis",
+"color": "white",
+"colorEs": "blanco",
+"brand": "On",
+"model": "THE ROGER Advantage",
+"note": "No me late tanto.",
+"short": false
+},
+{
+"id": "IMG_1679",
+"src": "img/IMG_1679.webp",
+"slots": [
+"abajo"
+],
+"sub": "dress-shirt",
+"subEs": "Camisa de vestir",
+"color": "light blue",
+"colorEs": "azul claro",
+"brand": "Uniqlo",
+"model": "",
+"note": "Está es Uniqlo sí me gusta la tela pues ese poliéster así que no sabe Rubén ni nada pero realísticamente…",
+"short": false
+},
+{
+"id": "IMG_1680",
+"src": "img/IMG_1680.webp",
+"slots": [
+"arriba",
+"abajo"
+],
+"sub": "button-up",
+"subEs": "Camisa",
+"color": "navy",
+"colorEs": "navy",
+"brand": "Giorgio Valentino",
+"model": "",
+"note": "Esta es Giorgio Valentino me gusta bastante como me quedan, me gustas bastante el color es un azul muy…",
+"short": false
+},
+{
+"id": "IMG_1681",
+"src": "img/IMG_1681.webp",
+"slots": [
+"arriba"
+],
+"sub": "polo",
+"subEs": "Polo",
+"color": "black",
+"colorEs": "negro",
+"brand": "Sin marca",
+"model": "",
+"note": "Esto es una Paloma Symo Titi, me apeteced bastante fuerte, me agrada, pero es para verme mamafo",
+"short": true
+},
+{
+"id": "IMG_1682",
+"src": "img/IMG_1682.webp",
+"slots": [
+"arriba"
+],
+"sub": "knit-polo",
+"subEs": "Polo de punto",
+"color": "navy",
+"colorEs": "navy",
+"brand": "Mango",
+"model": "",
+"note": "Esto es una larga azul oscuro, marca mango, igual me aprieta los brazos se me hace bien",
+"short": false
+},
+{
+"id": "IMG_1683",
+"src": "img/IMG_1683.webp",
+"slots": [
+"arriba"
+],
+"sub": "knit-polo",
+"subEs": "Polo de punto",
+"color": "black",
+"colorEs": "negro",
+"brand": "Massimo Dutti",
+"model": "",
+"note": "Massimo Dutti Paolo, manga larga que me cae bien",
+"short": false
+},
+{
+"id": "IMG_1684",
+"src": "img/IMG_1684.webp",
+"slots": [
+"arriba"
+],
+"sub": "polo",
+"subEs": "Polo",
+"color": "navy",
+"colorEs": "navy",
+"brand": "Massimo Dutti",
+"model": "",
+"note": "Massimo dutti manga larga polo heavy weight",
+"short": false
+},
+{
+"id": "IMG_1685",
+"src": "img/IMG_1685.webp",
+"slots": [
+"arriba"
+],
+"sub": "knit-polo",
+"subEs": "Polo de punto",
+"color": "olive",
+"colorEs": "olivo",
+"brand": "Massimo Dutti",
+"model": "",
+"note": "Massimo dutti me queda bien mamsfo pegada verde \nLa que trajo mamá de Londres \nVerde olivo oscuro",
+"short": false
+},
+{
+"id": "IMG_1686",
+"src": "img/IMG_1686.webp",
+"slots": [
+"arriba",
+"abajo"
+],
+"sub": "button-up",
+"subEs": "Camisa",
+"color": "white",
+"colorEs": "blanco",
+"brand": "Massimo Dutti",
+"model": "",
+"note": "Massimo dutti Lino\nLove it \nMuy fina\nNo está tan playera \nMe queda muy bien no suelta ni nada",
+"short": false
+},
+{
+"id": "IMG_1687",
+"src": "img/IMG_1687.webp",
+"slots": [
+"chaqueta"
+],
+"sub": "harrington",
+"subEs": "Harrington",
+"color": "navy",
+"colorEs": "navy",
+"brand": "Polo Ralph Lauren",
+"model": "",
+"note": "Mi chaqueta Ralph Lauren es como un rompevientos \nAzul oscuro\nLove it pero la otra está un poco mejor",
+"short": false
+},
+{
+"id": "IMG_1688",
+"src": "img/IMG_1688.webp",
+"slots": [
+"arriba",
+"abajo"
+],
+"sub": "dress-shirt",
+"subEs": "Camisa de vestir",
+"color": "white",
+"colorEs": "blanco",
+"brand": "Massimo Dutti",
+"model": "",
+"note": "Massimo Dutti blanca, es la camisa de vestir que mejor me queda (10/10)",
+"short": false
+},
+{
+"id": "IMG_1689",
+"src": "img/IMG_1689.webp",
+"slots": [
+"arriba",
+"abajo"
+],
+"sub": "button-up",
+"subEs": "Camisa",
+"color": "rust brown",
+"colorEs": "óxido",
+"brand": "Massimo Dutti",
+"model": "",
+"note": "Love this Massimo dutti Lino color marrón súper meduterranea",
+"short": false
+},
+{
+"id": "IMG_1690",
+"src": "img/IMG_1690.webp",
+"slots": [
+"abajo"
+],
+"sub": "dress-shirt",
+"subEs": "Camisa de vestir",
+"color": "pale grey-white",
+"colorEs": "gris perla",
+"brand": "Uniqlo",
+"model": "",
+"note": "Uniqlo white \nSame as the other Uniqlo shirt mesita es un poco más blanca y tiene rayitas muy delgadas negras",
+"short": false
+},
+{
+"id": "IMG_1691",
+"src": "img/IMG_1691.webp",
+"slots": [
+"arriba"
+],
+"sub": "knit-polo",
+"subEs": "Polo de punto",
+"color": "taupe",
+"colorEs": "taupe",
+"brand": "Mango",
+"model": "",
+"note": "La mango que me compré en Niza \nMe gusta\nMe queda pegada de ve bien",
+"short": false
+},
+{
+"id": "IMG_1692",
+"src": "img/IMG_1692.webp",
+"slots": [
+"arriba"
+],
+"sub": "polo",
+"subEs": "Polo",
+"color": "heather taupe",
+"colorEs": "taupe jaspeado",
+"brand": "Massimo Dutti",
+"model": "",
+"note": "La Massimo dutti long sleeve polo que me compré me gusta bastante con jeans o algo así de ve súper bien me…",
+"short": false
+},
+{
+"id": "IMG_1693",
+"src": "img/IMG_1693.webp",
+"slots": [
+"arriba"
+],
+"sub": "quarter-zip",
+"subEs": "Quarter-zip",
+"color": "navy",
+"colorEs": "navy",
+"brand": "Polo Ralph Lauren",
+"model": "",
+"note": "Quarter zip de Ralph Lauren de ve muy bien me queda bien",
+"short": false
+},
+{
+"id": "IMG_1694",
+"src": "img/IMG_1694.webp",
+"slots": [
+"arriba"
+],
+"sub": "sweater",
+"subEs": "Suéter",
+"color": "heather grey",
+"colorEs": "gris jaspeado",
+"brand": "Nautica",
+"model": "",
+"note": "Náutica gris me queda bastante bien se me hace que me hace ver mamsdo me enseña cuello y el lugarsito…",
+"short": false
+},
+{
+"id": "IMG_1695",
+"src": "img/IMG_1695.webp",
+"slots": [
+"arriba"
+],
+"sub": "hoodie",
+"subEs": "Hoodie",
+"color": "heather grey",
+"colorEs": "gris jaspeado",
+"brand": "Abercrombie & Fitch",
+"model": "",
+"note": "Hoodie Abercrombie and fifth me queda muy bien solamente que casi nunca uso hoodie",
+"short": false
+},
+{
+"id": "IMG_1696",
+"src": "img/IMG_1696.webp",
+"slots": [
+"arriba",
+"abajo"
+],
+"sub": "button-up",
+"subEs": "Camisa",
+"color": "light blue",
+"colorEs": "azul claro",
+"brand": "Sin marca",
+"model": "",
+"note": "Lino azul claro.",
+"short": false
+},
+{
+"id": "IMG_1697",
+"src": "img/IMG_1697.webp",
+"slots": [
+"arriba",
+"abajo"
+],
+"sub": "button-up",
+"subEs": "Camisa",
+"color": "light blue",
+"colorEs": "azul claro",
+"brand": "Massimo Dutti",
+"model": "",
+"note": "massimo dutti de vestir lowkey pegada, azul, pattern intersante, no tan facil de conbinar",
+"short": false
+},
+{
+"id": "IMG_1698",
+"src": "img/IMG_1698.webp",
+"slots": [
+"arriba",
+"abajo"
+],
+"sub": "button-up",
+"subEs": "Camisa",
+"color": "charcoal",
+"colorEs": "carbón",
+"brand": "Massimo Dutti",
+"model": "",
+"note": "de mis favoritaas, lino rgis (la uso para salir ) massimo dutti",
+"short": false
+},
+{
+"id": "IMG_1699",
+"src": "img/IMG_1699.webp",
+"slots": [
+"arriba",
+"abajo"
+],
+"sub": "button-up",
+"subEs": "Camisa",
+"color": "pale grey",
+"colorEs": "gris pálido",
+"brand": "Massimo Dutti",
+"model": "",
+"note": "massimo dutti lino blanco de mis favoritoas (son dos iguales ) exactamente iguales",
+"short": false
+},
+{
+"id": "IMG_1700",
+"src": "img/IMG_1700.webp",
+"slots": [
+"arriba"
+],
+"sub": "quarter-zip",
+"subEs": "Quarter-zip",
+"color": "red",
+"colorEs": "rojo",
+"brand": "Polo Ralph Lauren",
+"model": "",
+"note": "ralph lauren quarter zip, se me hace muy brillante para mi gusto, dificil de conbinar",
+"short": false
+},
+{
+"id": "IMG_1701",
+"src": "img/IMG_1701.webp",
+"slots": [
+"arriba",
+"abajo"
+],
+"sub": "dress-shirt",
+"subEs": "Camisa de vestir",
+"color": "light grey",
+"colorEs": "gris claro",
+"brand": "Tommy Hilfiger",
+"model": "",
+"note": "tommy hilfiger de vestir , me queda muy bien, para vrios tipos de ocasiones, azul no tan llamativo",
+"short": false
+},
+{
+"id": "IMG_1702",
+"src": "img/IMG_1702.webp",
+"slots": [
+"arriba",
+"abajo"
+],
+"sub": "button-up",
+"subEs": "Camisa",
+"color": "light grey",
+"colorEs": "gris claro",
+"brand": "Polo Ralph Lauren",
+"model": "",
+"note": "rl me queda muy bien a mis proporicones, de cuadritos, facil de combinar",
+"short": false
+},
+{
+"id": "IMG_1703",
+"src": "img/IMG_1703.webp",
+"slots": [
+"arriba",
+"abajo"
+],
+"sub": "button-up",
+"subEs": "Camisa",
+"color": "light grey",
+"colorEs": "gris claro",
+"brand": "Polo Ralph Lauren",
+"model": "",
+"note": "rl me queda un poco grande, facil de conbinar me la remangaria, es para fajarse",
+"short": false
+},
+{
+"id": "IMG_1704",
+"src": "img/IMG_1704.webp",
+"slots": [
+"arriba",
+"abajo"
+],
+"sub": "button-up",
+"subEs": "Camisa",
+"color": "navy",
+"colorEs": "navy",
+"brand": "Massimo Dutti",
+"model": "",
+"note": "massimo dutti lino obscuro , corte ecuello arabe (de mis favorias ) la uso para cenas y salir",
+"short": false
+},
+{
+"id": "IMG_1705",
+"src": "img/IMG_1705.webp",
+"slots": [
+"arriba",
+"abajo"
+],
+"sub": "button-up",
+"subEs": "Camisa",
+"color": "light grey",
+"colorEs": "gris claro",
+"brand": "Massimo Dutti",
+"model": "",
+"note": "massimo dutti (demasiado de vestir( las mangas necesitan gemelos, no me encanta la verdad, me las tendria…",
+"short": false
+},
+{
+"id": "IMG_1706",
+"src": "img/IMG_1706.webp",
+"slots": [
+"arriba",
+"abajo"
+],
+"sub": "dress-shirt",
+"subEs": "Camisa de vestir",
+"color": "white",
+"colorEs": "blanco",
+"brand": "Massimo Dutti",
+"model": "",
+"note": "supser de vestir, para traje, muy apretada, algodon massimo dutti",
+"short": false
+},
+{
+"id": "IMG_1707",
+"src": "img/IMG_1707.webp",
+"slots": [
+"arriba",
+"abajo"
+],
+"sub": "dress-shirt",
+"subEs": "Camisa de vestir",
+"color": "navy",
+"colorEs": "navy",
+"brand": "Massimo Dutti",
+"model": "",
+"note": "massimo dutti, apretada se puede usar para todo pero es para fajarse",
+"short": false
+},
+{
+"id": "IMG_1708",
+"src": "img/IMG_1708.webp",
+"slots": [
+"arriba",
+"abajo"
+],
+"sub": "button-up",
+"subEs": "Camisa",
+"color": "grey",
+"colorEs": "gris",
+"brand": "Massimo Dutti",
+"model": "",
+"note": "massimo dutti para playa me queda un poco grande",
+"short": false
+},
+{
+"id": "IMG_1709",
+"src": "img/IMG_1709.webp",
+"slots": [
+"arriba",
+"abajo"
+],
+"sub": "button-up",
+"subEs": "Camisa",
+"color": "beige",
+"colorEs": "beige",
+"brand": "Sin marca",
+"model": "",
+"note": "de lino (siento que me hace ver como un pirata) es para remangarmela y super para la plaay",
+"short": false
+},
+{
+"id": "IMG_1710",
+"src": "img/IMG_1710.webp",
+"slots": [
+"arriba",
+"abajo"
+],
+"sub": "oxford",
+"subEs": "Oxford",
+"color": "pale yellow",
+"colorEs": "amarillo pálido",
+"brand": "Polo Ralph Lauren",
+"model": "",
+"note": "ralph lauren amarilla, se me hace dificil de combinar, me qeuda bastante grande",
+"short": false
+},
+{
+"id": "IMG_1711",
+"src": "img/IMG_1711.webp",
+"slots": [
+"arriba",
+"abajo"
+],
+"sub": "button-up",
+"subEs": "Camisa",
+"color": "burgundy",
+"colorEs": "vino",
+"brand": "Massimo Dutti",
+"model": "",
+"note": "massimo dutti rojo, me queda un poco grande,",
+"short": false
+},
+{
+"id": "IMG_1712",
+"src": "img/IMG_1712.webp",
+"slots": [
+"arriba",
+"abajo"
+],
+"sub": "button-up",
+"subEs": "Camisa",
+"color": "khaki",
+"colorEs": "khaki",
+"brand": "Massimo Dutti",
+"model": "",
+"note": "massimo dutti de lino me quedea un poco grande se me hace un poco dificil de combinar pero chance tu si puedas",
+"short": false
+},
+{
+"id": "IMG_1713",
+"src": "img/IMG_1713.webp",
+"slots": [
+"arriba",
+"abajo"
+],
+"sub": "button-up",
+"subEs": "Camisa",
+"color": "sage",
+"colorEs": "salvia",
+"brand": "Sin marca",
+"model": "",
+"note": "de grecia de lino me gusta mucho esta me queda muy bien",
+"short": false
+},
+{
+"id": "IMG_1714",
+"src": "img/IMG_1714.webp",
+"slots": [
+"arriba",
+"abajo"
+],
+"sub": "oxford",
+"subEs": "Oxford",
+"color": "light blue",
+"colorEs": "azul claro",
+"brand": "Polo Ralph Lauren",
+"model": "",
+"note": "me queda gigante no me encanta , , , , , ,      la verdad",
+"short": false
+},
+{
+"id": "IMG_1715",
+"src": "img/IMG_1715.webp",
+"slots": [
+"arriba",
+"abajo"
+],
+"sub": "button-up",
+"subEs": "Camisa",
+"color": "light blue",
+"colorEs": "azul claro",
+"brand": "Brooks Brothers",
+"model": "",
+"note": "brooks brotehrs, esta muy bueno pero dificil de combinar chance tu puedas mas",
+"short": false
+},
+{
+"id": "IMG_1716",
+"src": "img/IMG_1716.webp",
+"slots": [
+"arriba",
+"abajo"
+],
+"sub": "button-up",
+"subEs": "Camisa",
+"color": "light blue",
+"colorEs": "azul claro",
+"brand": "Polo Ralph Lauren",
+"model": "",
+"note": "ralph lauren me queda un poco grande pero esta muy buena se me hace playera padre para usarla con shorts",
+"short": false
+},
+{
+"id": "IMG_1717",
+"src": "img/IMG_1717.webp",
+"slots": [
+"arriba",
+"abajo"
+],
+"sub": "button-up",
+"subEs": "Camisa",
+"color": "white",
+"colorEs": "blanco",
+"brand": "Oysho",
+"model": "",
+"note": "oysho lino me queda muy bien muy bien proporcionada",
+"short": false
+},
+{
+"id": "IMG_1718",
+"src": "img/IMG_1718.webp",
+"slots": [
+"arriba",
+"abajo"
+],
+"sub": "button-up",
+"subEs": "Camisa",
+"color": "off-white",
+"colorEs": "hueso",
+"brand": "Polo Ralph Lauren",
+"model": "",
+"note": "camisa rl manga larga se me hace de las mas bonitas, me queda muy bien, es una camisa muy linda",
+"short": false
+},
+{
+"id": "IMG_1719",
+"src": "img/IMG_1719.webp",
+"slots": [
+"arriba",
+"abajo"
+],
+"sub": "oxford",
+"subEs": "Oxford",
+"color": "white",
+"colorEs": "blanco",
+"brand": "Polo Ralph Lauren",
+"model": "",
+"note": "ralph lauren me gusta mucho esta camisa me qeuad muy bien",
+"short": false
+},
+{
+"id": "IMG_1720",
+"src": "img/IMG_1720.webp",
+"slots": [
+"arriba",
+"abajo"
+],
+"sub": "button-up",
+"subEs": "Camisa",
+"color": "white",
+"colorEs": "blanco",
+"brand": "Versace",
+"model": "",
+"note": "versace se me hace muy linda muh mexicana en la parte de atras tiene una flor blanca",
+"short": false
+},
+{
+"id": "IMG_1721",
+"src": "img/IMG_1721.webp",
+"slots": [
+"arriba",
+"abajo"
+],
+"sub": "button-up",
+"subEs": "Camisa",
+"color": "white",
+"colorEs": "blanco",
+"brand": "Polo Ralph Lauren",
+"model": "",
+"note": "es la misma que la rl que te digo uqe me queda muy bien que esta muy onnita tengeo dos iguales",
+"short": false
+},
+{
+"id": "IMG_1722",
+"src": "img/IMG_1722.webp",
+"slots": [
+"arriba",
+"abajo"
+],
+"sub": "oxford",
+"subEs": "Oxford",
+"color": "white",
+"colorEs": "blanco",
+"brand": "Polo Ralph Lauren",
+"model": "",
+"note": "polo ralph lauren manga corta me queda muy bien solo chacne y un poco grande",
+"short": false
+},
+{
+"id": "IMG_1723",
+"src": "img/IMG_1723.webp",
+"slots": [
+"arriba",
+"abajo"
+],
+"sub": "button-up",
+"subEs": "Camisa",
+"color": "navy",
+"colorEs": "navy",
+"brand": "Sin marca",
+"model": "",
+"note": "linea domo negra con rayas se me hace linda pero no se como cmobinarla",
+"short": false
+},
+{
+"id": "IMG_1724",
+"src": "img/IMG_1724.webp",
+"slots": [
+"arriba",
+"abajo"
+],
+"sub": "button-up",
+"subEs": "Camisa",
+"color": "black",
+"colorEs": "negro",
+"brand": "Lefties",
+"model": "",
+"note": "leftiesman negra me queda muy bien en cuanto a mis proporciones",
+"short": false
+},
+{
+"id": "IMG_1725",
+"src": "img/IMG_1725.webp",
+"slots": [
+"arriba"
+],
+"sub": "hoodie",
+"subEs": "Hoodie",
+"color": "olive",
+"colorEs": "olivo",
+"brand": "Abercrombie & Fitch",
+"model": "",
+"note": "hoodie me queda muy bien abercrombie and fitch",
+"short": false
+},
+{
+"id": "IMG_1726",
+"src": "img/IMG_1726.webp",
+"slots": [
+"arriba"
+],
+"sub": "knit-polo",
+"subEs": "Polo de punto",
+"color": "navy",
+"colorEs": "navy",
+"brand": "Polo Ralph Lauren",
+"model": "",
+"note": "polo ralph lauren polo manga larga me queda muy bien me gsuta como me queda",
+"short": false
+},
+{
+"id": "IMG_1727",
+"src": "img/IMG_1727.webp",
+"slots": [
+"arriba"
+],
+"sub": "sweater",
+"subEs": "Suéter",
+"color": "navy",
+"colorEs": "navy",
+"brand": "Polo Ralph Lauren",
+"model": "",
+"note": "sueter polo ralph lauren me agrada bastante como me queda",
+"short": false
+},
+{
+"id": "IMG_1728",
+"src": "img/IMG_1728.webp",
+"slots": [
+"arriba"
+],
+"sub": "sweater",
+"subEs": "Suéter",
+"color": "navy",
+"colorEs": "navy",
+"brand": "Polo Ralph Lauren",
+"model": "",
+"note": "poloi reaalph lauren suter overaly",
+"short": false
+},
+{
+"id": "IMG_1730",
+"src": "img/IMG_1730.webp",
+"slots": [
+"arriba",
+"abajo"
+],
+"sub": "button-up",
+"subEs": "Camisa",
+"color": "light blue",
+"colorEs": "azul claro",
+"brand": "Massimo Dutti",
+"model": "",
+"note": "massimo dutti boyish - sietno que estas sirven mas para outfits donde se usan shorts y asi",
+"short": false
+},
+{
+"id": "IMG_1731",
+"src": "img/IMG_1731.webp",
+"slots": [
+"arriba"
+],
+"sub": "jersey",
+"subEs": "Jersey",
+"color": "cream",
+"colorEs": "crema",
+"brand": "St. Louis Cardinals",
+"model": "",
+"note": "st luis cardinals esta medio de pijama T",
+"short": false
+},
+{
+"id": "IMG_1732",
+"src": "img/IMG_1732.webp",
+"slots": [
+"arriba"
+],
+"sub": "polo",
+"subEs": "Polo",
+"color": "burgundy",
+"colorEs": "vino",
+"brand": "Lacoste",
+"model": "",
+"note": "lacoste polo roja igual mediterannaean boyish",
+"short": true
+},
+{
+"id": "IMG_1733",
+"src": "img/IMG_1733.webp",
+"slots": [
+"arriba"
+],
+"sub": "polo",
+"subEs": "Polo",
+"color": "navy",
+"colorEs": "navy",
+"brand": "Lacoste",
+"model": "",
+"note": "lacoste me queda super bien no esta tan boyish esta medio pretty boy",
+"short": true
+},
+{
+"id": "IMG_1734",
+"src": "img/IMG_1734.webp",
+"slots": [
+"arriba"
+],
+"sub": "button-up",
+"subEs": "Camisa",
+"color": "blue",
+"colorEs": "azul",
+"brand": "Polo Ralph Lauren",
+"model": "",
+"note": "ralph lauren manga corta me agrada bastante pero me queda un poco grande",
+"short": true
+},
+{
+"id": "IMG_1735",
+"src": "img/IMG_1735.webp",
+"slots": [
+"arriba"
+],
+"sub": "henley",
+"subEs": "Henley",
+"color": "dark brown",
+"colorEs": "café oscuro",
+"brand": "Massimo Dutti",
+"model": "",
+"note": "massimo dutti manga larga me gust amucho este tipo de cuello que no tiene botoens se ve arabe",
+"short": false
+},
+{
+"id": "IMG_1736",
+"src": "img/IMG_1736.webp",
+"slots": [
+"arriba",
+"abajo"
+],
+"sub": "button-up",
+"subEs": "Camisa",
+"color": "sand",
+"colorEs": "arena",
+"brand": "Massimo Dutti",
+"model": "",
+"note": "massimo dutti manga corta de lino y algodon una de mis camisas facvoritas, el cuello sin botones igual se…",
+"short": false
+},
+{
+"id": "IMG_1737",
+"src": "img/IMG_1737.webp",
+"slots": [
+"arriba"
+],
+"sub": "camp-shirt",
+"subEs": "Camisa campera",
+"color": "tan",
+"colorEs": "tan",
+"brand": "Temu",
+"model": "",
+"note": "temu shirt - ni me encanta",
+"short": true
+},
+{
+"id": "IMG_1738",
+"src": "img/IMG_1738.webp",
+"slots": [
+"arriba"
+],
+"sub": "button-up",
+"subEs": "Camisa",
+"color": "blue",
+"colorEs": "azul",
+"brand": "Polo Ralph Lauren",
+"model": "",
+"note": "polo ralph lauren manga corta azul oscrua se ve muy bien en mi opinion me queda muy bien",
+"short": true
+},
+{
+"id": "IMG_1739",
+"src": "img/IMG_1739.webp",
+"slots": [
+"arriba"
+],
+"sub": "button-up",
+"subEs": "Camisa",
+"color": "olive",
+"colorEs": "olivo",
+"brand": "Mango",
+"model": "",
+"note": "mngo olivo oscuro",
+"short": true
+},
+{
+"id": "IMG_1740",
+"src": "img/IMG_1740.webp",
+"slots": [
+"arriba"
+],
+"sub": "button-up",
+"subEs": "Camisa",
+"color": "dark brown",
+"colorEs": "café oscuro",
+"brand": "Pull&Bear",
+"model": "",
+"note": "pull and bear lino gris faded medio streetwear",
+"short": true
+},
+{
+"id": "IMG_1741",
+"src": "img/IMG_1741.webp",
+"slots": [
+"arriba"
+],
+"sub": "button-up",
+"subEs": "Camisa",
+"color": "blue-grey",
+"colorEs": "azul gris",
+"brand": "Sin marca",
+"model": "",
+"note": "me la compre en roma me gusta por la historia me queda mbien de los brazos pero chance y me gusta mun poco…",
+"short": true
+},
+{
+"id": "IMG_1742",
+"src": "img/IMG_1742.webp",
+"slots": [
+"arriba"
+],
+"sub": "polo",
+"subEs": "Polo",
+"color": "green",
+"colorEs": "verde",
+"brand": "Lacoste",
+"model": "",
+"note": "lacoste verde no me encanta se me hace super dificil de combianr",
+"short": true
+},
+{
+"id": "IMG_1743",
+"src": "img/IMG_1743.webp",
+"slots": [
+"arriba"
+],
+"sub": "camp-shirt",
+"subEs": "Camisa campera",
+"color": "olive",
+"colorEs": "olivo",
+"brand": "Pull&Bear",
+"model": "",
+"note": "no me encanta como me queda",
+"short": true
+},
+{
+"id": "IMG_1744",
+"src": "img/IMG_1744.webp",
+"slots": [
+"arriba"
+],
+"sub": "camp-shirt",
+"subEs": "Camisa campera",
+"color": "sage",
+"colorEs": "salvia",
+"brand": "Lefties",
+"model": "",
+"note": "leftiesman verde medio menta se me hace boyish",
+"short": true
+},
+{
+"id": "IMG_1745",
+"src": "img/IMG_1745.webp",
+"slots": [
+"arriba"
+],
+"sub": "button-up",
+"subEs": "Camisa",
+"color": "white",
+"colorEs": "blanco",
+"brand": "H&M",
+"model": "",
+"note": "hnm white no me encanta como me queda medio boyish",
+"short": true
+},
+{
+"id": "IMG_1746",
+"src": "img/IMG_1746.webp",
+"slots": [
+"arriba"
+],
+"sub": "polo",
+"subEs": "Polo",
+"color": "navy",
+"colorEs": "navy",
+"brand": "Massimo Dutti",
+"model": "",
+"note": "massimo dutti short sleeve tight arms",
+"short": true
+},
+{
+"id": "IMG_1747",
+"src": "img/IMG_1747.webp",
+"slots": [
+"pantalon"
+],
+"sub": "jeans",
+"subEs": "Jeans",
+"color": "blue",
+"colorEs": "azul",
+"brand": "Massimo Dutti",
+"model": "",
+"note": "jeans massimo dutti me quedan bien solo un pioco apretados en las pantorillas",
+"short": false
+},
+{
+"id": "IMG_1748",
+"src": "img/IMG_1748.webp",
+"slots": [
+"pantalon"
+],
+"sub": "chinos",
+"subEs": "Chinos",
+"color": "khaki",
+"colorEs": "khaki",
+"brand": "Tommy Bahama",
+"model": "",
+"note": "tommy bahama de seda me quedan bien solo un poco anchos",
+"short": false
+},
+{
+"id": "IMG_1749",
+"src": "img/IMG_1749.webp",
+"slots": [
+"pantalon"
+],
+"sub": "chinos",
+"subEs": "Chinos",
+"color": "cream",
+"colorEs": "crema",
+"brand": "H&M",
+"model": "",
+"note": "hnm beach p[ants me qeudan bein",
+"short": false
+},
+{
+"id": "IMG_1750",
+"src": "img/IMG_1750.webp",
+"slots": [
+"pantalon"
+],
+"sub": "jeans",
+"subEs": "Jeans",
+"color": "dark grey",
+"colorEs": "gris oscuro",
+"brand": "H&M",
+"model": "",
+"note": "jeans hnm negros me quedan muy bien",
+"short": false
+},
+{
+"id": "IMG_1751",
+"src": "img/IMG_1751.webp",
+"slots": [
+"pantalon"
+],
+"sub": "trousers",
+"subEs": "Pantalón",
+"color": "stone",
+"colorEs": "piedra",
+"brand": "Brooks Brothers",
+"model": "",
+"note": "mis mejores pantalones creo son brooks brotehres 542 me quedan increiblemente bien son blacnos medio gris…",
+"short": false
+},
+{
+"id": "IMG_1752",
+"src": "img/IMG_1752.webp",
+"slots": [
+"pantalon"
+],
+"sub": "jeans",
+"subEs": "Jeans",
+"color": "light blue",
+"colorEs": "azul claro",
+"brand": "H&M",
+"model": "",
+"note": "jeans hnm me quedan super bien",
+"short": false
+},
+{
+"id": "IMG_1753",
+"src": "img/IMG_1753.webp",
+"slots": [
+"pantalon"
+],
+"sub": "trousers",
+"subEs": "Pantalón",
+"color": "khaki-olive",
+"colorEs": "khaki olivo",
+"brand": "Sin marca",
+"model": "",
+"note": "pants beige estan bien",
+"short": false
+},
+{
+"id": "IMG_1754",
+"src": "img/IMG_1754.webp",
+"slots": [
+"pantalon"
+],
+"sub": "chinos",
+"subEs": "Chinos",
+"color": "beige",
+"colorEs": "beige",
+"brand": "H&M",
+"model": "",
+"note": "jeans hnm me quedan masomenos la verdad son un poco incomodos",
+"short": false
+},
+{
+"id": "IMG_1755",
+"src": "img/IMG_1755.webp",
+"slots": [
+"pantalon"
+],
+"sub": "trousers",
+"subEs": "Pantalón",
+"color": "dark brown",
+"colorEs": "café oscuro",
+"brand": "Sin marca",
+"model": "",
+"note": "pantalones de vestir cafes me quedan un poco apretados de la cintura",
+"short": false
+},
+{
+"id": "IMG_1756",
+"src": "img/IMG_1756.webp",
+"slots": [
+"pantalon"
+],
+"sub": "trousers",
+"subEs": "Pantalón",
+"color": "charcoal",
+"colorEs": "carbón",
+"brand": "Polo Ralph Lauren",
+"model": "",
+"note": "pantalon de vestir polo me queda un poco grande necesito un cinturon",
+"short": false
+},
+{
+"id": "IMG_1757",
+"src": "img/IMG_1757.webp",
+"slots": [
+"arriba"
+],
+"sub": "t-shirt",
+"subEs": "Playera",
+"color": "black",
+"colorEs": "negro",
+"brand": "Acapella",
+"model": "",
+"note": "playera negra acapella me queda supe rbien",
+"short": true
+},
+{
+"id": "IMG_1758",
+"src": "img/IMG_1758.webp",
+"slots": [
+"arriba"
+],
+"sub": "t-shirt",
+"subEs": "Playera",
+"color": "black",
+"colorEs": "negro",
+"brand": "Polo Ralph Lauren",
+"model": "",
+"note": "playera rl negra me queda muy bien",
+"short": true
+},
+{
+"id": "IMG_1759",
+"src": "img/IMG_1759.webp",
+"slots": [
+"pantalon"
+],
+"sub": "trousers",
+"subEs": "Pantalón",
+"color": "grey",
+"colorEs": "gris",
+"brand": "H&M",
+"model": "",
+"note": "jeans grises me quedan muy bien hnm",
+"short": false
+},
+{
+"id": "shoes-zara-boat-grey",
+"src": "img/shoes-zara-boat-grey.webp",
+"slots": [
+"zapatos"
+],
+"sub": "boat shoes",
+"subEs": "Náuticos",
+"color": "grey",
+"colorEs": "gris",
+"brand": "Zara",
+"model": "",
+"note": "Gamuza gris con suela crema; van con lino y jeans claros.",
+"short": false
+}
+],
+"presets": [
+{
+"id": "look-1",
+"name": "Look 1 · camisa blanca de rayas, jeans straight, loafer café (sin gor",
+"approved": true,
+"slots": {
+"chaqueta": null,
+"arriba": "IMG_1719",
+"abajo": null,
+"pantalon": "IMG_1752",
+"zapatos": "shoes-bw-army-brown"
+}
+},
+{
+"id": "look-2",
+"name": "Look 2 · lino claro por fuera + pantalón claro + zapato café",
+"approved": true,
+"slots": {
+"chaqueta": null,
+"arriba": "IMG_1686",
+"abajo": null,
+"pantalon": "IMG_1751",
+"zapatos": "shoes-bw-army-brown"
+}
+},
+{
+"id": "look-5",
+"name": "Look 5 · camisa de rayas bajo knit oscuro + jeans claros + zapato caf",
+"approved": true,
+"slots": {
+"chaqueta": null,
+"arriba": "IMG_1727",
+"abajo": "IMG_1679",
+"pantalon": "IMG_1752",
+"zapatos": "shoes-bw-army-brown"
+}
+},
+{
+"id": "look-6",
+"name": "Look 6 · chaqueta navy + knit taupe + pantalón crema",
+"approved": true,
+"slots": {
+"chaqueta": "IMG_1687",
+"arriba": "IMG_1692",
+"abajo": null,
+"pantalon": "IMG_1751",
+"zapatos": "shoes-bw-army-brown"
+}
+},
+{
+"id": "look-8",
+"name": "Look 8 · chaqueta navy + top arena + pantalón crema",
+"approved": true,
+"slots": {
+"chaqueta": "IMG_1687",
+"arriba": "IMG_1736",
+"abajo": null,
+"pantalon": "IMG_1751",
+"zapatos": "shoes-bw-army-brown"
+}
+},
+{
+"id": "look-9",
+"name": "Look 9 · polo Lacoste navy + pantalón crema + loafer café",
+"approved": true,
+"slots": {
+"chaqueta": null,
+"arriba": "IMG_1733",
+"abajo": null,
+"pantalon": "IMG_1751",
+"zapatos": "shoes-bw-army-brown"
+}
+},
+{
+"id": "look-10",
+"name": "Look 10 · camisa de rayas + jeans oscuros + chaqueta oscura + loafer c",
+"approved": true,
+"slots": {
+"chaqueta": "IMG_1687",
+"arriba": "IMG_1719",
+"abajo": null,
+"pantalon": "IMG_1750",
+"zapatos": "shoes-bw-army-brown"
+}
+},
+{
+"id": "look-11",
+"name": "Look 11 · suéter navy + pantalón café + zapato café (sin bufanda)",
+"approved": true,
+"slots": {
+"chaqueta": null,
+"arriba": "IMG_1727",
+"abajo": null,
+"pantalon": "IMG_1755",
+"zapatos": "shoes-bw-army-brown"
+}
+},
+{
+"id": "look-12",
+"name": "Look 12 · camisa oscura ligera por fuera + pantalón blanco",
+"approved": true,
+"slots": {
+"chaqueta": null,
+"arriba": "IMG_1698",
+"abajo": null,
+"pantalon": "IMG_1749",
+"zapatos": "shoes-bw-army-brown"
+}
+},
+{
+"id": "look-13",
+"name": "Look 13 · knit café + jeans lavados + zapato café (sin gorra)",
+"approved": true,
+"slots": {
+"chaqueta": null,
+"arriba": "IMG_1735",
+"abajo": null,
+"pantalon": "IMG_1752",
+"zapatos": "shoes-bw-army-brown"
+}
+},
+{
+"id": "look-14",
+"name": "Look 14 · polo knit crema manga corta + pantalón café-oliva de pinzas ",
+"approved": true,
+"slots": {
+"chaqueta": null,
+"arriba": "IMG_1736",
+"abajo": null,
+"pantalon": "IMG_1748",
+"zapatos": "shoes-bw-army-brown"
+}
+},
+{
+"id": "look-15",
+"name": "Look 15 · lino blanco por fuera + jeans claros (inspo rotos; los suyos",
+"approved": true,
+"slots": {
+"chaqueta": null,
+"arriba": "IMG_1717",
+"abajo": null,
+"pantalon": "IMG_1752",
+"zapatos": "shoes-bw-army-brown"
+}
+},
+{
+"id": "look-17",
+"name": "Look 17 · suéter gris + pantalón crema + zapato café (sin gorra)",
+"approved": true,
+"slots": {
+"chaqueta": null,
+"arriba": "IMG_1694",
+"abajo": null,
+"pantalon": "IMG_1751",
+"zapatos": "shoes-bw-army-brown"
+}
+},
+{
+"id": "look-18",
+"name": "Look 18 · knit negro manga larga + jeans azul medio + zapato café (sin",
+"approved": true,
+"slots": {
+"chaqueta": null,
+"arriba": "IMG_1683",
+"abajo": null,
+"pantalon": "IMG_1752",
+"zapatos": "shoes-bw-army-brown"
+}
+},
+{
+"id": "look-19",
+"name": "Look 19 · Mediterráneo: lino azul + jeans claros",
+"approved": true,
+"slots": {
+"chaqueta": null,
+"arriba": "IMG_1704",
+"abajo": null,
+"pantalon": "IMG_1752",
+"zapatos": "shoes-zara-boat-grey"
+}
+}
+]
+}

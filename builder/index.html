@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Arma tu outfit · Clóset de Nicolás</title>
+<meta name="theme-color" content="#F5F3EF">
+<style>
+:root{--bg:#F5F3EF;--paper:#FFFCF7;--ink:#1C1915;--navy:#24304D;--muted:#7A7468;--line:#E3DCD0;--rec:#8B3A32;--ok:#3E5B3A;
+--serif:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
+--sans:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);-webkit-tap-highlight-color:transparent}
+button{font:inherit;color:inherit}
+header{position:sticky;top:0;z-index:5;background:rgba(245,243,239,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:calc(env(safe-area-inset-top,0px) + 10px) 16px 10px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.brand{font:600 22px/1.1 var(--serif);flex:1;min-width:160px}
+.brand small{display:block;font:500 11px/1.4 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:3px}
+.btn{height:44px;padding:0 14px;border:1px solid var(--line);background:var(--paper);border-radius:12px;font-weight:600;font-size:14px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.btn:hover,.btn:focus-visible{border-color:var(--navy);outline:none}
+.btn.primary{background:var(--navy);border-color:var(--navy);color:#fff}
+.toggle{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);cursor:pointer;user-select:none;height:44px;padding:0 4px}
+.toggle input{accent-color:var(--navy);width:18px;height:18px}
+main{display:grid;grid-template-columns:minmax(0,520px) minmax(0,1fr);gap:24px;max-width:1180px;margin:0 auto;padding:16px 16px calc(env(safe-area-inset-bottom,0px) + 32px)}
+@media(max-width:600px){header{gap:4px 10px}.brand{flex-basis:100%}.toggle{height:36px}header .btn{height:36px;margin-left:auto}}
+@media(max-width:860px){main{grid-template-columns:1fr;gap:18px;padding:12px}}
+.body{display:flex;flex-direction:column;gap:10px}
+.slot{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:10px;display:grid;grid-template-columns:44px 1fr 44px;align-items:center;gap:6px;position:relative;touch-action:pan-y}
+.slot.locked{border-color:var(--navy);box-shadow:inset 0 0 0 1px var(--navy)}
+.slot .lbl{position:absolute;top:10px;left:14px;font:600 10.5px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);z-index:1}
+.slot .lock{position:absolute;top:4px;right:6px;z-index:2;width:40px;height:40px;border:0;background:transparent;border-radius:10px;cursor:pointer;display:grid;place-items:center;color:var(--muted)}
+.slot.locked .lock{color:var(--navy)}
+.arrow{width:44px;height:44px;border:0;border-radius:50%;background:var(--bg);cursor:pointer;display:grid;place-items:center;font-size:22px;color:var(--ink)}
+.arrow:hover{color:var(--navy);background:#ECE7DE}
+.pic{height:var(--h,200px);display:flex;align-items:center;justify-content:center;cursor:pointer;border-radius:12px;position:relative;margin-top:14px}
+.pic img{max-width:100%;max-height:100%;object-fit:contain;-webkit-user-drag:none;user-select:none;mix-blend-mode:multiply;transition:opacity .15s}
+.slot.empty .pic{height:64px}.slot.empty .meta{min-height:0;padding:0}.slot.empty .meta span{font-size:11.5px}
+.pic .none{font:italic 15px var(--serif);color:var(--muted);border:1.5px dashed var(--line);border-radius:12px;padding:14px 18px}
+.meta{grid-column:1/-1;text-align:center;padding:2px 8px 4px;min-height:34px}
+.meta b{font-size:14px;font-weight:600}
+.meta span{font-size:12.5px;color:var(--muted)}
+.meta p{margin:3px auto 0;max-width:42ch;font-size:12px;line-height:1.4;color:var(--muted);text-wrap:pretty}
+.warn{background:#F3E4DF;color:var(--rec);border-radius:12px;padding:9px 12px;font-size:13px;line-height:1.4;display:none}
+.warn.on{display:block}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+.actions .btn{flex:1}
+.side h2{font:600 18px var(--serif);margin:6px 0 10px}
+.tabs{display:flex;gap:6px;margin-bottom:12px}
+.tab{height:36px;padding:0 14px;border-radius:999px;border:1px solid var(--line);background:var(--paper);font-size:13px;font-weight:600;cursor:pointer}
+.tab.on{background:var(--navy);border-color:var(--navy);color:#fff}
+.saved{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:8px;display:flex;flex-direction:column;gap:6px}
+.thumbs{display:grid;grid-template-columns:1fr 1fr;gap:4px;background:var(--bg);border-radius:10px;padding:6px;cursor:pointer;aspect-ratio:1}
+.thumbs img{width:100%;height:100%;object-fit:contain;min-height:0}
+.card .nm{font-size:12.5px;font-weight:600;line-height:1.3}
+.pill{display:inline-block;font:600 10px/1 var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--ok);background:#E4EADF;border-radius:999px;padding:4px 7px}
+.card .row{display:flex;gap:6px}
+.card .row button{flex:1;height:34px;border:1px solid var(--line);border-radius:9px;background:var(--paper);font-size:12px;font-weight:600;cursor:pointer}
+.card .row button.del{color:var(--rec);flex:0 0 38px}
+.empty{color:var(--muted);font-size:14px;padding:16px 0}
+.io{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+dialog{border:0;border-radius:20px;padding:0;background:var(--paper);color:var(--ink);width:min(920px,96vw);max-height:88vh;box-shadow:0 30px 80px -20px rgba(28,25,21,.5)}
+dialog::backdrop{background:rgba(28,25,21,.4)}
+.dh{position:sticky;top:0;background:var(--paper);padding:14px 16px 10px;border-bottom:1px solid var(--line);z-index:1}
+.dh .t{display:flex;align-items:center;gap:8px}
+.dh h3{font:600 19px var(--serif);margin:0;flex:1}
+.chips{display:flex;gap:6px;overflow-x:auto;padding-top:10px;scrollbar-width:none}
+.chip{flex:0 0 auto;height:32px;padding:0 12px;border-radius:999px;border:1px solid var(--line);background:var(--bg);font-size:12.5px;cursor:pointer}
+.chip.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px;padding:12px 16px 18px}
+.gi{border:1px solid var(--line);border-radius:12px;background:var(--bg);padding:6px;cursor:pointer;text-align:center}
+.gi.sel{border-color:var(--navy);box-shadow:inset 0 0 0 1px var(--navy)}
+.gi.avoid{opacity:.55}
+.gi img{width:100%;aspect-ratio:1;object-fit:contain}
+.gi div{font-size:11px;line-height:1.3;color:var(--muted);margin-top:3px}
+.gi div b{color:var(--ink);font-weight:600;display:block}
+.toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 18px);transform:translateX(-50%) translateY(20px);background:var(--navy);color:#fff;padding:11px 16px;border-radius:12px;font-size:14px;opacity:0;transition:.2s;pointer-events:none;z-index:20}
+.toast.on{opacity:1;transform:translateX(-50%)}
+</style></head><body>
+<header>
+  <div class="brand">Arma tu outfit<small id="sub">Clóset de Nicolás</small></div>
+  <label class="toggle"><input type="checkbox" id="escuela"> Modo escuela</label>
+  <label class="toggle"><input type="checkbox" id="todo"> Incluir todo</label>
+  <a class="btn" style="text-decoration:none;color:var(--navy)" href="../closet/">Clóset</a>
+</header>
+<main>
+  <section>
+    <div class="body" id="body"></div>
+    <div class="warn" id="warn" style="margin-top:10px"></div>
+    <div class="actions" style="margin-top:12px">
+      <button class="btn primary" id="rand">🎲 Aleatorio</button>
+      <button class="btn" id="save">Guardar outfit</button>
+    </div>
+  </section>
+  <aside class="side">
+    <h2>Outfits</h2>
+    <div class="tabs"><button class="tab on" data-t="mine">Guardados</button><button class="tab" data-t="ok">Aprobados</button></div>
+    <div class="saved" id="saved"></div>
+    <div class="io">
+      <button class="btn" id="exp">Exportar JSON</button>
+      <label class="btn" style="cursor:pointer">Importar JSON<input type="file" id="imp" accept="application/json,.json" hidden></label>
+    </div>
+  </aside>
+</main>
+<dialog id="dlg"><div class="dh"><div class="t"><h3 id="dt"></h3><button class="btn" id="dclose">Cerrar</button></div><div class="chips" id="fsub"></div><div class="chips" id="fcol" style="padding-top:6px"></div></div><div class="grid" id="dgrid"></div></dialog>
+<div class="toast" id="toast"></div>
+<script>
+const SLOTS=[
+ {k:'chaqueta',l:'Chaqueta',opt:true,h:150},
+ {k:'arriba',l:'Arriba',h:210},
+ {k:'abajo',l:'Capa abajo',opt:true,h:120},
+ {k:'pantalon',l:'Pantalón',h:210},
+ {k:'zapatos',l:'Zapatos',h:110}];
+const AVOID=new Set(['IMG_1695','IMG_1725','IMG_1737','IMG_1705','IMG_1706','IMG_1714','IMG_1754','IMG_1700','IMG_1710','IMG_1742']);
+const NOSCHOOL=new Set(['shoes-oncloud-white']);
+const KNITS=new Set(['sweater','knit-polo','quarter-zip','hoodie']);
+const COLLAR=new Set(['button-up','dress-shirt','oxford']);
+const LS='outfits-guardados-v1';
+let ITEMS=[],BY={},PRESETS=[],cur={},locks={},tab='mine';
+const $=s=>document.querySelector(s);
+const pool=k=>ITEMS.filter(i=>i.slots.includes(k));
+function toast(t){const e=$('#toast');e.textContent=t;e.classList.add('on');clearTimeout(e._t);e._t=setTimeout(()=>e.classList.remove('on'),1800)}
+function mine(){try{return JSON.parse(localStorage.getItem(LS))||[]}catch(e){return[]}}
+function setMine(a){localStorage.setItem(LS,JSON.stringify(a))}
+function escuela(){return $('#escuela').checked}
+function schoolBad(i){return NOSCHOOL.has(i.id)||['t-shirt','jersey','hoodie'].includes(i.sub)}
+function okRandom(i){if(!$('#todo').checked&&AVOID.has(i.id))return false;if(escuela()&&schoolBad(i))return false;return true}
+function isNavyKhaki(o){const t=BY[o.arriba],p=BY[o.pantalon];if(!t||!p)return false;return (t.id==='IMG_1680'&&p.id==='IMG_1748')||(t.color==='navy'&&COLLAR.has(t.sub)&&/khaki/.test(p.color)&&!o.chaqueta)}
+function warnings(o){const w=[];
+ if(isNavyKhaki(o))w.push('Camisa navy + khaki: mucho contraste, se ve “de Target”. Mejor pantalón crema, piedra o jeans.');
+ if(BY[o.zapatos]&&NOSCHOOL.has(o.zapatos))w.push('On The Roger: no para la escuela.');
+ if(o.abajo&&BY[o.arriba]&&!KNITS.has(BY[o.arriba].sub))w.push('Capa abajo va mejor bajo un suéter o polo de punto.');
+ for(const k in o){const i=BY[o[k]];if(i&&AVOID.has(i.id))w.push(`${i.brand} ${i.subEs.toLowerCase()} (${i.colorEs}): la marcaste para evitar.`)}
+ if(escuela())for(const k in o){const i=BY[o[k]];if(i&&schoolBad(i)&&!NOSCHOOL.has(i.id))w.push(`${i.subEs} no es para la escuela.`)}
+ return w}
+function label(i){return `${i.brand}${i.model?' '+i.model:''}`}
+function render(){
+ const b=$('#body');b.innerHTML='';
+ for(const s of SLOTS){const id=cur[s.k],i=BY[id];
+  const el=document.createElement('div');el.className='slot'+(locks[s.k]?' locked':'')+(i?'':' empty');el.style.setProperty('--h',(window.innerWidth<600?Math.round(s.h*.85):s.h)+'px');
+  el.innerHTML=`<span class="lbl">${s.l}${s.opt?' · opcional':''}</span>
+  <button class="lock" aria-label="Fijar ${s.l}" title="Fijar">${locks[s.k]?'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>':'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 7.5-2"/></svg>'}</button>
+  <button class="arrow" data-d="-1" aria-label="Anterior">‹</button>
+  <div class="pic">${i?`<img src="${i.src}" alt="${label(i)}" draggable="false">`:'<span class="none">Ninguna</span>'}</div>
+  <button class="arrow" data-d="1" aria-label="Siguiente">›</button>
+  <div class="meta">${i?`<b>${label(i)}</b> <span>· ${i.subEs} ${i.colorEs}</span>${i.note?`<p>${i.note}</p>`:''}`:`<span>${s.opt?'Sin '+s.l.toLowerCase()+'. Toca para elegir.':''}</span>`}</div>`;
+  el.querySelector('.lock').onclick=()=>{locks[s.k]=!locks[s.k];render()};
+  el.querySelectorAll('.arrow').forEach(a=>a.onclick=()=>step(s,+a.dataset.d));
+  el.querySelector('.pic').onclick=()=>openPicker(s);
+  let x0=null,y0=0;el.addEventListener('touchstart',e=>{x0=e.touches[0].clientX;y0=e.touches[0].clientY},{passive:true});
+  el.addEventListener('touchend',e=>{if(x0==null)return;const dx=e.changedTouches[0].clientX-x0,dy=e.changedTouches[0].clientY-y0;if(Math.abs(dx)>45&&Math.abs(dx)>Math.abs(dy)*1.4){step(s,dx<0?1:-1);el._sw=Date.now()}x0=null});
+  el.querySelector('.pic').addEventListener('click',e=>{if(el._sw&&Date.now()-el._sw<400)e.stopImmediatePropagation()},true);
+  b.appendChild(el)}
+ const w=warnings(cur),we=$('#warn');we.innerHTML=w.map(x=>'⚠︎ '+x).join('<br>');we.classList.toggle('on',w.length>0);
+ localStorage.setItem(LS+'-cur',JSON.stringify(cur));
+}
+function step(s,d){const p=pool(s.k).map(i=>i.id);if(s.opt)p.unshift(null);let ix=p.indexOf(cur[s.k]??null);ix=(ix+d+p.length)%p.length;cur[s.k]=p[ix];render()}
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+function randomize(){
+ for(let t=0;t<60;t++){const o={...cur};
+  for(const s of SLOTS){if(locks[s.k])continue;
+   if(s.k==='chaqueta'){o.chaqueta=Math.random()<.3?pick(pool('chaqueta').filter(okRandom)).id:null;continue}
+   if(s.k==='abajo')continue;
+   const p=pool(s.k).filter(okRandom);if(p.length)o[s.k]=pick(p).id}
+  if(!locks.abajo){const top=BY[o.arriba];o.abajo=(top&&KNITS.has(top.sub)&&!top.short&&Math.random()<.6)?pick(pool('abajo').filter(i=>okRandom(i)&&['white','off-white','light blue','pale grey-white'].includes(i.color))).id:null}
+  const tp=BY[o.arriba],sh=BY[o.zapatos];const sandwich=tp&&sh&&KNITS.has(tp.sub)&&tp.color===sh.color;
+  if(!isNavyKhaki(o)&&!sandwich||t===59){cur=o;break}}
+ render()}
+function openPicker(s){
+ const d=$('#dlg'),all=pool(s.k);let fs=null,fc=null;$('#dt').textContent=s.l;
+ const subs=[...new Set(all.map(i=>i.subEs))],cols=[...new Set(all.map(i=>i.colorEs))];
+ function chips(el,arr,get,set){el.innerHTML='';el.style.display=arr.length>1?'flex':'none';['Todo',...arr].forEach(v=>{const c=document.createElement('button');c.className='chip'+((get()??'Todo')===v?' on':'');c.textContent=v;c.onclick=()=>{set(v==='Todo'?null:v);draw()};el.appendChild(c)})}
+ function draw(){chips($('#fsub'),subs,()=>fs,v=>fs=v);chips($('#fcol'),cols,()=>fc,v=>fc=v);
+  const g=$('#dgrid');g.innerHTML='';
+  if(s.opt){const n=document.createElement('button');n.className='gi'+(cur[s.k]?'':' sel');n.innerHTML='<div style="aspect-ratio:1;display:grid;place-items:center;font:italic 14px var(--serif)">Ninguna</div>';n.onclick=()=>{cur[s.k]=null;d.close();render()};g.appendChild(n)}
+  all.filter(i=>(!fs||i.subEs===fs)&&(!fc||i.colorEs===fc)).forEach(i=>{const c=document.createElement('button');c.className='gi'+(cur[s.k]===i.id?' sel':'')+(AVOID.has(i.id)?' avoid':'');c.innerHTML=`<img src="${i.src}" loading="lazy" alt=""><div><b>${i.brand}</b>${i.subEs} ${i.colorEs}</div>`;c.onclick=()=>{cur[s.k]=i.id;d.close();render()};g.appendChild(c)})}
+ draw();d.showModal()}
+function thumbs(o){return ['chaqueta','arriba','abajo','pantalon','zapatos'].filter(k=>BY[o[k]]).slice(0,4).map(k=>`<img src="${BY[o[k]].src}" alt="">`).join('')}
+function renderSaved(){
+ const el=$('#saved'),list=tab==='mine'?mine():PRESETS;el.innerHTML='';
+ if(!list.length){el.innerHTML='<div class="empty">Aún no guardas outfits. Arma uno y toca “Guardar outfit”.</div>';return}
+ list.forEach((o,ix)=>{const c=document.createElement('div');c.className='card';
+  c.innerHTML=`<div class="thumbs">${thumbs(o.slots)}</div><div class="nm">${o.approved?'<span class="pill">Aprobado</span> ':''}${o.name||'Sin nombre'}</div><div class="row"><button class="ld">Ponérmelo</button>${tab==='mine'?'<button class="del" aria-label="Borrar">✕</button>':''}</div>`;
+  const load=()=>{cur={...o.slots};render();window.scrollTo({top:0,behavior:'smooth'});toast('Cargado: '+(o.name||'outfit'))};
+  c.querySelector('.thumbs').onclick=load;c.querySelector('.ld').onclick=load;
+  const del=c.querySelector('.del');if(del)del.onclick=()=>{if(!confirm('¿Borrar este outfit?'))return;const a=mine();a.splice(ix,1);setMine(a);renderSaved()};
+  el.appendChild(c)})}
+$('#rand').onclick=randomize;
+$('#save').onclick=()=>{const name=prompt('Nombre del outfit (opcional):','');if(name===null)return;const a=mine();a.unshift({id:'o'+Date.now(),name:name.trim(),date:new Date().toISOString(),slots:{...cur},items:Object.fromEntries(Object.entries(cur).filter(([k,v])=>v).map(([k,v])=>[k,label(BY[v])+' · '+BY[v].subEs+' '+BY[v].colorEs]))});setMine(a);tab='mine';document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('on',t.dataset.t==='mine'));renderSaved();toast('Guardado')};
+document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{tab=t.dataset.t;document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x===t));renderSaved()});
+$('#exp').onclick=()=>{const blob=new Blob([JSON.stringify({exported:new Date().toISOString(),outfits:mine()},null,1)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='outfits-guardados.json';a.click()};
+$('#imp').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const j=JSON.parse(await f.text());const inc=Array.isArray(j)?j:j.outfits||[];const a=mine(),have=new Set(a.map(o=>o.id));inc.forEach(o=>{if(o&&o.slots&&!have.has(o.id))a.push(o)});setMine(a);renderSaved();toast(`Importados ${inc.length}`)}catch(err){toast('Ese archivo no es válido')}e.target.value=''};
+['escuela','todo'].forEach(k=>$('#'+k).onchange=render);
+$('#dclose').onclick=()=>$('#dlg').close();
+$('#dlg').addEventListener('click',e=>{if(e.target.id==='dlg')e.target.close()});
+document.addEventListener('keydown',e=>{if($('#dlg').open)return;if(e.key==='r'||e.key==='R')randomize()});
+fetch('items.json?v=1').then(r=>r.json()).then(d=>{ITEMS=d.items;PRESETS=d.presets;ITEMS.forEach(i=>BY[i.id]=i);
+ $('#sub').textContent=`Clóset de Nicolás · ${ITEMS.length} prendas`;
+ let saved=null;try{saved=JSON.parse(localStorage.getItem(LS+'-cur'))}catch(e){}
+ cur=saved&&BY[saved.arriba]?saved:{...PRESETS.find(p=>p.id==='look-19').slots};render();renderSaved()});
+</script></body></html>
